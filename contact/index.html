@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact & Feedback - Browser Arcade</title>
   <meta name="description" content="Get in touch with Browser Arcade. Share feedback, submit game ideas, or report gameplay issues.">
-  <link rel="canonical" href="https://browserarcade.pages.dev/contact/">
+  <link rel="canonical" href="/contact/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://browserarcade.pages.dev/contact/">
+  <meta property="og:url" content="/contact/">
   <meta property="og:title" content="Contact & Feedback - Browser Arcade">
   <meta property="og:description" content="Share your suggestions, feedback, or game requests with the Browser Arcade team.">
   <meta property="og:image" content="/assets/images/og-image.svg">
@@ -92,7 +92,7 @@
         </p>
       </div>
 
-      <!-- Feedback Form Card (Zero backend, client-side email dispatch) -->
+      <!-- Feedback Form Card (Zero backend, GitHub Issues dispatch) -->
       <div class="arcade-card" style="padding: 32px; margin-bottom: 40px;">
         <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
           <div style="margin-bottom: 20px;">
@@ -115,7 +115,7 @@
             <input
               type="email"
               id="contactEmail"
-              placeholder="alex@example.com"
+              placeholder="alex@example.com (optional)"
               style="width: 100%; padding: 12px 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none;"
             >
           </div>
@@ -135,7 +135,7 @@
             </select>
           </div>
 
-          <div style="margin-bottom: 24px;">
+          <div style="margin-bottom: 20px;">
             <label for="contactMessage" style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">
               Your Message
             </label>
@@ -148,13 +148,41 @@
             ></textarea>
           </div>
 
-          <button type="submit" class="arcade-btn arcade-btn-primary" style="width: 100%; padding: 14px;">
-            Send Feedback Message
+          <!-- Public GitHub Issue Notice -->
+          <div style="margin-bottom: 22px; padding: 14px 16px; border-radius: var(--radius-md); background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
+            <strong style="color: var(--primary-400);">Public Submission Notice:</strong>
+            Submissions open as a GitHub Issue on our public repository (<a href="https://github.com/aryansharma11223/BrowserArcade" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">aryansharma11223/BrowserArcade</a>).
+            Because GitHub issues are publicly viewable by anyone on the internet, please do <strong>not</strong> include passwords, confidential information, or sensitive personal data.
+          </div>
+
+          <button type="submit" id="submitBtn" class="arcade-btn arcade-btn-primary" style="width: 100%; padding: 14px;">
+            Continue to GitHub Issue Creation
           </button>
         </form>
 
-        <div id="contactStatus" style="display: none; margin-top: 20px; padding: 16px; border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); color: #A7F3D0; font-size: 0.95rem; text-align: center;">
-          Thank you! Your feedback note has been prepared. If your email client did not automatically launch, you can email us directly at <strong>feedback@browserarcade.dev</strong>.
+        <!-- Status & Fallback Action Container -->
+        <div id="contactStatus" style="display: none; margin-top: 24px; padding: 20px; border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.12); border: 1px solid var(--accent-emerald); color: #E2E8F0; font-size: 0.95rem;">
+          <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+            <span style="font-size: 1.25rem;">↗️</span>
+            <div>
+              <strong id="statusTitle" style="color: #A7F3D0; font-size: 1rem; display: block; margin-bottom: 4px;">GitHub Issue Page Prepared</strong>
+              <p id="statusDesc" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin: 0;">
+                A new browser tab has been prepared with your issue details. Please review your draft and click <strong>"Submit new issue"</strong> on GitHub to complete submission.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+            <a id="githubDirectLink" href="#" target="_blank" rel="noopener" class="arcade-btn arcade-btn-primary arcade-btn-sm" style="text-decoration: none;">
+              Open GitHub Issue
+            </a>
+            <button type="button" id="copyMessageBtn" onclick="copyFormattedFeedback();" class="arcade-btn arcade-btn-secondary arcade-btn-sm">
+              Copy Formatted Message
+            </button>
+            <span id="copyConfirm" style="display: none; align-self: center; font-size: 0.85rem; color: #34D399; font-weight: 600;">
+              Copied to clipboard!
+            </span>
+          </div>
         </div>
       </div>
 
@@ -224,18 +252,96 @@
 
   <script type="module" src="/assets/js/arcade.js"></script>
   <script>
-    function handleContactSubmit() {
-      const name = document.getElementById('contactName').value;
-      const topic = document.getElementById('contactTopic').value;
-      const message = document.getElementById('contactMessage').value;
-      const email = document.getElementById('contactEmail').value || 'Anonymous';
+    let lastFormattedBody = '';
 
-      const mailtoLink = `mailto:feedback@browserarcade.dev?subject=${encodeURIComponent('[' + topic + '] from ' + name)}&body=${encodeURIComponent(message + '\n\n---\nSent from: ' + email)}`;
-      
+    function handleContactSubmit() {
+      const name = document.getElementById('contactName').value.trim();
+      const topic = document.getElementById('contactTopic').value;
+      const message = document.getElementById('contactMessage').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+
+      const issueTitle = `[${topic}] Feedback from ${name}`;
+      const issueBody = `### Feedback Submission
+- **Topic:** ${topic}
+- **Submitted By:** ${name}
+${email ? `- **Contact Email (Optional):** ${email}` : '- **Contact Email:** Not provided'}
+
+### Message
+${message}
+
+---
+*Prepared via Browser Arcade Contact Form. Please review and click "Submit new issue" above to post.*`;
+
+      lastFormattedBody = issueBody;
+
+      const githubRepoUrl = 'https://github.com/aryansharma11223/BrowserArcade/issues/new';
+      const issueUrl = `${githubRepoUrl}?title=${encodeURIComponent(issueTitle)}&body=${encodeURIComponent(issueBody)}`;
+
       const statusEl = document.getElementById('contactStatus');
+      const directLink = document.getElementById('githubDirectLink');
+      const statusTitle = document.getElementById('statusTitle');
+      const statusDesc = document.getElementById('statusDesc');
+
+      directLink.href = issueUrl;
       statusEl.style.display = 'block';
-      
-      window.location.href = mailtoLink;
+
+      // Attempt to open GitHub Issue in a new tab
+      const win = window.open(issueUrl, '_blank');
+
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        // Pop-up was blocked or not allowed by browser
+        statusTitle.textContent = 'Action Required: Open GitHub to Submit';
+        statusDesc.textContent = 'Your browser blocked opening a new tab automatically. Please click the button below to open GitHub and submit your issue, or copy the formatted text.';
+      } else {
+        statusTitle.textContent = 'GitHub Issue Page Opened in New Tab';
+        statusDesc.textContent = 'A new browser tab has been prepared with your feedback. Please review the details and click "Submit new issue" on GitHub to complete submission.';
+      }
+
+      // Smooth scroll status into view
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function copyFormattedFeedback() {
+      if (!lastFormattedBody) {
+        const message = document.getElementById('contactMessage').value.trim();
+        lastFormattedBody = message || 'No message entered';
+      }
+
+      const confirmEl = document.getElementById('copyConfirm');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(lastFormattedBody).then(() => {
+          showCopyConfirmation(confirmEl);
+        }).catch(() => {
+          fallbackCopyText(lastFormattedBody, confirmEl);
+        });
+      } else {
+        fallbackCopyText(lastFormattedBody, confirmEl);
+      }
+    }
+
+    function fallbackCopyText(text, confirmEl) {
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = text;
+      tempTextArea.style.position = 'fixed';
+      tempTextArea.style.left = '-9999px';
+      document.body.appendChild(tempTextArea);
+      tempTextArea.focus();
+      tempTextArea.select();
+      try {
+        document.execCommand('copy');
+        showCopyConfirmation(confirmEl);
+      } catch (err) {
+        alert('Could not copy automatically. Please select and copy your message text manually.');
+      }
+      document.body.removeChild(tempTextArea);
+    }
+
+    function showCopyConfirmation(confirmEl) {
+      if (!confirmEl) return;
+      confirmEl.style.display = 'inline';
+      setTimeout(() => {
+        confirmEl.style.display = 'none';
+      }, 3000);
     }
   </script>
 </body>

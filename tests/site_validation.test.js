@@ -1,6 +1,6 @@
 /**
  * Browser Arcade - Comprehensive Site & Navigation Validation Test Suite
- * Validates links, canonical URLs, meta tags, sitemap, robots.txt, and assets.
+ * Validates links, canonical URLs, meta tags, sitemap, robots.txt, vercel.json, and assets.
  */
 
 const assert = require('assert');
@@ -30,16 +30,16 @@ console.log('========================================\n');
 const ROOT_DIR = path.join(__dirname, '..');
 
 const HTML_PAGES = [
-  { file: 'index.html', canonical: 'https://browserarcade.pages.dev/' },
-  { file: 'games/2048/index.html', canonical: 'https://browserarcade.pages.dev/games/2048/' },
-  { file: 'about/index.html', canonical: 'https://browserarcade.pages.dev/about/' },
-  { file: 'contact/index.html', canonical: 'https://browserarcade.pages.dev/contact/' },
-  { file: 'privacy/index.html', canonical: 'https://browserarcade.pages.dev/privacy/' },
-  { file: 'terms/index.html', canonical: 'https://browserarcade.pages.dev/terms/' },
+  { file: 'index.html', canonical: '/' },
+  { file: 'games/2048/index.html', canonical: '/games/2048/' },
+  { file: 'about/index.html', canonical: '/about/' },
+  { file: 'contact/index.html', canonical: '/contact/' },
+  { file: 'privacy/index.html', canonical: '/privacy/' },
+  { file: 'terms/index.html', canonical: '/terms/' },
   { file: '404.html', canonical: null }
 ];
 
-// 1. Verify all HTML pages exist and have required metadata
+// 1. Verify all HTML pages exist and have valid canonical links and metadata
 HTML_PAGES.forEach(({ file, canonical }) => {
   runTest(`HTML Page "${file}" exists and has valid title, meta description, and structure`, () => {
     const fullPath = path.join(ROOT_DIR, file);
@@ -111,7 +111,7 @@ runTest('All SVG game thumbnails exist and have valid SVG XML headers', () => {
 });
 
 // 4. Verify Sitemap.xml integrity and coverage
-runTest('sitemap.xml covers all active production routes', () => {
+runTest('sitemap.xml covers all active production routes without obsolete domains', () => {
   const sitemapPath = path.join(ROOT_DIR, 'sitemap.xml');
   assert.ok(fs.existsSync(sitemapPath), 'sitemap.xml is missing');
 
@@ -119,17 +119,19 @@ runTest('sitemap.xml covers all active production routes', () => {
   assert.ok(sitemapContent.includes('<?xml version="1.0" encoding="UTF-8"?>'), 'Missing XML declaration');
 
   const expectedUrls = [
-    'https://browserarcade.pages.dev/',
-    'https://browserarcade.pages.dev/games/2048/',
-    'https://browserarcade.pages.dev/about/',
-    'https://browserarcade.pages.dev/contact/',
-    'https://browserarcade.pages.dev/privacy/',
-    'https://browserarcade.pages.dev/terms/'
+    '/',
+    '/games/2048/',
+    '/about/',
+    '/contact/',
+    '/privacy/',
+    '/terms/'
   ];
 
   expectedUrls.forEach(url => {
     assert.ok(sitemapContent.includes(`<loc>${url}</loc>`), `sitemap.xml missing URL: ${url}`);
   });
+
+  assert.ok(!sitemapContent.includes('pages.dev'), 'sitemap.xml must not contain obsolete pages.dev domain');
 });
 
 // 5. Verify robots.txt points to sitemap.xml
@@ -140,10 +142,7 @@ runTest('robots.txt allows indexing and references sitemap.xml', () => {
   const robotsContent = fs.readFileSync(robotsPath, 'utf8');
   assert.ok(robotsContent.includes('User-agent: *'), 'robots.txt missing User-agent: *');
   assert.ok(robotsContent.includes('Allow: /'), 'robots.txt missing Allow: /');
-  assert.ok(
-    robotsContent.includes('Sitemap: https://browserarcade.pages.dev/sitemap.xml'),
-    'robots.txt missing Sitemap reference'
-  );
+  assert.ok(robotsContent.includes('Sitemap: /sitemap.xml'), 'robots.txt missing Sitemap reference');
 });
 
 // 6. Verify Navigation link integrity across all pages
@@ -159,6 +158,79 @@ runTest('Navigation and footer links are consistent across all platform pages', 
     assert.ok(content.includes('href="/privacy/"'), `${page} missing link to Privacy`);
     assert.ok(content.includes('href="/terms/"'), `${page} missing link to Terms`);
   });
+});
+
+// 7. Verify Vercel Hosting Configuration (vercel.json)
+runTest('vercel.json is valid and contains standard security and static caching headers', () => {
+  const vercelPath = path.join(ROOT_DIR, 'vercel.json');
+  assert.ok(fs.existsSync(vercelPath), 'vercel.json is missing');
+
+  const vercelRaw = fs.readFileSync(vercelPath, 'utf8');
+  const vercelConfig = JSON.parse(vercelRaw);
+
+  assert.strictEqual(vercelConfig.cleanUrls, true, 'vercel.json must specify cleanUrls: true');
+
+  // Verify headers
+  assert.ok(Array.isArray(vercelConfig.headers), 'vercel.json must define headers array');
+
+  const headerKeys = [];
+  vercelConfig.headers.forEach(h => {
+    if (h.headers) {
+      h.headers.forEach(kv => headerKeys.push(kv.key));
+    }
+  });
+
+  assert.ok(headerKeys.includes('X-Content-Type-Options'), 'Missing X-Content-Type-Options header');
+  assert.ok(headerKeys.includes('X-Frame-Options'), 'Missing X-Frame-Options header');
+  assert.ok(headerKeys.includes('Referrer-Policy'), 'Missing Referrer-Policy header');
+  assert.ok(headerKeys.includes('Cache-Control'), 'Missing Cache-Control header');
+
+  // Verify Cloudflare _headers file was removed
+  const headersPath = path.join(ROOT_DIR, '_headers');
+  assert.ok(!fs.existsSync(headersPath), 'Legacy Cloudflare _headers file must be deleted');
+});
+
+// 8. Verify complete elimination of unowned emails and obsolete Cloudflare domains
+runTest('Zero unowned email addresses or obsolete Cloudflare domains exist in production files', () => {
+  const filesToCheck = [
+    'index.html',
+    'games/2048/index.html',
+    'about/index.html',
+    'contact/index.html',
+    'privacy/index.html',
+    'terms/index.html',
+    'robots.txt',
+    'sitemap.xml',
+    'assets/js/arcade.js'
+  ];
+
+  filesToCheck.forEach(file => {
+    const content = fs.readFileSync(path.join(ROOT_DIR, file), 'utf8');
+    assert.ok(!content.includes('pages.dev'), `${file} contains obsolete pages.dev reference`);
+    assert.ok(!content.includes('browserarcade.dev'), `${file} contains unowned browserarcade.dev domain`);
+    assert.ok(!content.includes('feedback@'), `${file} contains unowned feedback@ email`);
+    assert.ok(!content.includes('privacy@'), `${file} contains unowned privacy@ email`);
+    assert.ok(!content.includes('terms@'), `${file} contains unowned terms@ email`);
+  });
+});
+
+// 9. Verify Contact Form GitHub Issue Integration
+runTest('Contact page implements GitHub Issues submission URL and copy fallback', () => {
+  const contactPath = path.join(ROOT_DIR, 'contact/index.html');
+  const content = fs.readFileSync(contactPath, 'utf8');
+
+  assert.ok(
+    content.includes('https://github.com/aryansharma11223/BrowserArcade/issues/new'),
+    'Contact page missing GitHub Issues new-issue URL'
+  );
+  assert.ok(
+    content.includes('copyFormattedFeedback'),
+    'Contact page missing copyFormattedFeedback fallback'
+  );
+  assert.ok(
+    content.includes('Public Submission Notice') || content.includes('Public Notice'),
+    'Contact page missing public issue visibility notice'
+  );
 });
 
 console.log('\n========================================');
