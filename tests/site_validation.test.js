@@ -30,17 +30,17 @@ console.log('========================================\n');
 const ROOT_DIR = path.join(__dirname, '..');
 
 const HTML_PAGES = [
-  { file: 'index.html', canonical: '/' },
-  { file: 'games/2048/index.html', canonical: '/games/2048/' },
-  { file: 'about/index.html', canonical: '/about/' },
-  { file: 'contact/index.html', canonical: '/contact/' },
-  { file: 'privacy/index.html', canonical: '/privacy/' },
-  { file: 'terms/index.html', canonical: '/terms/' },
-  { file: '404.html', canonical: null }
+  { file: 'index.html', canonical: 'https://browserarcade.pages.dev/', ogUrl: 'https://browserarcade.pages.dev/' },
+  { file: 'games/2048/index.html', canonical: 'https://browserarcade.pages.dev/games/2048/', ogUrl: 'https://browserarcade.pages.dev/games/2048/' },
+  { file: 'about/index.html', canonical: 'https://browserarcade.pages.dev/about/', ogUrl: 'https://browserarcade.pages.dev/about/' },
+  { file: 'contact/index.html', canonical: 'https://browserarcade.pages.dev/contact/', ogUrl: 'https://browserarcade.pages.dev/contact/' },
+  { file: 'privacy/index.html', canonical: 'https://browserarcade.pages.dev/privacy/', ogUrl: 'https://browserarcade.pages.dev/privacy/' },
+  { file: 'terms/index.html', canonical: 'https://browserarcade.pages.dev/terms/', ogUrl: 'https://browserarcade.pages.dev/terms/' },
+  { file: '404.html', canonical: null, ogUrl: null }
 ];
 
 // 1. Verify all HTML pages exist and have valid canonical links and metadata
-HTML_PAGES.forEach(({ file, canonical }) => {
+HTML_PAGES.forEach(({ file, canonical, ogUrl }) => {
   runTest(`HTML Page "${file}" exists and has valid title, meta description, and structure`, () => {
     const fullPath = path.join(ROOT_DIR, file);
     assert.ok(fs.existsSync(fullPath), `File ${file} does not exist`);
@@ -63,6 +63,38 @@ HTML_PAGES.forEach(({ file, canonical }) => {
         content.includes('<meta property="og:title"'),
         `${file} missing OpenGraph title`
       );
+      assert.ok(
+        content.includes(`<meta property="og:url" content="${ogUrl}">`),
+        `${file} missing or incorrect OpenGraph URL: ${ogUrl}`
+      );
+      assert.ok(
+        content.includes('<meta property="og:image" content="https://browserarcade.pages.dev/assets/images/og-image.png">'),
+        `${file} missing absolute og:image PNG URL`
+      );
+      assert.ok(
+        content.includes('<meta property="og:image:type" content="image/png">'),
+        `${file} missing og:image:type image/png`
+      );
+      assert.ok(
+        content.includes('<meta property="og:image:width" content="1200">'),
+        `${file} missing og:image:width 1200`
+      );
+      assert.ok(
+        content.includes('<meta property="og:image:height" content="630">'),
+        `${file} missing og:image:height 630`
+      );
+      assert.ok(
+        content.includes('<meta property="og:image:alt" content="'),
+        `${file} missing og:image:alt metadata`
+      );
+      assert.ok(
+        content.includes('<meta name="twitter:image" content="https://browserarcade.pages.dev/assets/images/og-image.png">'),
+        `${file} missing absolute twitter:image PNG URL`
+      );
+
+      // Verify referenced image asset exists on disk
+      const localImagePath = path.join(ROOT_DIR, 'assets/images/og-image.png');
+      assert.ok(fs.existsSync(localImagePath), 'Referenced og:image asset does not exist on disk');
     }
   });
 });
@@ -83,7 +115,8 @@ runTest('All referenced CSS stylesheets and JavaScript modules exist on disk', (
     'games/2048/js/input.js',
     'games/2048/js/renderer.js',
     'favicon.svg',
-    'manifest.webmanifest'
+    'manifest.webmanifest',
+    'assets/images/og-image.png'
   ];
 
   referencedAssets.forEach(relPath => {
@@ -110,8 +143,35 @@ runTest('All SVG game thumbnails exist and have valid SVG XML headers', () => {
   });
 });
 
-// 4. Verify Sitemap.xml template integrity and coverage
-runTest('sitemap.xml covers all active production routes without obsolete domains', () => {
+// 3b. Verify social preview PNG image existence, signature, and dimensions
+runTest('Social preview og-image.png exists with valid PNG signature and 1200x630 dimensions', () => {
+  const pngPath = path.join(ROOT_DIR, 'assets/images/og-image.png');
+  assert.ok(fs.existsSync(pngPath), 'assets/images/og-image.png is missing');
+
+  const buffer = fs.readFileSync(pngPath);
+  assert.ok(buffer.length > 0, 'og-image.png is empty');
+
+  // Verify 8-byte PNG signature: 89 50 4E 47 0D 0A 1A 0A
+  const expectedSig = Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]);
+  assert.ok(
+    buffer.subarray(0, 8).equals(expectedSig),
+    'og-image.png does not have a valid PNG signature'
+  );
+
+  // Verify IHDR chunk width (offset 16-19) and height (offset 20-23)
+  const width = buffer.readUInt32BE(16);
+  const height = buffer.readUInt32BE(20);
+
+  assert.strictEqual(width, 1200, `Expected width 1200, got ${width}`);
+  assert.strictEqual(height, 630, `Expected height 630, got ${height}`);
+
+  // Also confirm original SVG master continues to exist
+  const svgPath = path.join(ROOT_DIR, 'assets/images/og-image.svg');
+  assert.ok(fs.existsSync(svgPath), 'Master vector og-image.svg must continue to exist');
+});
+
+// 4. Verify Sitemap.xml integrity, absolute URLs, and exact 6-route coverage
+runTest('sitemap.xml covers all active production routes without obsolete domains or placeholders', () => {
   const sitemapPath = path.join(ROOT_DIR, 'sitemap.xml');
   assert.ok(fs.existsSync(sitemapPath), 'sitemap.xml is missing');
 
@@ -119,28 +179,45 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
   assert.ok(sitemapContent.includes('<?xml version="1.0" encoding="UTF-8"?>'), 'Missing XML declaration');
 
   const expectedUrls = [
-    'https://REPLACE_WITH_CONFIRMED_DOMAIN/',
-    'https://REPLACE_WITH_CONFIRMED_DOMAIN/games/2048/',
-    'https://REPLACE_WITH_CONFIRMED_DOMAIN/about/',
-    'https://REPLACE_WITH_CONFIRMED_DOMAIN/contact/',
-    'https://REPLACE_WITH_CONFIRMED_DOMAIN/privacy/',
-    'https://REPLACE_WITH_CONFIRMED_DOMAIN/terms/'
+    'https://browserarcade.pages.dev/',
+    'https://browserarcade.pages.dev/games/2048/',
+    'https://browserarcade.pages.dev/about/',
+    'https://browserarcade.pages.dev/contact/',
+    'https://browserarcade.pages.dev/privacy/',
+    'https://browserarcade.pages.dev/terms/'
   ];
 
+  // Verify all expected URLs are present
   expectedUrls.forEach(url => {
     assert.ok(sitemapContent.includes(`<loc>${url}</loc>`), `sitemap.xml missing URL: ${url}`);
   });
+
+  // Verify exactly 6 URLs exist in sitemap
+  const locMatches = sitemapContent.match(/<loc>/g) || [];
+  assert.strictEqual(locMatches.length, 6, `sitemap.xml must contain exactly 6 URLs, found ${locMatches.length}`);
+
+  // Verify no placeholders or obsolete domains remain
+  assert.ok(!sitemapContent.includes('REPLACE_WITH_CONFIRMED_DOMAIN'), 'sitemap.xml contains REPLACE_WITH_CONFIRMED_DOMAIN placeholder');
+  assert.ok(!sitemapContent.includes('vercel.app'), 'sitemap.xml contains obsolete vercel.app reference');
+  assert.ok(!sitemapContent.includes('browserarcade.dev'), 'sitemap.xml contains unowned browserarcade.dev reference');
 });
 
 // 5. Verify robots.txt configuration
-runTest('robots.txt allows indexing and documents sitemap reference', () => {
+runTest('robots.txt allows indexing and documents production sitemap reference', () => {
   const robotsPath = path.join(ROOT_DIR, 'robots.txt');
   assert.ok(fs.existsSync(robotsPath), 'robots.txt is missing');
 
   const robotsContent = fs.readFileSync(robotsPath, 'utf8');
   assert.ok(robotsContent.includes('User-agent: *'), 'robots.txt missing User-agent: *');
   assert.ok(robotsContent.includes('Allow: /'), 'robots.txt missing Allow: /');
-  assert.ok(robotsContent.includes('sitemap.xml'), 'robots.txt missing sitemap.xml reference');
+  assert.ok(
+    robotsContent.includes('Sitemap: https://browserarcade.pages.dev/sitemap.xml'),
+    'robots.txt missing exact production Sitemap URL'
+  );
+  assert.ok(
+    !robotsContent.includes('REPLACE_WITH_CONFIRMED_DOMAIN'),
+    'robots.txt contains REPLACE_WITH_CONFIRMED_DOMAIN placeholder'
+  );
 });
 
 // 6. Verify Navigation link integrity across all pages
@@ -240,6 +317,7 @@ runTest('Zero unowned email addresses or assumed hostnames exist in production f
   filesToCheck.forEach(file => {
     const content = fs.readFileSync(path.join(ROOT_DIR, file), 'utf8');
     assert.ok(!content.includes('browserarcade.dev'), `${file} contains unowned browserarcade.dev domain`);
+    assert.ok(!content.includes('REPLACE_WITH_CONFIRMED_DOMAIN'), `${file} contains unresolved REPLACE_WITH_CONFIRMED_DOMAIN placeholder`);
     assert.ok(!content.includes('feedback@'), `${file} contains unowned feedback@ email`);
     assert.ok(!content.includes('privacy@'), `${file} contains unowned privacy@ email`);
     assert.ok(!content.includes('terms@'), `${file} contains unowned terms@ email`);
@@ -352,6 +430,12 @@ runTest('CLOUDFLARE_DEPLOYMENT_GUIDE.md documents safe revalidation, routing dis
   assert.ok(
     !guideContent.includes('automatic 308') && !guideContent.includes('automatically receives a 308'),
     'Guide must not contain unverified automatic 308 claims'
+  );
+
+  // Verify confirmed production domain is identified
+  assert.ok(
+    guideContent.includes('https://browserarcade.pages.dev'),
+    'Guide must identify confirmed production domain https://browserarcade.pages.dev'
   );
 });
 

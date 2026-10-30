@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  PRE-DEPLOYMENT SITEMAP TEMPLATE:
-  Search engine sitemap standards require fully-qualified absolute URLs (including protocol and domain).
-  Once your production domain is confirmed upon deployment (e.g. https://<project-name>.pages.dev),
-  replace "https://REPLACE_WITH_CONFIRMED_DOMAIN" across all entries below.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://REPLACE_WITH_CONFIRMED_DOMAIN/</loc>
+    <loc>https://browserarcade.pages.dev/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://REPLACE_WITH_CONFIRMED_DOMAIN/games/2048/</loc>
+    <loc>https://browserarcade.pages.dev/games/2048/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://REPLACE_WITH_CONFIRMED_DOMAIN/about/</loc>
+    <loc>https://browserarcade.pages.dev/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://REPLACE_WITH_CONFIRMED_DOMAIN/contact/</loc>
+    <loc>https://browserarcade.pages.dev/contact/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE_WITH_CONFIRMED_DOMAIN/privacy/</loc>
+    <loc>https://browserarcade.pages.dev/privacy/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE_WITH_CONFIRMED_DOMAIN/terms/</loc>
+    <loc>https://browserarcade.pages.dev/terms/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

@@ -22,6 +22,7 @@ Browser Arcade is built entirely with vanilla web standards:
 ### Local Repository Status
 - **Repository:** `https://github.com/aryansharma11223/BrowserArcade`
 - **Target Branch:** `main`
+- **Production Domain:** `https://browserarcade.pages.dev`
 - **Configuration Files:**
   - `_headers`: Defines security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) on `/*` and conditional revalidation caching (`max-age=0, must-revalidate`) on `/assets/*`.
   - `_redirects`: Configures deterministic HTTP 301 permanent redirects enforcing trailing slashes on all directory routes (`/about`, `/games/2048`, `/contact`, `/privacy`, `/terms`).
@@ -59,7 +60,7 @@ Enter the following configuration settings:
 
 | Setting | Value | Notes |
 | :--- | :--- | :--- |
-| **Project name** | `browserarcade` *(or user choice)* | Determines your free URL: `https://<project-name>.pages.dev` |
+| **Project name** | `browserarcade` | Sets your confirmed free production URL: `https://browserarcade.pages.dev` |
 | **Production branch** | `main` | Deploys updates pushed to the `main` branch |
 | **Framework preset** | `None` | Browser Arcade is pure static HTML/CSS/JS |
 | **Build command** | *(Leave completely empty/blank)* | No compilation or bundling required |
@@ -70,7 +71,7 @@ Enter the following configuration settings:
 ### Step 2.5 — Deploy
 1. Click **Save and Deploy**.
 2. Cloudflare will clone the repository and publish the static files in seconds.
-3. Once completed, you will receive your live URL: `https://<project-name>.pages.dev`.
+3. Once completed, your live site is active at: `https://browserarcade.pages.dev`.
 
 ---
 
@@ -80,12 +81,12 @@ Once Cloudflare displays the green deployment success checkmark, perform these v
 
 ### 3.1 Route & Directory Verification
 Verify that all routes resolve cleanly with no 404 or redirect loops:
-- `https://<project-name>.pages.dev/` (Arcade Homepage)
-- `https://<project-name>.pages.dev/games/2048/` (2048 Game)
-- `https://<project-name>.pages.dev/about/` (About Page)
-- `https://<project-name>.pages.dev/contact/` (Contact Page)
-- `https://<project-name>.pages.dev/privacy/` (Privacy Policy)
-- `https://<project-name>.pages.dev/terms/` (Terms & Conditions)
+- `https://browserarcade.pages.dev/` (Arcade Homepage)
+- `https://browserarcade.pages.dev/games/2048/` (2048 Game)
+- `https://browserarcade.pages.dev/about/` (About Page)
+- `https://browserarcade.pages.dev/contact/` (Contact Page)
+- `https://browserarcade.pages.dev/privacy/` (Privacy Policy)
+- `https://browserarcade.pages.dev/terms/` (Terms & Conditions)
 
 ### 3.2 Routing Behavior: Explicit Redirects vs. Built-in Cloudflare Behavior
 Browser Arcade clearly distinguishes between explicit repository configuration and Cloudflare Pages native behavior:
@@ -127,38 +128,28 @@ Open your browser's Developer Tools (**F12** -> **Network** tab), refresh the pa
 
 ---
 
-## 4. Post-Deployment SEO, Canonical & Social Metadata Update
+## 4. Production Domain & Future Custom Domain Guidance
 
-Currently, pre-deployment canonical tags and sitemaps are set with safe placeholders (`REPLACE_WITH_CONFIRMED_DOMAIN`) and relative paths. Once your live domain is finalized (either `https://<project-name>.pages.dev` or a custom domain):
+Browser Arcade is configured for its confirmed production domain:
+`https://browserarcade.pages.dev`
 
-1. **Update Canonical URLs** to absolute URLs in all 6 HTML files:
-   - `index.html`: `<link rel="canonical" href="https://<your-domain>/" />`
-   - `games/2048/index.html`: `<link rel="canonical" href="https://<your-domain>/games/2048/" />`
-   - `about/index.html`: `<link rel="canonical" href="https://<your-domain>/about/" />`
-   - `contact/index.html`: `<link rel="canonical" href="https://<your-domain>/contact/" />`
-   - `privacy/index.html`: `<link rel="canonical" href="https://<your-domain>/privacy/" />`
-   - `terms/index.html`: `<link rel="canonical" href="https://<your-domain>/terms/" />`
+All production metadata elements are configured with this address:
+- Canonical links across all 6 pages (`https://browserarcade.pages.dev/...`)
+- Open Graph URLs (`og:url`) and preview image (`og:image`)
+- Twitter card image tags (`twitter:image`)
+- `sitemap.xml` with all 6 production route URLs
+- `robots.txt` referencing `https://browserarcade.pages.dev/sitemap.xml`
 
-2. **Update Open Graph and Twitter Social Meta URLs** to absolute URLs in all 6 HTML files:
-   - Social scrapers (Facebook, X/Twitter, Discord, LinkedIn) strictly require absolute URLs:
-   - `index.html`:
-     - `<meta property="og:url" content="https://<your-domain>/">`
-     - `<meta property="og:image" content="https://<your-domain>/assets/images/og-image.svg">`
-     - `<meta name="twitter:image" content="https://<your-domain>/assets/images/og-image.svg">`
-   - `games/2048/index.html`:
-     - `<meta property="og:url" content="https://<your-domain>/games/2048/">`
-     - `<meta property="og:image" content="https://<your-domain>/assets/images/og-image.svg">`
-     - `<meta name="twitter:image" content="https://<your-domain>/assets/images/og-image.svg">`
-   - `about/index.html`: `<meta property="og:url" content="https://<your-domain>/about/">`
-   - `contact/index.html`: `<meta property="og:url" content="https://<your-domain>/contact/">`
-   - `privacy/index.html`: `<meta property="og:url" content="https://<your-domain>/privacy/">`
-   - `terms/index.html`: `<meta property="og:url" content="https://<your-domain>/terms/">`
+### Future Custom Domain Update (Optional)
+If you decide to bind a custom domain in the future (e.g. `https://yourcustomdomain.com`), follow these steps:
+1. **Update Canonical URLs** to the new domain across all 6 HTML files.
+2. **Update Open Graph and Twitter tags** (`og:url`, `og:image`, `twitter:image`) across all 6 HTML files.
+3. **Update `sitemap.xml`** with the new domain.
+4. **Update `robots.txt`** sitemap reference with the new domain.
 
-3. **Update `sitemap.xml`**:
-   - Replace `https://REPLACE_WITH_CONFIRMED_DOMAIN/` across all 6 `<loc>` entries with `https://<your-domain>/`.
-
-4. **Update `robots.txt`**:
-   - Uncomment and update line 4: `Sitemap: https://<your-domain>/sitemap.xml`.
+> **Note on Zero Cost & Monetization:**
+> - Cloudflare Pages allows adding custom domains at **$0 / ₹0 cost** with automatic free SSL/TLS certificates.
+> - Regardless of domain choice (whether `*.pages.dev` or a custom domain), Cloudflare Pages Free has no identified prohibition on advertising, and Google independently evaluates all AdSense applications based on publisher criteria (**AdSense approval is not guaranteed**).
 
 ---
 
