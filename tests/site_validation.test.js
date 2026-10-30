@@ -110,7 +110,7 @@ runTest('All SVG game thumbnails exist and have valid SVG XML headers', () => {
   });
 });
 
-// 4. Verify Sitemap.xml integrity and coverage
+// 4. Verify Sitemap.xml template integrity and coverage
 runTest('sitemap.xml covers all active production routes without obsolete domains', () => {
   const sitemapPath = path.join(ROOT_DIR, 'sitemap.xml');
   assert.ok(fs.existsSync(sitemapPath), 'sitemap.xml is missing');
@@ -119,12 +119,12 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
   assert.ok(sitemapContent.includes('<?xml version="1.0" encoding="UTF-8"?>'), 'Missing XML declaration');
 
   const expectedUrls = [
-    '/',
-    '/games/2048/',
-    '/about/',
-    '/contact/',
-    '/privacy/',
-    '/terms/'
+    'https://REPLACE_WITH_CONFIRMED_DOMAIN/',
+    'https://REPLACE_WITH_CONFIRMED_DOMAIN/games/2048/',
+    'https://REPLACE_WITH_CONFIRMED_DOMAIN/about/',
+    'https://REPLACE_WITH_CONFIRMED_DOMAIN/contact/',
+    'https://REPLACE_WITH_CONFIRMED_DOMAIN/privacy/',
+    'https://REPLACE_WITH_CONFIRMED_DOMAIN/terms/'
   ];
 
   expectedUrls.forEach(url => {
@@ -134,34 +134,34 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
   assert.ok(!sitemapContent.includes('pages.dev'), 'sitemap.xml must not contain obsolete pages.dev domain');
 });
 
-// 5. Verify robots.txt points to sitemap.xml
-runTest('robots.txt allows indexing and references sitemap.xml', () => {
+// 5. Verify robots.txt configuration
+runTest('robots.txt allows indexing and documents sitemap reference', () => {
   const robotsPath = path.join(ROOT_DIR, 'robots.txt');
   assert.ok(fs.existsSync(robotsPath), 'robots.txt is missing');
 
   const robotsContent = fs.readFileSync(robotsPath, 'utf8');
   assert.ok(robotsContent.includes('User-agent: *'), 'robots.txt missing User-agent: *');
   assert.ok(robotsContent.includes('Allow: /'), 'robots.txt missing Allow: /');
-  assert.ok(robotsContent.includes('Sitemap: /sitemap.xml'), 'robots.txt missing Sitemap reference');
+  assert.ok(robotsContent.includes('sitemap.xml'), 'robots.txt missing sitemap.xml reference');
 });
 
 // 6. Verify Navigation link integrity across all pages
-runTest('Navigation and footer links are consistent across all platform pages', () => {
+runTest('Navigation and footer links are consistent with trailing slashes across all platform pages', () => {
   const pagesToCheck = ['index.html', 'games/2048/index.html', 'about/index.html', 'contact/index.html', 'privacy/index.html', 'terms/index.html'];
 
   pagesToCheck.forEach(page => {
     const content = fs.readFileSync(path.join(ROOT_DIR, page), 'utf8');
     assert.ok(content.includes('href="/"'), `${page} missing link to Home /`);
-    assert.ok(content.includes('href="/games/2048/"'), `${page} missing link to 2048`);
-    assert.ok(content.includes('href="/about/"'), `${page} missing link to About`);
-    assert.ok(content.includes('href="/contact/"'), `${page} missing link to Contact`);
-    assert.ok(content.includes('href="/privacy/"'), `${page} missing link to Privacy`);
-    assert.ok(content.includes('href="/terms/"'), `${page} missing link to Terms`);
+    assert.ok(content.includes('href="/games/2048/"'), `${page} missing link to 2048/`);
+    assert.ok(content.includes('href="/about/"'), `${page} missing link to About/`);
+    assert.ok(content.includes('href="/contact/"'), `${page} missing link to Contact/`);
+    assert.ok(content.includes('href="/privacy/"'), `${page} missing link to Privacy/`);
+    assert.ok(content.includes('href="/terms/"'), `${page} missing link to Terms/`);
   });
 });
 
 // 7. Verify Vercel Hosting Configuration (vercel.json)
-runTest('vercel.json is valid and contains standard security and static caching headers', () => {
+runTest('vercel.json is valid with cleanUrls: true, trailingSlash: true, and security headers', () => {
   const vercelPath = path.join(ROOT_DIR, 'vercel.json');
   assert.ok(fs.existsSync(vercelPath), 'vercel.json is missing');
 
@@ -169,6 +169,7 @@ runTest('vercel.json is valid and contains standard security and static caching 
   const vercelConfig = JSON.parse(vercelRaw);
 
   assert.strictEqual(vercelConfig.cleanUrls, true, 'vercel.json must specify cleanUrls: true');
+  assert.strictEqual(vercelConfig.trailingSlash, true, 'vercel.json must specify trailingSlash: true');
 
   // Verify headers
   assert.ok(Array.isArray(vercelConfig.headers), 'vercel.json must define headers array');
@@ -214,8 +215,8 @@ runTest('Zero unowned email addresses or obsolete Cloudflare domains exist in pr
   });
 });
 
-// 9. Verify Contact Form GitHub Issue Integration
-runTest('Contact page implements GitHub Issues submission URL and copy fallback', () => {
+// 9. Verify Contact Form GitHub Issue Integration & Privacy Disclosures
+runTest('Contact page implements GitHub Issues submission URL, email visibility warning, and copy fallback', () => {
   const contactPath = path.join(ROOT_DIR, 'contact/index.html');
   const content = fs.readFileSync(contactPath, 'utf8');
 
@@ -228,8 +229,12 @@ runTest('Contact page implements GitHub Issues submission URL and copy fallback'
     'Contact page missing copyFormattedFeedback fallback'
   );
   assert.ok(
-    content.includes('Public Submission Notice') || content.includes('Public Notice'),
-    'Contact page missing public issue visibility notice'
+    content.includes('Public Visibility Notice') || content.includes('Public Visibility Warning'),
+    'Contact page missing email public visibility notice'
+  );
+  assert.ok(
+    content.includes('Important Public Privacy Notice') || content.includes('Public Submission Notice'),
+    'Contact page missing public issue privacy notice'
   );
 });
 

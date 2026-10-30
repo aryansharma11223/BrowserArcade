@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: /sitemap.xml
+# Sitemap: https://REPLACE_WITH_CONFIRMED_DOMAIN/sitemap.xml
+# Note: Update the Sitemap URL above with your confirmed production domain upon deployment.

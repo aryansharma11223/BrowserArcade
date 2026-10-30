@@ -118,6 +118,9 @@
               placeholder="alex@example.com (optional)"
               style="width: 100%; padding: 12px 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none;"
             >
+            <span style="display: block; font-size: 0.8rem; color: #f59e0b; margin-top: 6px; line-height: 1.4;">
+              ⚠️ <strong>Public Visibility Notice:</strong> Any email address entered here will be included in the public GitHub Issue text. Leave this field blank if you do not want your email publicly visible.
+            </span>
           </div>
 
           <div style="margin-bottom: 20px;">
@@ -149,10 +152,14 @@
           </div>
 
           <!-- Public GitHub Issue Notice -->
-          <div style="margin-bottom: 22px; padding: 14px 16px; border-radius: var(--radius-md); background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
-            <strong style="color: var(--primary-400);">Public Submission Notice:</strong>
-            Submissions open as a GitHub Issue on our public repository (<a href="https://github.com/aryansharma11223/BrowserArcade" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">aryansharma11223/BrowserArcade</a>).
-            Because GitHub issues are publicly viewable by anyone on the internet, please do <strong>not</strong> include passwords, confidential information, or sensitive personal data.
+          <div style="margin-bottom: 22px; padding: 14px 16px; border-radius: var(--radius-md); background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+            <strong style="color: var(--primary-400); display: block; margin-bottom: 6px;">Important Public Privacy Notice:</strong>
+            Submissions are not sent to a private server. Instead, this form pre-fills a draft issue on our public GitHub repository (<a href="https://github.com/aryansharma11223/BrowserArcade" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">aryansharma11223/BrowserArcade</a>).
+            <ul style="list-style: disc; padding-left: 20px; margin-top: 6px;">
+              <li>Your submitted <strong>name, message, and optional email</strong> will be publicly readable by anyone on the internet.</li>
+              <li>Do <strong>not</strong> include passwords, confidential information, or private personal data.</li>
+              <li>This website <strong>does not automatically submit or store</strong> your issue; clicking below opens GitHub where you must personally review and click <strong>"Submit new issue"</strong>.</li>
+            </ul>
           </div>
 
           <button type="submit" id="submitBtn" class="arcade-btn arcade-btn-primary" style="width: 100%; padding: 14px;">
