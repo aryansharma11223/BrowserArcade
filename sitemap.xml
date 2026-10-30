@@ -2,7 +2,7 @@
 <!--
   PRE-DEPLOYMENT SITEMAP TEMPLATE:
   Search engine sitemap standards require fully-qualified absolute URLs (including protocol and domain).
-  Once your production domain is confirmed upon deployment (e.g. https://browserarcade.vercel.app),
+  Once your production domain is confirmed upon deployment (e.g. https://<project-name>.pages.dev),
   replace "https://REPLACE_WITH_CONFIRMED_DOMAIN" across all entries below.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

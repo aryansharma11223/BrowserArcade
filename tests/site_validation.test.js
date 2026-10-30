@@ -1,6 +1,6 @@
 /**
  * Browser Arcade - Comprehensive Site & Navigation Validation Test Suite
- * Validates links, canonical URLs, meta tags, sitemap, robots.txt, vercel.json, and assets.
+ * Validates links, canonical URLs, meta tags, sitemap, robots.txt, Cloudflare _headers, and assets.
  */
 
 const assert = require('assert');
@@ -130,8 +130,6 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
   expectedUrls.forEach(url => {
     assert.ok(sitemapContent.includes(`<loc>${url}</loc>`), `sitemap.xml missing URL: ${url}`);
   });
-
-  assert.ok(!sitemapContent.includes('pages.dev'), 'sitemap.xml must not contain obsolete pages.dev domain');
 });
 
 // 5. Verify robots.txt configuration
@@ -160,39 +158,73 @@ runTest('Navigation and footer links are consistent with trailing slashes across
   });
 });
 
-// 7. Verify Vercel Hosting Configuration (vercel.json)
-runTest('vercel.json is valid with cleanUrls: true, trailingSlash: true, and security headers', () => {
-  const vercelPath = path.join(ROOT_DIR, 'vercel.json');
-  assert.ok(fs.existsSync(vercelPath), 'vercel.json is missing');
+// 6b. Verify all internal links to directory routes use trailing slashes
+runTest('All internal links across all HTML documents to platform directory routes use trailing slashes', () => {
+  const allHtmlFiles = [
+    'index.html',
+    'games/2048/index.html',
+    'about/index.html',
+    'contact/index.html',
+    'privacy/index.html',
+    'terms/index.html',
+    '404.html'
+  ];
 
-  const vercelRaw = fs.readFileSync(vercelPath, 'utf8');
-  const vercelConfig = JSON.parse(vercelRaw);
+  const directoryRoutes = ['about', 'games/2048', 'contact', 'privacy', 'terms'];
 
-  assert.strictEqual(vercelConfig.cleanUrls, true, 'vercel.json must specify cleanUrls: true');
-  assert.strictEqual(vercelConfig.trailingSlash, true, 'vercel.json must specify trailingSlash: true');
+  allHtmlFiles.forEach(file => {
+    const filePath = path.join(ROOT_DIR, file);
+    assert.ok(fs.existsSync(filePath), `${file} is missing`);
+    const content = fs.readFileSync(filePath, 'utf8');
 
-  // Verify headers
-  assert.ok(Array.isArray(vercelConfig.headers), 'vercel.json must define headers array');
-
-  const headerKeys = [];
-  vercelConfig.headers.forEach(h => {
-    if (h.headers) {
-      h.headers.forEach(kv => headerKeys.push(kv.key));
+    const hrefRegex = /href="([^"#:]+)"/g;
+    let match;
+    while ((match = hrefRegex.exec(content)) !== null) {
+      const url = match[1];
+      directoryRoutes.forEach(route => {
+        assert.notStrictEqual(
+          url,
+          `/${route}`,
+          `${file} contains non-trailing-slash internal link: href="/${route}" (must be "/${route}/")`
+        );
+      });
     }
   });
-
-  assert.ok(headerKeys.includes('X-Content-Type-Options'), 'Missing X-Content-Type-Options header');
-  assert.ok(headerKeys.includes('X-Frame-Options'), 'Missing X-Frame-Options header');
-  assert.ok(headerKeys.includes('Referrer-Policy'), 'Missing Referrer-Policy header');
-  assert.ok(headerKeys.includes('Cache-Control'), 'Missing Cache-Control header');
-
-  // Verify Cloudflare _headers file was removed
-  const headersPath = path.join(ROOT_DIR, '_headers');
-  assert.ok(!fs.existsSync(headersPath), 'Legacy Cloudflare _headers file must be deleted');
 });
 
-// 8. Verify complete elimination of unowned emails and obsolete Cloudflare domains
-runTest('Zero unowned email addresses or obsolete Cloudflare domains exist in production files', () => {
+// 7. Verify Cloudflare Pages Hosting Configuration (_headers)
+runTest('Cloudflare _headers exists with security headers and safe asset revalidation caching', () => {
+  const headersPath = path.join(ROOT_DIR, '_headers');
+  assert.ok(fs.existsSync(headersPath), '_headers file is missing');
+
+  const headersContent = fs.readFileSync(headersPath, 'utf8');
+
+  // Verify security headers in global rule
+  assert.ok(headersContent.includes('/*'), '_headers missing global /* rule');
+  assert.ok(headersContent.includes('X-Content-Type-Options: nosniff'), 'Missing X-Content-Type-Options header');
+  assert.ok(headersContent.includes('X-Frame-Options: SAMEORIGIN'), 'Missing X-Frame-Options header');
+  assert.ok(headersContent.includes('Referrer-Policy: strict-origin-when-cross-origin'), 'Missing Referrer-Policy header');
+
+  // Verify caching scoped strictly to static assets with safe revalidation policy
+  assert.ok(headersContent.includes('/assets/*'), '_headers missing /assets/* rule');
+  assert.ok(
+    headersContent.includes('Cache-Control: public, max-age=0, must-revalidate'),
+    'Missing safe revalidation Cache-Control in /assets/*'
+  );
+
+  // Verify immutable caching is NOT applied to unhashed assets
+  assert.ok(
+    !headersContent.includes('immutable'),
+    '_headers must NOT set immutable caching on unhashed static assets'
+  );
+
+  // Verify vercel.json is safely removed
+  const vercelPath = path.join(ROOT_DIR, 'vercel.json');
+  assert.ok(!fs.existsSync(vercelPath), 'vercel.json must be removed for Cloudflare Pages deployment');
+});
+
+// 8. Verify complete elimination of unowned emails and placeholder domains
+runTest('Zero unowned email addresses or assumed hostnames exist in production files', () => {
   const filesToCheck = [
     'index.html',
     'games/2048/index.html',
@@ -207,7 +239,6 @@ runTest('Zero unowned email addresses or obsolete Cloudflare domains exist in pr
 
   filesToCheck.forEach(file => {
     const content = fs.readFileSync(path.join(ROOT_DIR, file), 'utf8');
-    assert.ok(!content.includes('pages.dev'), `${file} contains obsolete pages.dev reference`);
     assert.ok(!content.includes('browserarcade.dev'), `${file} contains unowned browserarcade.dev domain`);
     assert.ok(!content.includes('feedback@'), `${file} contains unowned feedback@ email`);
     assert.ok(!content.includes('privacy@'), `${file} contains unowned privacy@ email`);
@@ -236,6 +267,138 @@ runTest('Contact page implements GitHub Issues submission URL, email visibility 
     content.includes('Important Public Privacy Notice') || content.includes('Public Submission Notice'),
     'Contact page missing public issue privacy notice'
   );
+});
+
+// 10. Verify all static directory routes and their index.html files exist
+runTest('All static directory routes contain valid index.html files', () => {
+  const routes = [
+    '', // root
+    'games/2048',
+    'about',
+    'contact',
+    'privacy',
+    'terms'
+  ];
+
+  routes.forEach(route => {
+    const indexPath = path.join(ROOT_DIR, route, 'index.html');
+    assert.ok(fs.existsSync(indexPath), `Missing index.html for route /${route}`);
+  });
+
+  // Verify custom 404 page exists at root
+  assert.ok(fs.existsSync(path.join(ROOT_DIR, '404.html')), 'Missing root 404.html error page');
+});
+
+// 11. Verify Cloudflare deployment guide accuracy, routing documentation, and absence of obsolete Vercel references
+runTest('CLOUDFLARE_DEPLOYMENT_GUIDE.md documents safe revalidation, routing distinction, and AdSense clarity', () => {
+  const guidePath = path.join(ROOT_DIR, 'CLOUDFLARE_DEPLOYMENT_GUIDE.md');
+  assert.ok(fs.existsSync(guidePath), 'CLOUDFLARE_DEPLOYMENT_GUIDE.md is missing');
+
+  const guideContent = fs.readFileSync(guidePath, 'utf8');
+
+  // Verify asset caching policy
+  assert.ok(
+    guideContent.includes('max-age=0, must-revalidate'),
+    'Guide must document safe revalidation caching (max-age=0, must-revalidate)'
+  );
+  assert.ok(
+    !guideContent.includes('max-age=31536000, immutable'),
+    'Guide must not recommend immutable caching for unhashed assets'
+  );
+
+  // Verify obsolete Vercel references are removed
+  assert.ok(
+    !guideContent.toLowerCase().includes('vercel.app'),
+    'Guide must not reference obsolete vercel.app domain'
+  );
+  assert.ok(
+    !guideContent.toLowerCase().includes('vercel.json'),
+    'Guide must not reference vercel.json'
+  );
+
+  // Verify AdSense clarity and commercial terms
+  assert.ok(
+    guideContent.includes('no prohibition on commercial static websites or advertising'),
+    'Guide must clarify Cloudflare terms regarding commercial sites/ads'
+  );
+  assert.ok(
+    guideContent.includes('AdSense approval is not guaranteed'),
+    'Guide must explicitly state AdSense approval is not guaranteed'
+  );
+
+  // Verify all 5 explicit redirect rules are documented
+  const expectedRedirectRoutes = ['/about', '/games/2048', '/contact', '/privacy', '/terms'];
+  expectedRedirectRoutes.forEach(route => {
+    const hasRuleDoc = guideContent.includes(`\`${route}\` → \`${route}/\``) ||
+                       guideContent.includes(`${route} → ${route}/`) ||
+                       (guideContent.includes(route) && guideContent.includes(`${route}/`));
+    assert.ok(
+      hasRuleDoc,
+      `Guide must document explicit redirect for ${route}`
+    );
+  });
+
+  // Verify clear distinction between explicit _redirects and Cloudflare built-in behavior
+  assert.ok(
+    guideContent.includes('Explicitly Configured Redirects') || guideContent.includes('_redirects'),
+    'Guide must document explicitly configured _redirects'
+  );
+  assert.ok(
+    guideContent.includes('Documented Cloudflare') || guideContent.includes('Built-in Behavior'),
+    'Guide must document Cloudflare built-in behavior'
+  );
+
+  // Verify no unsupported automatic 308 guarantee remains
+  assert.ok(
+    !guideContent.includes('automatic 308') && !guideContent.includes('automatically receives a 308'),
+    'Guide must not contain unverified automatic 308 claims'
+  );
+});
+
+// 12. Verify Cloudflare Pages _redirects file and rules
+runTest('_redirects exists with 5 non-circular HTTP 301 rules enforcing trailing slashes', () => {
+  const redirectsPath = path.join(ROOT_DIR, '_redirects');
+  assert.ok(fs.existsSync(redirectsPath), '_redirects file is missing');
+
+  const content = fs.readFileSync(redirectsPath, 'utf8');
+  const lines = content.split('\n')
+    .map(line => line.trim())
+    .filter(line => line && !line.startsWith('#'));
+
+  assert.strictEqual(lines.length, 5, `Expected exactly 5 redirect rules, found ${lines.length}`);
+
+  const expectedRules = [
+    { from: '/about', to: '/about/', code: '301' },
+    { from: '/games/2048', to: '/games/2048/', code: '301' },
+    { from: '/contact', to: '/contact/', code: '301' },
+    { from: '/privacy', to: '/privacy/', code: '301' },
+    { from: '/terms', to: '/terms/', code: '301' }
+  ];
+
+  const parsedRules = [];
+
+  lines.forEach(line => {
+    const parts = line.split(/\s+/);
+    assert.strictEqual(parts.length, 3, `Malformed redirect rule line: "${line}"`);
+    const [from, to, code] = parts;
+    assert.strictEqual(code, '301', `Rule "${from}" must use HTTP 301, got ${code}`);
+    assert.strictEqual(to, `${from}/`, `Destination for "${from}" must be "${from}/", got "${to}"`);
+    assert.notStrictEqual(from, to, `Self-redirect detected for "${from}"`);
+    assert.notStrictEqual(from, '/', `Root "/" must not be redirected`);
+    parsedRules.push({ from, to, code });
+  });
+
+  // Verify all expected rules are present
+  expectedRules.forEach(expected => {
+    const found = parsedRules.find(r => r.from === expected.from && r.to === expected.to && r.code === expected.code);
+    assert.ok(found, `Missing expected redirect rule: ${expected.from} -> ${expected.to} ${expected.code}`);
+  });
+
+  // Verify no circular redirects exist (e.g. A -> B and B -> A)
+  parsedRules.forEach(rule => {
+    const reverse = parsedRules.find(r => r.from === rule.to);
+    assert.strictEqual(reverse, undefined, `Circular redirect detected: ${rule.from} -> ${rule.to} and ${rule.to} -> ${reverse ? reverse.to : ''}`);
+  });
 });
 
 console.log('\n========================================');
