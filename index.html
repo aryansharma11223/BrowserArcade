@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Arcade - Free Online Browser Games | Instant Play</title>
+  <meta name="description" content="Discover premium, lightweight browser games with zero downloads or subscriptions. Play the official 2048 puzzle game online with smooth swipe controls, undo, and procedural audio.">
+  <meta name="keywords" content="browser games, free online games, 2048, play 2048, arcade games, web games, no download games">
+  <link rel="canonical" href="https://browserarcade.pages.dev/">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://browserarcade.pages.dev/">
+  <meta property="og:title" content="Browser Arcade - Free Online Browser Games | Instant Play">
+  <meta property="og:description" content="Premium, lightweight browser gaming platform. Play 2048 and upcoming classic games instantly on mobile and desktop.">
+  <meta property="og:image" content="/assets/images/og-image.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Browser Arcade - Free Online Browser Games">
+  <meta name="twitter:description" content="Instant-play lightweight browser games. No installs, 100% free web games.">
+  <meta name="twitter:image" content="/assets/images/og-image.svg">
+
+  <!-- Favicon & PWA -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#6366F1">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Browser Arcade",
+    "url": "https://browserarcade.pages.dev/",
+    "description": "Premium lightweight browser-based gaming platform featuring instant-play puzzle and arcade games."
+  }
+  </script>
+</head>
+<body class="arcade-layout">
+  <!-- Accessibility Skip Link -->
+  <a href="#mainContent" class="skip-to-content">Skip to content</a>
+
+  <!-- Platform Header -->
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand" aria-label="Browser Arcade Home">
+        <div class="arcade-brand-logo">
+          <svg width="32" height="32" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="#121420"/>
+            <path d="M16 28 C16 20, 22 16, 32 16 C42 16, 48 20, 48 28 L46 44 C46 47, 43 49, 40 47 L35 43 L29 43 L24 47 C21 49, 18 47, 18 44 Z" fill="url(#navLogoGrad)"/>
+            <rect x="22" y="26" width="4" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="19" y="29" width="10" height="4" rx="1" fill="#FFFFFF"/>
+            <circle cx="39" cy="28" r="2.2" fill="#FFFFFF"/>
+            <circle cx="43" cy="32" r="2.2" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="arcade-nav" aria-label="Primary Navigation">
+        <a href="/" class="arcade-nav-link active">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="arcade-header-actions">
+        <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound Effects" title="Sound Effects">
+          <span class="sound-icon"></span>
+        </button>
+        <button class="arcade-mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <a href="/" class="arcade-mobile-link active">Home</a>
+    <a href="/games/2048/" class="arcade-mobile-link">2048 Puzzle</a>
+    <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
+    <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
+    <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
+    <a href="/terms/" class="arcade-mobile-link">Terms of Service</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="arcade-main" id="mainContent">
+    <!-- Hero Banner -->
+    <section style="padding: 64px 0 48px; text-align: center; position: relative; overflow: hidden;">
+      <div class="container" style="position: relative; z-index: 2;">
+        <div class="badge badge-pulse" style="margin-bottom: 20px;">
+          <span>Instant Play &bull; Pure Web Standards</span>
+        </div>
+        <h1 style="font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1.15;">
+          Next-Gen Web Gaming.<br>
+          <span style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Zero Bloat. 100% Free.</span>
+        </h1>
+        <p style="font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--text-muted); max-width: 680px; margin: 0 auto 32px; line-height: 1.6;">
+          Engineered for performance. Play beloved arcade and puzzle games straight in your browser on phone, tablet, or desktop with 60 FPS hardware acceleration.
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a href="/games/2048/" class="arcade-btn arcade-btn-primary" style="padding: 14px 28px; font-size: 1.05rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Play 2048 Now
+          </a>
+          <a href="#gameCatalog" class="arcade-btn arcade-btn-secondary" style="padding: 14px 24px; font-size: 1.05rem;">
+            Browse Games
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- AdSense Ready Placeholder (Zero CLS) -->
+    <div class="container">
+      <div class="arcade-ad-slot arcade-ad-leaderboard" aria-hidden="true"></div>
+      <div class="arcade-ad-slot arcade-ad-mobile-banner" aria-hidden="true"></div>
+    </div>
+
+    <!-- Games Catalog Grid -->
+    <section id="gameCatalog" style="padding: 40px 0 64px;">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px;">Game Catalog</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Select any game to launch immediately without loading screens or paywalls.</p>
+          </div>
+          <span class="badge">1 Playable &bull; 3 Coming Soon</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+          <!-- Game 1: 2048 (Active & Playable) -->
+          <article class="arcade-card game-card">
+            <div class="game-card-media">
+              <img src="/assets/images/games/2048-thumb.svg" alt="2048 Puzzle Game" width="400" height="225" loading="eager">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);">
+                  PLAYABLE NOW
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-card-title">2048 Puzzle</h3>
+              <p class="game-card-desc">
+                The addictive math tile-sliding puzzle. Merge matching numbers to create 2048, use multi-level undo, and enjoy synthesized audio effects.
+              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">Puzzle / Math</span>
+                <a href="/games/2048/" class="arcade-btn arcade-btn-primary arcade-btn-sm">
+                  Play Now
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 2: Snake Retro (Coming Soon) -->
+          <article class="arcade-card game-card" style="opacity: 0.85;">
+            <div class="game-card-media">
+              <img src="/assets/images/games/snake-thumb.svg" alt="Snake Retro Arcade" width="400" height="225" loading="lazy">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(234, 179, 8, 0.15); color: #FBBF24; border-color: rgba(234, 179, 8, 0.3);">
+                  COMING SOON
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-card-title">Snake Retro</h3>
+              <p class="game-card-desc">
+                Classic arcade reflex challenge reinvented with sleek neon visuals, smooth grid movement, speed acceleration, and persistent high scores.
+              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">Arcade / Reflex</span>
+                <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" disabled style="opacity: 0.6; cursor: not-allowed;">
+                  In Development
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 3: Block Drop (Coming Soon) -->
+          <article class="arcade-card game-card" style="opacity: 0.85;">
+            <div class="game-card-media">
+              <img src="/assets/images/games/blockdrop-thumb.svg" alt="Block Drop Classic" width="400" height="225" loading="lazy">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(234, 179, 8, 0.15); color: #FBBF24; border-color: rgba(234, 179, 8, 0.3);">
+                  COMING SOON
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-card-title">Block Drop</h3>
+              <p class="game-card-desc">
+                Timeless falling-block geometry puzzle. Rotate polyominoes, clear rows under increasing gravity, and master clean line clears.
+              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">Puzzle / Classic</span>
+                <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" disabled style="opacity: 0.6; cursor: not-allowed;">
+                  In Development
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 4: Mine Sweeper (Coming Soon) -->
+          <article class="arcade-card game-card" style="opacity: 0.85;">
+            <div class="game-card-media">
+              <img src="/assets/images/games/minesweeper-thumb.svg" alt="Mine Sweeper Strategy" width="400" height="225" loading="lazy">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(234, 179, 8, 0.15); color: #FBBF24; border-color: rgba(234, 179, 8, 0.3);">
+                  COMING SOON
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-card-title">Mine Sweeper</h3>
+              <p class="game-card-desc">
+                High-stakes deductive reasoning. Uncover numerical clues, flag dangerous hidden mines, and solve boards from Beginner to Expert.
+              </p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">Strategy / Logic</span>
+                <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" disabled style="opacity: 0.6; cursor: not-allowed;">
+                  In Development
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform Values / Features -->
+    <section style="background: var(--bg-surface); padding: 56px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+      <div class="container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto 48px;">
+          <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;">Why Browser Arcade?</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">We believe web gaming should be instantaneous, zero-cost, and completely free from bloated app store installs.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px;">
+          <div style="padding: 24px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem; margin-bottom: 12px;">⚡</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Instant Play</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Sub-second load times. No multi-megabyte app downloads or loading bars. Click and play instantly.</p>
+          </div>
+
+          <div style="padding: 24px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📱</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Mobile First</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Smooth touch gestures with gesture conflict prevention. Plays naturally on iPhone, Android, iPad, and desktop.</p>
+          </div>
+
+          <div style="padding: 24px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🔒</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Private & Local</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Your high scores and game settings stay on your device using client-side localStorage. No invasive tracking.</p>
+          </div>
+
+          <div style="padding: 24px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🔊</div>
+            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Synthesized Audio</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Zero-byte procedural sound synthesis powered by the Web Audio API. Disabled by default; toggle on at any time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Platform Footer -->
+  <footer class="arcade-footer">
+    <div class="container">
+      <div class="arcade-footer-grid">
+        <div>
+          <div class="arcade-brand">
+            <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+          </div>
+          <p class="arcade-footer-brand-desc">
+            Premium, lightweight web games built with pure vanilla technologies. Instant play on any device with zero downloads.
+          </p>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Games</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Platform</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
+            <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Legal</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
+            <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="arcade-footer-bottom">
+        <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+          <a href="/terms/" class="arcade-footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Platform Shell Script -->
+  <script type="module" src="/assets/js/arcade.js"></script>
+</body>
+</html>

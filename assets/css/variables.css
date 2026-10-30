@@ -1,0 +1,105 @@
+/**
+ * Browser Arcade - Design Tokens & Custom Properties
+ * Zero-cost, high-contrast, modern arcade aesthetic
+ */
+
+:root {
+  /* Surface & Background Palette */
+  --bg-app: #090a10;
+  --bg-surface: #121420;
+  --bg-surface-elevated: #1a1d30;
+  --bg-surface-card: rgba(22, 25, 42, 0.75);
+  --bg-glass: rgba(18, 20, 32, 0.85);
+  --bg-board: #161826;
+  --bg-cell-empty: rgba(255, 255, 255, 0.04);
+
+  /* Primary Brand Neon Palette */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-400: #818cf8;
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5;
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --primary-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+
+  /* Secondary & Accent */
+  --accent-cyan: #06b6d4;
+  --accent-pink: #ec4899;
+  --accent-purple: #8b5cf6;
+  --accent-amber: #f59e0b;
+  --accent-emerald: #10b981;
+
+  /* Typography Colors */
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --text-inverse: #090a10;
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-focus: #6366f1;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.25);
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout Dimensions */
+  --header-height: 68px;
+  --container-max-width: 1200px;
+  --game-max-width: 460px;
+
+  /* Future AdSense Placeholder Dimensions (IAB Standards) */
+  --ad-leaderboard-w: 728px;
+  --ad-leaderboard-h: 90px;
+  --ad-mobile-banner-w: 320px;
+  --ad-mobile-banner-h: 50px;
+  --ad-rect-w: 300px;
+  --ad-rect-h: 250px;
+
+  /* 2048 Game Color Scale (Vibrant, high contrast, neo-arcade aesthetic) */
+  --tile-2-bg: #1e2238;
+  --tile-2-color: #f1f5f9;
+  --tile-4-bg: #282f4d;
+  --tile-4-color: #f8fafc;
+  --tile-8-bg: #f97316;
+  --tile-8-color: #ffffff;
+  --tile-16-bg: #ea580c;
+  --tile-16-color: #ffffff;
+  --tile-32-bg: #ef4444;
+  --tile-32-color: #ffffff;
+  --tile-64-bg: #dc2626;
+  --tile-64-color: #ffffff;
+  --tile-128-bg: #eab308;
+  --tile-128-color: #0f172a;
+  --tile-128-glow: 0 0 16px rgba(234, 179, 8, 0.4);
+  --tile-256-bg: #eab308;
+  --tile-256-color: #0f172a;
+  --tile-256-glow: 0 0 22px rgba(234, 179, 8, 0.55);
+  --tile-512-bg: #10b981;
+  --tile-512-color: #ffffff;
+  --tile-512-glow: 0 0 26px rgba(16, 185, 129, 0.6);
+  --tile-1024-bg: #06b6d4;
+  --tile-1024-color: #ffffff;
+  --tile-1024-glow: 0 0 30px rgba(6, 182, 212, 0.7);
+  --tile-2048-bg: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  --tile-2048-color: #ffffff;
+  --tile-2048-glow: 0 0 35px rgba(236, 72, 153, 0.85);
+  --tile-super-bg: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #f43f5e 100%);
+  --tile-super-color: #ffffff;
+  --tile-super-glow: 0 0 40px rgba(139, 92, 246, 0.9);
+}

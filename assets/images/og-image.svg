@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E101A"/>
+      <stop offset="50%" stop-color="#090A10"/>
+      <stop offset="100%" stop-color="#05060A"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+    <filter id="bigGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="25" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgDark)"/>
+  
+  <!-- Ambient background glow spots -->
+  <circle cx="300" cy="200" r="250" fill="#6366F1" opacity="0.12" filter="url(#bigGlow)"/>
+  <circle cx="950" cy="400" r="280" fill="#EC4899" opacity="0.10" filter="url(#bigGlow)"/>
+
+  <!-- Arcade Controller Icon -->
+  <g transform="translate(140, 200)">
+    <rect width="140" height="140" rx="35" fill="#161826" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+    <g transform="translate(25, 25)">
+      <path d="M15 32 C15 20, 24 14, 45 14 C66 14, 75 20, 75 32 L71 62 C71 68, 66 70, 60 67 L50 60 L40 60 L30 67 C24 70, 19 68, 19 62 Z" fill="url(#textGrad)"/>
+      <rect x="25" y="28" width="6" height="18" rx="2" fill="#FFFFFF"/>
+      <rect x="19" y="34" width="18" height="6" rx="2" fill="#FFFFFF"/>
+      <circle cx="60" cy="32" r="4" fill="#FFFFFF"/>
+      <circle cx="67" cy="40" r="4" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- Typography -->
+  <text x="320" y="265" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="76" fill="#F8FAFC" letter-spacing="-2">
+    Browser<tspan fill="url(#textGrad)">Arcade</tspan>
+  </text>
+  <text x="320" y="325" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="28" fill="#94A3B8">
+    Premium, Lightweight Browser Games &bull; Instant Play &bull; Zero Downloads
+  </text>
+
+  <!-- Tag Pills -->
+  <g transform="translate(320, 370)">
+    <rect x="0" y="0" width="170" height="44" rx="22" fill="rgba(99, 102, 241, 0.15)" stroke="#6366F1" stroke-width="1.5"/>
+    <text x="85" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#818CF8" text-anchor="middle">2048 PUZZLE</text>
+
+    <rect x="185" y="0" width="165" height="44" rx="22" fill="rgba(16, 185, 129, 0.15)" stroke="#10B981" stroke-width="1.5"/>
+    <text x="267" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#34D399" text-anchor="middle">PURE HTML5</text>
+
+    <rect x="365" y="0" width="175" height="44" rx="22" fill="rgba(236, 72, 153, 0.15)" stroke="#EC4899" stroke-width="1.5"/>
+    <text x="452" y="28" font-family="system-ui, sans-serif" font-weight="700" font-size="16" fill="#F472B6" text-anchor="middle">WEB AUDIO API</text>
+  </g>
+</svg>

@@ -1,0 +1,449 @@
+/**
+ * Browser Arcade - 2048 Game Styling & Animations
+ * Hardware-accelerated 60 FPS transitions and responsive grid layout.
+ */
+
+:root {
+  --grid-size: min(92vw, 460px);
+  --grid-gap: clamp(8px, 2.2vw, 14px);
+  --cell-size: calc((var(--grid-size) - (var(--grid-gap) * 5)) / 4);
+}
+
+/* ==========================================================================
+   Game Page Header & HUD
+   ========================================================================== */
+
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: var(--grid-size);
+  margin: 0 auto;
+  padding: 16px 0 32px;
+}
+
+.game-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.game-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.game-scores {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-box {
+  position: relative;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  min-width: 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.score-box-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.score-box-value {
+  font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+/* Score floating increment animation */
+.score-addition {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent-emerald);
+  pointer-events: none;
+  opacity: 0;
+  animation: score-float 600ms ease-out forwards;
+}
+
+@keyframes score-float {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -180%) scale(1.2);
+  }
+}
+
+/* ==========================================================================
+   Game Controls Toolbar
+   ========================================================================== */
+
+.game-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+  gap: 10px;
+}
+
+.game-toolbar-left,
+.game-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   4x4 Game Board
+   ========================================================================== */
+
+.game-board-container {
+  position: relative;
+  width: var(--grid-size);
+  height: var(--grid-size);
+  background: var(--bg-board);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--grid-gap);
+  touch-action: none; /* Prevents mobile scroll while swiping */
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: var(--shadow-lg), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.grid-background {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--grid-gap);
+  width: 100%;
+  height: 100%;
+}
+
+.grid-cell {
+  background: var(--bg-cell-empty);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   Tile Styling & Hardware-Accelerated Animations
+   ========================================================================== */
+
+.tile-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tile {
+  position: absolute;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  user-select: none;
+  will-change: transform;
+  /* Hardware accelerated transform with GPU rasterization */
+  transform: translate3d(
+    calc(var(--col) * (var(--cell-size) + var(--grid-gap)) + var(--grid-gap)),
+    calc(var(--row) * (var(--cell-size) + var(--grid-gap)) + var(--grid-gap)),
+    0
+  );
+  transition: transform 115ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tile-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md);
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Font size adjustments for larger digit counts */
+.tile[data-digits="3"] .tile-inner {
+  font-size: clamp(1.25rem, 4vw, 1.7rem);
+}
+
+.tile[data-digits="4"] .tile-inner {
+  font-size: clamp(1rem, 3.2vw, 1.35rem);
+}
+
+.tile[data-digits="5"] .tile-inner {
+  font-size: clamp(0.85rem, 2.6vw, 1.1rem);
+}
+
+/* New tile spawn animation */
+.tile-new .tile-inner {
+  animation: tile-spawn 140ms ease-out forwards;
+}
+
+@keyframes tile-spawn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Merged tile pop animation */
+.tile-merged {
+  z-index: 10;
+}
+
+.tile-merged .tile-inner {
+  animation: tile-pop 160ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes tile-pop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   Tile Color System
+   ========================================================================== */
+
+.tile-2 .tile-inner {
+  background: var(--tile-2-bg);
+  color: var(--tile-2-color);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tile-4 .tile-inner {
+  background: var(--tile-4-bg);
+  color: var(--tile-4-color);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tile-8 .tile-inner {
+  background: var(--tile-8-bg);
+  color: var(--tile-8-color);
+}
+
+.tile-16 .tile-inner {
+  background: var(--tile-16-bg);
+  color: var(--tile-16-color);
+}
+
+.tile-32 .tile-inner {
+  background: var(--tile-32-bg);
+  color: var(--tile-32-color);
+}
+
+.tile-64 .tile-inner {
+  background: var(--tile-64-bg);
+  color: var(--tile-64-color);
+}
+
+.tile-128 .tile-inner {
+  background: var(--tile-128-bg);
+  color: var(--tile-128-color);
+  box-shadow: var(--tile-128-glow);
+}
+
+.tile-256 .tile-inner {
+  background: var(--tile-256-bg);
+  color: var(--tile-256-color);
+  box-shadow: var(--tile-256-glow);
+}
+
+.tile-512 .tile-inner {
+  background: var(--tile-512-bg);
+  color: var(--tile-512-color);
+  box-shadow: var(--tile-512-glow);
+}
+
+.tile-1024 .tile-inner {
+  background: var(--tile-1024-bg);
+  color: var(--tile-1024-color);
+  box-shadow: var(--tile-1024-glow);
+}
+
+.tile-2048 .tile-inner {
+  background: var(--tile-2048-bg);
+  color: var(--tile-2048-color);
+  box-shadow: var(--tile-2048-glow);
+}
+
+.tile-super .tile-inner {
+  background: var(--tile-super-bg);
+  color: var(--tile-super-color);
+  box-shadow: var(--tile-super-glow);
+}
+
+/* ==========================================================================
+   Overlay Modals (Game Over & Victory)
+   ========================================================================== */
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 16, 26, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.game-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.game-overlay-title {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.game-overlay-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.game-overlay-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Instructions & Guide Section
+   ========================================================================== */
+
+.game-info-card {
+  width: 100%;
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.game-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-info-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.controls-badge-grid {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.control-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Reduced Motion Accessibility Preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none !important;
+  }
+  .tile-new .tile-inner,
+  .tile-merged .tile-inner,
+  .score-addition {
+    animation: none !important;
+  }
+}

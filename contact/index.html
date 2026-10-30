@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Feedback - Browser Arcade</title>
+  <meta name="description" content="Get in touch with Browser Arcade. Share feedback, submit game ideas, or report gameplay issues.">
+  <link rel="canonical" href="https://browserarcade.pages.dev/contact/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://browserarcade.pages.dev/contact/">
+  <meta property="og:title" content="Contact & Feedback - Browser Arcade">
+  <meta property="og:description" content="Share your suggestions, feedback, or game requests with the Browser Arcade team.">
+  <meta property="og:image" content="/assets/images/og-image.svg">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#6366F1">
+
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+</head>
+<body class="arcade-layout">
+  <a href="#mainContent" class="skip-to-content">Skip to content</a>
+
+  <!-- Header -->
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand" aria-label="Browser Arcade Home">
+        <div class="arcade-brand-logo">
+          <svg width="32" height="32" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="navLogoGradContact" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="#121420"/>
+            <path d="M16 28 C16 20, 22 16, 32 16 C42 16, 48 20, 48 28 L46 44 C46 47, 43 49, 40 47 L35 43 L29 43 L24 47 C21 49, 18 47, 18 44 Z" fill="url(#navLogoGradContact)"/>
+            <rect x="22" y="26" width="4" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="19" y="29" width="10" height="4" rx="1" fill="#FFFFFF"/>
+            <circle cx="39" cy="28" r="2.2" fill="#FFFFFF"/>
+            <circle cx="43" cy="32" r="2.2" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+
+      <nav class="arcade-nav" aria-label="Primary Navigation">
+        <a href="/" class="arcade-nav-link">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link active">Contact</a>
+      </nav>
+
+      <div class="arcade-header-actions">
+        <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound Effects" title="Sound Effects">
+          <span class="sound-icon"></span>
+        </button>
+        <button class="arcade-mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <a href="/" class="arcade-mobile-link">Home</a>
+    <a href="/games/2048/" class="arcade-mobile-link">2048 Puzzle</a>
+    <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
+    <a href="/contact/" class="arcade-mobile-link active">Contact Us</a>
+    <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
+    <a href="/terms/" class="arcade-mobile-link">Terms of Service</a>
+  </div>
+
+  <main class="arcade-main" id="mainContent" style="padding: 48px 0 64px;">
+    <div class="container" style="max-width: 800px;">
+      <div style="margin-bottom: 32px;">
+        <span class="badge" style="margin-bottom: 12px;">Get in Touch</span>
+        <h1 style="font-size: clamp(2rem, 5vw, 2.75rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 16px;">
+          Contact & Feedback
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+          Have feedback on the 2048 game, a bug to report, or an idea for the next classic game we should build? Send us a message below.
+        </p>
+      </div>
+
+      <!-- Feedback Form Card (Zero backend, client-side email dispatch) -->
+      <div class="arcade-card" style="padding: 32px; margin-bottom: 40px;">
+        <form id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
+          <div style="margin-bottom: 20px;">
+            <label for="contactName" style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">
+              Your Name
+            </label>
+            <input
+              type="text"
+              id="contactName"
+              required
+              placeholder="e.g. Alex"
+              style="width: 100%; padding: 12px 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none;"
+            >
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label for="contactEmail" style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">
+              Email Address (Optional)
+            </label>
+            <input
+              type="email"
+              id="contactEmail"
+              placeholder="alex@example.com"
+              style="width: 100%; padding: 12px 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none;"
+            >
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label for="contactTopic" style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">
+              Topic
+            </label>
+            <select
+              id="contactTopic"
+              style="width: 100%; padding: 12px 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none;"
+            >
+              <option value="Game Feedback">Game Feedback (2048)</option>
+              <option value="Bug Report">Bug or Glitch Report</option>
+              <option value="Game Suggestion">New Game Suggestion</option>
+              <option value="General Inquiry">General Question</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <label for="contactMessage" style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">
+              Your Message
+            </label>
+            <textarea
+              id="contactMessage"
+              required
+              rows="5"
+              placeholder="What's on your mind?..."
+              style="width: 100%; padding: 12px 16px; background: var(--bg-surface-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: var(--text-main); font-size: 0.95rem; outline: none; resize: vertical;"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="arcade-btn arcade-btn-primary" style="width: 100%; padding: 14px;">
+            Send Feedback Message
+          </button>
+        </form>
+
+        <div id="contactStatus" style="display: none; margin-top: 20px; padding: 16px; border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); color: #A7F3D0; font-size: 0.95rem; text-align: center;">
+          Thank you! Your feedback note has been prepared. If your email client did not automatically launch, you can email us directly at <strong>feedback@browserarcade.dev</strong>.
+        </div>
+      </div>
+
+      <!-- Frequently Asked Questions -->
+      <section>
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">Frequently Asked Questions</h2>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="arcade-card" style="padding: 20px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 8px;">Is Browser Arcade completely free?</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Yes! There are no subscriptions, in-app purchases, or paywalls. All games are 100% free to play directly in your browser.</p>
+          </div>
+          <div class="arcade-card" style="padding: 20px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 8px;">How are my high scores saved?</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Your best score and preferences are saved locally on your device via standard browser localStorage. No account creation or server storage is required.</p>
+          </div>
+          <div class="arcade-card" style="padding: 20px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 8px;">Can I play on my mobile phone?</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Browser Arcade is designed mobile-first. The 2048 game supports smooth touch swipe gestures and automatically adapts to your screen size.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="arcade-footer">
+    <div class="container">
+      <div class="arcade-footer-grid">
+        <div>
+          <div class="arcade-brand">
+            <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+          </div>
+          <p class="arcade-footer-brand-desc">
+            Premium, lightweight web games built with pure vanilla technologies. Instant play on any device with zero downloads.
+          </p>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Games</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Platform</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
+            <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Legal</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
+            <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="arcade-footer-bottom">
+        <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+          <a href="/terms/" class="arcade-footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/assets/js/arcade.js"></script>
+  <script>
+    function handleContactSubmit() {
+      const name = document.getElementById('contactName').value;
+      const topic = document.getElementById('contactTopic').value;
+      const message = document.getElementById('contactMessage').value;
+      const email = document.getElementById('contactEmail').value || 'Anonymous';
+
+      const mailtoLink = `mailto:feedback@browserarcade.dev?subject=${encodeURIComponent('[' + topic + '] from ' + name)}&body=${encodeURIComponent(message + '\n\n---\nSent from: ' + email)}`;
+      
+      const statusEl = document.getElementById('contactStatus');
+      statusEl.style.display = 'block';
+      
+      window.location.href = mailtoLink;
+    }
+  </script>
+</body>
+</html>

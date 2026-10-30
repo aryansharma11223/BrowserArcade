@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>2048 Puzzle Game - Play Online Free | Browser Arcade</title>
+  <meta name="description" content="Play the original 2048 puzzle game online for free. Smooth swipe and keyboard controls, procedural sound effects, undo support, and endless mode.">
+  <meta name="keywords" content="2048, 2048 game, play 2048, puzzle games, free online games, browser arcade">
+  <link rel="canonical" href="https://browserarcade.pages.dev/games/2048/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://browserarcade.pages.dev/games/2048/">
+  <meta property="og:title" content="2048 Puzzle Game - Play Online Free | Browser Arcade">
+  <meta property="og:description" content="Join the tiles and get to 2048! Free browser puzzle game with undo, sound effects, and mobile swipe.">
+  <meta property="og:image" content="/assets/images/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="2048 Puzzle Game - Play Online Free | Browser Arcade">
+  <meta name="twitter:description" content="Join the tiles and get to 2048! Free browser puzzle game with undo, sound effects, and mobile swipe.">
+
+  <!-- Favicon & PWA -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#6366F1">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+  <link rel="stylesheet" href="/games/2048/css/2048.css">
+</head>
+<body class="arcade-layout">
+  <!-- Accessibility Skip Link -->
+  <a href="#gameContent" class="skip-to-content">Skip to game</a>
+
+  <!-- Platform Header -->
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand" aria-label="Browser Arcade Home">
+        <div class="arcade-brand-logo">
+          <svg width="32" height="32" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="hdrGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="#121420"/>
+            <path d="M16 28 C16 20, 22 16, 32 16 C42 16, 48 20, 48 28 L46 44 C46 47, 43 49, 40 47 L35 43 L29 43 L24 47 C21 49, 18 47, 18 44 Z" fill="url(#hdrGrad)"/>
+            <rect x="22" y="26" width="4" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="19" y="29" width="10" height="4" rx="1" fill="#FFFFFF"/>
+            <circle cx="39" cy="28" r="2.2" fill="#FFFFFF"/>
+            <circle cx="43" cy="32" r="2.2" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="arcade-nav" aria-label="Primary Navigation">
+        <a href="/" class="arcade-nav-link">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link active">2048</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="arcade-header-actions">
+        <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound Effects" title="Sound Effects">
+          <span class="sound-icon"></span>
+        </button>
+        <button class="arcade-mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <a href="/" class="arcade-mobile-link">Home</a>
+    <a href="/games/2048/" class="arcade-mobile-link active">2048 Puzzle</a>
+    <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
+    <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
+    <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
+    <a href="/terms/" class="arcade-mobile-link">Terms of Service</a>
+  </div>
+
+  <!-- Main Game Content -->
+  <main class="arcade-main" id="gameContent">
+    <div class="container">
+      <div class="game-wrapper">
+        <!-- Game HUD: Title & Scores -->
+        <div class="game-hud">
+          <div class="game-title-group">
+            <h1 class="game-title">2048</h1>
+            <p class="game-subtitle">Join the tiles to reach <strong>2048!</strong></p>
+          </div>
+
+          <div class="game-scores">
+            <div class="score-box" aria-live="polite">
+              <span class="score-box-label">Score</span>
+              <span class="score-box-value" id="currentScore">0</span>
+            </div>
+            <div class="score-box">
+              <span class="score-box-label">Best</span>
+              <span class="score-box-value" id="bestScore">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls Toolbar -->
+        <div class="game-toolbar">
+          <div class="game-toolbar-left">
+            <button class="arcade-btn arcade-btn-primary arcade-btn-sm btn-new-game" id="newGameBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+              New Game
+            </button>
+            <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" id="undoBtn" disabled title="Undo last move">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M3 7v6h6"/>
+                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
+              </svg>
+              Undo
+            </button>
+          </div>
+
+          <div class="game-toolbar-right">
+            <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" id="rulesBtn" title="Game instructions">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Rules
+            </button>
+            <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound" title="Sound: Off by default">
+              <span class="sound-icon"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4x4 Game Board -->
+        <div class="game-board-container" id="gameBoard" role="application" aria-label="2048 Game Board">
+          <!-- 16 Static Background Grid Cells -->
+          <div class="grid-background" aria-hidden="true">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+          </div>
+
+          <!-- Dynamic Active Tiles Container -->
+          <div class="tile-container" id="tileContainer" aria-live="polite"></div>
+
+          <!-- Win Overlay Modal -->
+          <div class="game-overlay" id="winOverlay" role="dialog" aria-modal="true" aria-labelledby="winTitle">
+            <div class="arcade-modal-icon">🏆</div>
+            <h2 class="game-overlay-title" id="winTitle" style="color: #ec4899;">You Won!</h2>
+            <p class="game-overlay-desc">Incredible! You reached the 2048 tile. Keep going to set a legendary high score!</p>
+            <div class="game-overlay-actions">
+              <button class="arcade-btn arcade-btn-primary" id="keepGoingBtn">Keep Going</button>
+              <button class="arcade-btn arcade-btn-secondary btn-new-game">New Game</button>
+            </div>
+          </div>
+
+          <!-- Game Over Overlay Modal -->
+          <div class="game-overlay" id="gameOverOverlay" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+            <div class="arcade-modal-icon">💀</div>
+            <h2 class="game-overlay-title" id="gameOverTitle" style="color: #ef4444;">Game Over!</h2>
+            <p class="game-overlay-desc">No moves left! Your final score: <strong id="finalScore" style="color: #f8fafc;">0</strong></p>
+            <div class="game-overlay-actions">
+              <button class="arcade-btn arcade-btn-primary btn-new-game">Try Again</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rules / Instructions Modal -->
+        <div class="arcade-modal-backdrop" id="rulesModal" role="dialog" aria-modal="true" aria-labelledby="rulesModalTitle">
+          <div class="arcade-modal-card" style="text-align: left; max-width: 460px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 class="arcade-modal-title" id="rulesModalTitle" style="margin: 0; font-size: 1.4rem;">How to Play 2048</h2>
+              <button class="arcade-btn-icon arcade-btn-sm" id="closeRulesBtn" aria-label="Close rules">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="game-info-text" style="margin-bottom: 18px;">
+              <p style="margin-bottom: 10px;"><strong>Objective:</strong> Slide matching numbered tiles across the 4&times;4 grid. When two identical numbers collide, they merge into their sum!</p>
+              <p style="margin-bottom: 10px;">Reach the <strong>2048 tile</strong> to win. You can keep playing past 2048 to hit 4096 or higher!</p>
+              <p style="margin-bottom: 12px;"><strong>Controls:</strong></p>
+              <ul style="list-style: disc; padding-left: 20px; line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">
+                <li><strong>Mobile:</strong> Swipe your finger in any direction across the board.</li>
+                <li><strong>Desktop:</strong> Use <kbd class="control-key">↑</kbd> <kbd class="control-key">↓</kbd> <kbd class="control-key">←</kbd> <kbd class="control-key">→</kbd> or <kbd class="control-key">W</kbd> <kbd class="control-key">A</kbd> <kbd class="control-key">S</kbd> <kbd class="control-key">D</kbd>.</li>
+                <li><strong>Undo:</strong> Click the Undo button or press <kbd class="control-key">U</kbd> / <kbd class="control-key">Ctrl+Z</kbd>.</li>
+              </ul>
+            </div>
+            <button class="arcade-btn arcade-btn-primary" style="width: 100%;" onclick="document.getElementById('rulesModal').classList.remove('active')">Got It, Let's Play!</button>
+          </div>
+        </div>
+
+        <!-- AdSense Ready Placement Container (Zero CLS, No ads/scripts) -->
+        <div class="arcade-ad-slot arcade-ad-leaderboard" aria-hidden="true"></div>
+        <div class="arcade-ad-slot arcade-ad-mobile-banner" aria-hidden="true"></div>
+
+        <!-- Game Instructions Card -->
+        <section class="game-info-card" aria-labelledby="howToPlayHeading">
+          <h2 class="game-info-title" id="howToPlayHeading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            How to Play
+          </h2>
+          <p class="game-info-text">
+            Use your <strong>arrow keys</strong> or <strong>swipe on mobile</strong> to slide the tiles.
+            When two tiles with the identical number touch, they <strong>merge into one</strong>!
+            Merge your way to the <strong>2048 tile</strong>, or undo any mistake with the <strong>Undo</strong> button.
+          </p>
+
+          <div class="controls-badge-grid">
+            <span class="control-key">↑</span>
+            <span class="control-key">↓</span>
+            <span class="control-key">←</span>
+            <span class="control-key">→</span>
+            <span class="control-key">W</span>
+            <span class="control-key">A</span>
+            <span class="control-key">S</span>
+            <span class="control-key">D</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center; margin-left: 6px;">Desktop Keys or Touch Swipe</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Platform Footer -->
+  <footer class="arcade-footer">
+    <div class="container">
+      <div class="arcade-footer-grid">
+        <div>
+          <div class="arcade-brand">
+            <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+          </div>
+          <p class="arcade-footer-brand-desc">
+            Premium, lightweight web games built with pure vanilla technologies. Instant play on any device with zero downloads.
+          </p>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Games</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Platform</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
+            <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Legal</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
+            <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="arcade-footer-bottom">
+        <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+          <a href="/terms/" class="arcade-footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Modules -->
+  <script type="module" src="/assets/js/arcade.js"></script>
+  <script type="module" src="/games/2048/js/main.js"></script>
+</body>
+</html>

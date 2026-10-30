@@ -1,0 +1,298 @@
+/**
+ * Browser Arcade - Platform Layout & Shell Styles
+ * Responsive, mobile-first arcade header, navigation, and footer
+ */
+
+/* ==========================================================================
+   Skip Link (Accessibility)
+   ========================================================================== */
+
+.skip-to-content {
+  position: absolute;
+  top: -60px;
+  left: 20px;
+  background: var(--primary-500);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  z-index: 9999;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 15px;
+}
+
+/* ==========================================================================
+   Platform Shell Layout
+   ========================================================================== */
+
+.arcade-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.arcade-main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+.arcade-header {
+  position: sticky;
+  top: 0;
+  height: var(--header-height);
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 500;
+}
+
+.arcade-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.arcade-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.arcade-brand-logo {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arcade-brand-text span {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.arcade-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.arcade-nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+  position: relative;
+  padding: 6px 0;
+}
+
+.arcade-nav-link:hover,
+.arcade-nav-link.active {
+  color: var(--text-main);
+}
+
+.arcade-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary-gradient);
+  border-radius: var(--radius-full);
+}
+
+.arcade-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Mobile Hamburger Toggle */
+.arcade-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.arcade-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-main);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+
+.arcade-mobile-toggle.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.arcade-mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.arcade-mobile-toggle.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Navigation Drawer */
+.arcade-mobile-drawer {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-app);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 16px;
+  z-index: 490;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition-normal);
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.arcade-mobile-drawer.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.arcade-mobile-link {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.arcade-mobile-link:hover,
+.arcade-mobile-link.active {
+  color: var(--text-main);
+  background: var(--bg-surface-elevated);
+}
+
+/* ==========================================================================
+   Platform Footer
+   ========================================================================== */
+
+.arcade-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: 48px 0 32px;
+  margin-top: 48px;
+  flex-shrink: 0;
+}
+
+.arcade-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 36px;
+  margin-bottom: 36px;
+}
+
+.arcade-footer-brand-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-top: 12px;
+  max-width: 320px;
+}
+
+.arcade-footer-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  margin-bottom: 16px;
+}
+
+.arcade-footer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.arcade-footer-link {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.arcade-footer-link:hover {
+  color: var(--primary-400);
+}
+
+.arcade-footer-bottom {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 868px) {
+  .arcade-nav {
+    display: none;
+  }
+  .arcade-mobile-toggle {
+    display: flex;
+  }
+  .arcade-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 520px) {
+  .arcade-footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .arcade-footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}

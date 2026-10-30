@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found (404) - Browser Arcade</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+</head>
+<body class="arcade-layout">
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand">
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+      <nav class="arcade-nav">
+        <a href="/" class="arcade-nav-link">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="arcade-main" style="display: flex; align-items: center; justify-content: center; padding: 64px 20px; text-align: center;">
+    <div class="arcade-card" style="padding: 48px 32px; max-width: 480px; width: 100%;">
+      <div style="font-size: 3.5rem; margin-bottom: 12px;">👾</div>
+      <h1 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        404 - Level Not Found
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 24px;">
+        The game page or route you are looking for has warped into another dimension or does not exist.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <a href="/" class="arcade-btn arcade-btn-primary">Return to Arcade Hub</a>
+        <a href="/games/2048/" class="arcade-btn arcade-btn-secondary">Play 2048</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="arcade-footer">
+    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+      &copy; 2026 Browser Arcade. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>

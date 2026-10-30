@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" width="400" height="225">
+  <defs>
+    <linearGradient id="bgBlock" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#140f24"/>
+      <stop offset="100%" stop-color="#0a0812"/>
+    </linearGradient>
+    <filter id="blockGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <rect width="400" height="225" fill="url(#bgBlock)"/>
+
+  <!-- Ghost Outline / Grid Lines -->
+  <g opacity="0.08" stroke="#8B5CF6" stroke-width="1">
+    <line x1="0" y1="56" x2="400" y2="56"/><line x1="0" y1="112" x2="400" y2="112"/><line x1="0" y1="168" x2="400" y2="168"/>
+    <line x1="100" y1="0" x2="100" y2="225"/><line x1="200" y1="0" x2="200" y2="225"/><line x1="300" y1="0" x2="300" y2="225"/>
+  </g>
+
+  <!-- Base Stacked Blocks -->
+  <g filter="url(#blockGlow)">
+    <!-- Cyan I Block -->
+    <rect x="80" y="160" width="30" height="30" rx="4" fill="#06B6D4" stroke="rgba(255,255,255,0.2)"/>
+    <rect x="114" y="160" width="30" height="30" rx="4" fill="#06B6D4" stroke="rgba(255,255,255,0.2)"/>
+    <!-- Yellow O Block -->
+    <rect x="148" y="160" width="30" height="30" rx="4" fill="#F59E0B" stroke="rgba(255,255,255,0.2)"/>
+    <rect x="182" y="160" width="30" height="30" rx="4" fill="#F59E0B" stroke="rgba(255,255,255,0.2)"/>
+    <rect x="148" y="126" width="30" height="30" rx="4" fill="#F59E0B" stroke="rgba(255,255,255,0.2)"/>
+    <rect x="182" y="126" width="30" height="30" rx="4" fill="#F59E0B" stroke="rgba(255,255,255,0.2)"/>
+
+    <!-- Falling T Block (Purple) with trail effect -->
+    <g transform="translate(40, -10)">
+      <rect x="180" y="45" width="32" height="32" rx="4" fill="#8B5CF6" stroke="rgba(255,255,255,0.3)"/>
+      <rect x="146" y="79" width="32" height="32" rx="4" fill="#8B5CF6" stroke="rgba(255,255,255,0.3)"/>
+      <rect x="180" y="79" width="32" height="32" rx="4" fill="#8B5CF6" stroke="rgba(255,255,255,0.3)"/>
+      <rect x="214" y="79" width="32" height="32" rx="4" fill="#8B5CF6" stroke="rgba(255,255,255,0.3)"/>
+    </g>
+  </g>
+</svg>

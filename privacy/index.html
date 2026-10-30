@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Browser Arcade</title>
+  <meta name="description" content="Privacy Policy for Browser Arcade. Transparent disclosures regarding local storage usage, client-side data, and third-party advertising readiness.">
+  <link rel="canonical" href="https://browserarcade.pages.dev/privacy/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://browserarcade.pages.dev/privacy/">
+  <meta property="og:title" content="Privacy Policy - Browser Arcade">
+  <meta property="og:description" content="Transparent disclosures regarding client-side local storage and privacy practices.">
+  <meta property="og:image" content="/assets/images/og-image.svg">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#6366F1">
+
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+</head>
+<body class="arcade-layout">
+  <a href="#mainContent" class="skip-to-content">Skip to content</a>
+
+  <!-- Header -->
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand" aria-label="Browser Arcade Home">
+        <div class="arcade-brand-logo">
+          <svg width="32" height="32" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="navLogoGradPriv" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="#121420"/>
+            <path d="M16 28 C16 20, 22 16, 32 16 C42 16, 48 20, 48 28 L46 44 C46 47, 43 49, 40 47 L35 43 L29 43 L24 47 C21 49, 18 47, 18 44 Z" fill="url(#navLogoGradPriv)"/>
+            <rect x="22" y="26" width="4" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="19" y="29" width="10" height="4" rx="1" fill="#FFFFFF"/>
+            <circle cx="39" cy="28" r="2.2" fill="#FFFFFF"/>
+            <circle cx="43" cy="32" r="2.2" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+
+      <nav class="arcade-nav" aria-label="Primary Navigation">
+        <a href="/" class="arcade-nav-link">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link">Contact</a>
+      </nav>
+
+      <div class="arcade-header-actions">
+        <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound Effects" title="Sound Effects">
+          <span class="sound-icon"></span>
+        </button>
+        <button class="arcade-mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <a href="/" class="arcade-mobile-link">Home</a>
+    <a href="/games/2048/" class="arcade-mobile-link">2048 Puzzle</a>
+    <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
+    <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
+    <a href="/privacy/" class="arcade-mobile-link active">Privacy Policy</a>
+    <a href="/terms/" class="arcade-mobile-link">Terms of Service</a>
+  </div>
+
+  <main class="arcade-main" id="mainContent" style="padding: 48px 0 64px;">
+    <div class="container" style="max-width: 800px;">
+      <div style="margin-bottom: 32px;">
+        <span class="badge" style="margin-bottom: 12px;">Legal & Transparency</span>
+        <h1 style="font-size: clamp(2rem, 5vw, 2.75rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 12px;">
+          Privacy Policy
+        </h1>
+        <p style="color: var(--text-dim); font-size: 0.9rem;">Effective Date: October 2026</p>
+      </div>
+
+      <div class="arcade-card" style="padding: 32px; display: flex; flex-direction: column; gap: 24px; line-height: 1.7; color: var(--text-muted); font-size: 0.95rem;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">1. Overview</h2>
+          <p>
+            Browser Arcade ("we", "us", or "our") operates as a static, browser-based gaming website. We respect your privacy and are committed to transparent, responsible data practices. Because our platform is hosted as a static web application with no server-side databases or user accounts, we do not collect, process, or store personal identifying information on our servers.
+          </p>
+        </div>
+
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">2. Local Storage and Client-Side Data</h2>
+          <p>
+            To deliver an optimal gaming experience, Browser Arcade utilizes standard browser <strong>Local Storage</strong> exclusively on your local device. This storage is used to record:
+          </p>
+          <ul style="list-style: disc; padding-left: 20px; margin-top: 8px;">
+            <li><strong>High Scores:</strong> Your best score for games such as 2048 (`BrowserArcade:2048_bestScore`).</li>
+            <li><strong>Sound Preferences:</strong> Whether audio effects are muted or enabled (`BrowserArcade:sound_enabled`).</li>
+            <li><strong>Undo State:</strong> Temporary snapshots of active game moves.</li>
+          </ul>
+          <p style="margin-top: 8px;">
+            This data never leaves your device and is not transmitted to any remote server. You can remove this data at any time by clearing your browser's local storage or site data.
+          </p>
+        </div>
+
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">3. Third-Party Advertising and Cookies Disclosure</h2>
+          <p>
+            Browser Arcade has pre-structured its visual layout to support third-party advertising networks, such as Google AdSense, in future iterations. <em>At this initial stage, no active advertising scripts or tracking tags are loaded.</em>
+          </p>
+          <p style="margin-top: 8px;">
+            When third-party ad networks are activated:
+          </p>
+          <ul style="list-style: disc; padding-left: 20px; margin-top: 8px;">
+            <li>Third-party vendors, including Google, may use cookies or web beacons to serve ads based on your prior visits to this website or other sites on the internet.</li>
+            <li>Google's use of advertising cookies enables it and its partners to serve ads to users based on their visits to our site and/or other sites on the Internet.</li>
+            <li>Users may opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">Ads Settings</a> or by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">www.aboutads.info</a>.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">4. Analytics & Hosting Infrastructure</h2>
+          <p>
+            Browser Arcade is served via Cloudflare Pages edge delivery network. Like all web hosting infrastructure, Cloudflare's edge servers may log basic technical network requests (such as IP address, user-agent, and requested file path) for diagnostic security, DDoS mitigation, and global caching purposes in accordance with Cloudflare's standard infrastructure privacy standards.
+          </p>
+        </div>
+
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">5. Children's Privacy</h2>
+          <p>
+            Browser Arcade provides casual puzzle and arcade games accessible to players of all ages. Because we do not request, harvest, or store personal information, we do not knowingly collect personal data from children under the age of 13.
+          </p>
+        </div>
+
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">6. Contact Regarding Privacy</h2>
+          <p>
+            If you have questions or inquiries regarding our privacy disclosure, please contact us at <a href="mailto:privacy@browserarcade.dev" style="color: var(--primary-400); text-decoration: underline;">privacy@browserarcade.dev</a> or through our <a href="/contact/" style="color: var(--primary-400); text-decoration: underline;">Contact Page</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="arcade-footer">
+    <div class="container">
+      <div class="arcade-footer-grid">
+        <div>
+          <div class="arcade-brand">
+            <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+          </div>
+          <p class="arcade-footer-brand-desc">
+            Premium, lightweight web games built with pure vanilla technologies. Instant play on any device with zero downloads.
+          </p>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Games</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Platform</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
+            <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Legal</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
+            <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="arcade-footer-bottom">
+        <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+          <a href="/terms/" class="arcade-footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/assets/js/arcade.js"></script>
+</body>
+</html>

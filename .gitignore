@@ -1,0 +1,36 @@
+# Environment and secrets
+.env
+.env.*
+*.env
+*.local
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / package manager artifacts (if ever used)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor & IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files, caches, and test artifacts
+*.tmp
+*.temp
+temp_screens/
+.cache/
+scratch/
+*.log
+
+# Sensitive keys and certificates
+*.pem
+*.key
+*.cert
