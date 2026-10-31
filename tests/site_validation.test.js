@@ -32,6 +32,7 @@ const ROOT_DIR = path.join(__dirname, '..');
 const HTML_PAGES = [
   { file: 'index.html', canonical: 'https://browserarcade.pages.dev/', ogUrl: 'https://browserarcade.pages.dev/' },
   { file: 'games/2048/index.html', canonical: 'https://browserarcade.pages.dev/games/2048/', ogUrl: 'https://browserarcade.pages.dev/games/2048/' },
+  { file: 'games/snake/index.html', canonical: 'https://browserarcade.pages.dev/games/snake/', ogUrl: 'https://browserarcade.pages.dev/games/snake/' },
   { file: 'about/index.html', canonical: 'https://browserarcade.pages.dev/about/', ogUrl: 'https://browserarcade.pages.dev/about/' },
   { file: 'contact/index.html', canonical: 'https://browserarcade.pages.dev/contact/', ogUrl: 'https://browserarcade.pages.dev/contact/' },
   { file: 'privacy/index.html', canonical: 'https://browserarcade.pages.dev/privacy/', ogUrl: 'https://browserarcade.pages.dev/privacy/' },
@@ -115,6 +116,11 @@ runTest('All referenced CSS stylesheets and JavaScript modules exist on disk', (
     'games/2048/js/engine.js',
     'games/2048/js/input.js',
     'games/2048/js/renderer.js',
+    'games/snake/css/snake.css',
+    'games/snake/js/main.js',
+    'games/snake/js/engine.js',
+    'games/snake/js/input.js',
+    'games/snake/js/renderer.js',
     'favicon.svg',
     'manifest.webmanifest',
     'assets/images/og-image.png'
@@ -171,7 +177,7 @@ runTest('Social preview og-image.png exists with valid PNG signature and 1200x63
   assert.ok(fs.existsSync(svgPath), 'Master vector og-image.svg must continue to exist');
 });
 
-// 4. Verify Sitemap.xml integrity, absolute URLs, and exact 6-route coverage
+// 4. Verify Sitemap.xml integrity, absolute URLs, and exact 7-route coverage
 runTest('sitemap.xml covers all active production routes without obsolete domains or placeholders', () => {
   const sitemapPath = path.join(ROOT_DIR, 'sitemap.xml');
   assert.ok(fs.existsSync(sitemapPath), 'sitemap.xml is missing');
@@ -182,6 +188,7 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
   const expectedUrls = [
     'https://browserarcade.pages.dev/',
     'https://browserarcade.pages.dev/games/2048/',
+    'https://browserarcade.pages.dev/games/snake/',
     'https://browserarcade.pages.dev/about/',
     'https://browserarcade.pages.dev/contact/',
     'https://browserarcade.pages.dev/privacy/',
@@ -193,9 +200,9 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
     assert.ok(sitemapContent.includes(`<loc>${url}</loc>`), `sitemap.xml missing URL: ${url}`);
   });
 
-  // Verify exactly 6 URLs exist in sitemap
+  // Verify exactly 7 URLs exist in sitemap
   const locMatches = sitemapContent.match(/<loc>/g) || [];
-  assert.strictEqual(locMatches.length, 6, `sitemap.xml must contain exactly 6 URLs, found ${locMatches.length}`);
+  assert.strictEqual(locMatches.length, 7, `sitemap.xml must contain exactly 7 URLs, found ${locMatches.length}`);
 
   // Verify no placeholders or obsolete domains remain
   assert.ok(!sitemapContent.includes('REPLACE_WITH_CONFIRMED_DOMAIN'), 'sitemap.xml contains REPLACE_WITH_CONFIRMED_DOMAIN placeholder');
@@ -223,7 +230,7 @@ runTest('robots.txt allows indexing and documents production sitemap reference',
 
 // 6. Verify Navigation link integrity across all pages
 runTest('Navigation and footer links are consistent with trailing slashes across all platform pages', () => {
-  const pagesToCheck = ['index.html', 'games/2048/index.html', 'about/index.html', 'contact/index.html', 'privacy/index.html', 'terms/index.html'];
+  const pagesToCheck = ['index.html', 'games/2048/index.html', 'games/snake/index.html', 'about/index.html', 'contact/index.html', 'privacy/index.html', 'terms/index.html'];
 
   pagesToCheck.forEach(page => {
     const content = fs.readFileSync(path.join(ROOT_DIR, page), 'utf8');
@@ -241,6 +248,7 @@ runTest('All internal links across all HTML documents to platform directory rout
   const allHtmlFiles = [
     'index.html',
     'games/2048/index.html',
+    'games/snake/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',
@@ -248,7 +256,7 @@ runTest('All internal links across all HTML documents to platform directory rout
     '404.html'
   ];
 
-  const directoryRoutes = ['about', 'games/2048', 'contact', 'privacy', 'terms'];
+  const directoryRoutes = ['about', 'games/2048', 'games/snake', 'contact', 'privacy', 'terms'];
 
   allHtmlFiles.forEach(file => {
     const filePath = path.join(ROOT_DIR, file);
@@ -306,6 +314,7 @@ runTest('Zero unowned email addresses or assumed hostnames exist in production f
   const filesToCheck = [
     'index.html',
     'games/2048/index.html',
+    'games/snake/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',
@@ -353,6 +362,7 @@ runTest('All static directory routes contain valid index.html files', () => {
   const routes = [
     '', // root
     'games/2048',
+    'games/snake',
     'about',
     'contact',
     'privacy',
@@ -441,7 +451,7 @@ runTest('CLOUDFLARE_DEPLOYMENT_GUIDE.md documents safe revalidation, routing dis
 });
 
 // 12. Verify Cloudflare Pages _redirects file and rules
-runTest('_redirects exists with 5 non-circular HTTP 301 rules enforcing trailing slashes', () => {
+runTest('_redirects exists with 6 non-circular HTTP 301 rules enforcing trailing slashes', () => {
   const redirectsPath = path.join(ROOT_DIR, '_redirects');
   assert.ok(fs.existsSync(redirectsPath), '_redirects file is missing');
 
@@ -450,11 +460,12 @@ runTest('_redirects exists with 5 non-circular HTTP 301 rules enforcing trailing
     .map(line => line.trim())
     .filter(line => line && !line.startsWith('#'));
 
-  assert.strictEqual(lines.length, 5, `Expected exactly 5 redirect rules, found ${lines.length}`);
+  assert.strictEqual(lines.length, 6, `Expected exactly 6 redirect rules, found ${lines.length}`);
 
   const expectedRules = [
     { from: '/about', to: '/about/', code: '301' },
     { from: '/games/2048', to: '/games/2048/', code: '301' },
+    { from: '/games/snake', to: '/games/snake/', code: '301' },
     { from: '/contact', to: '/contact/', code: '301' },
     { from: '/privacy', to: '/privacy/', code: '301' },
     { from: '/terms', to: '/terms/', code: '301' }
@@ -491,6 +502,7 @@ runTest('Zero hardcoded unconsented Google Analytics tags exist in static HTML f
   const allHtmlFiles = [
     'index.html',
     'games/2048/index.html',
+    'games/snake/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',
@@ -508,11 +520,12 @@ runTest('Zero hardcoded unconsented Google Analytics tags exist in static HTML f
   });
 });
 
-// 14. Verify all 7 platform HTML pages provide the Cookie Settings trigger and load arcade.js
+// 14. Verify all platform HTML pages provide the Cookie Settings trigger and load arcade.js
 runTest('All platform HTML pages include Cookie Settings trigger and load arcade shell module', () => {
   const allHtmlFiles = [
     'index.html',
     'games/2048/index.html',
+    'games/snake/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',
