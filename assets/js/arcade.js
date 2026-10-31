@@ -5,6 +5,7 @@
 
 import { audio } from './sound.js';
 import { storage } from './storage.js';
+import './consent.js';
 
 class ArcadePlatform {
   constructor() {

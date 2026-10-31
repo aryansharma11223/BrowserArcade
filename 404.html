@@ -43,9 +43,16 @@
   </main>
 
   <footer class="arcade-footer">
-    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.85rem;">
-      &copy; 2026 Browser Arcade. All rights reserved.
+    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+      <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+      <div style="display: flex; gap: 16px;">
+        <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+        <a href="/terms/" class="arcade-footer-link">Terms</a>
+        <button type="button" class="arcade-footer-link" id="cookieSettingsBtn">Cookie Settings</button>
+      </div>
     </div>
   </footer>
+
+  <script type="module" src="/assets/js/arcade.js"></script>
 </body>
 </html>

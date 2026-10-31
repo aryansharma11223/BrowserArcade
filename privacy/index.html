@@ -139,28 +139,55 @@
         </div>
 
         <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">4. Hosting Infrastructure & Edge Delivery</h2>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">4. Web Analytics (Google Analytics 4 & Consent Mode)</h2>
+          <p>
+            Browser Arcade uses Google Analytics 4, a web analytics service provided by Google LLC ("Google"), to help us understand how visitors discover and engage with our platform. When analytics measurement is enabled, Google Analytics may process usage information, approximate geographic region (country/city level), browser and device characteristics, and identifiers (such as first-party cookies and client measurement tokens) under Google's applicable privacy policies and documentation.
+          </p>
+          <p style="margin-top: 8px;">
+            Browser Arcade does not collect or submit direct personal contact details (such as names or email addresses) through Google Analytics.
+          </p>
+          <p style="margin-top: 8px;">
+            <strong>Basic Consent Mode & Default Disabled State:</strong> In accordance with our privacy-first design, Google Analytics is <strong>disabled by default</strong> for all visitors. The Google Analytics script is not loaded and no analytics network requests or cookies are sent until you explicitly grant consent by clicking "Accept Analytics" on our consent banner.
+          </p>
+          <p style="margin-top: 8px;">
+            If you choose "Reject Analytics" or make no choice, Google Analytics remains completely deactivated (<code style="background: var(--bg-surface-elevated); padding: 2px 6px; border-radius: 4px; font-size: 0.85em;">ga-disable</code> active) and no analytics requests are initiated.
+          </p>
+          <p style="margin-top: 8px;">
+            Your consent preference is stored locally in your browser's <code style="background: var(--bg-surface-elevated); padding: 2px 6px; border-radius: 4px; font-size: 0.85em;">localStorage</code> under the key <code style="background: var(--bg-surface-elevated); padding: 2px 6px; border-radius: 4px; font-size: 0.85em;">BrowserArcade:analytics_consent</code> so your choice is respected across visits.
+          </p>
+          <p style="margin-top: 8px;">
+            <strong>Withdrawing Consent & Limitations:</strong> You have full control over your analytics preferences and can change or revoke your choice at any time:
+          </p>
+          <ul style="list-style: disc; padding-left: 20px; margin-top: 8px;">
+            <li>Click the <button type="button" class="cookie-settings-trigger" style="background: none; border: none; padding: 0; color: var(--primary-400); text-decoration: underline; font: inherit; cursor: pointer;">Cookie Settings</button> link at any time (also located in the footer of every page) to reopen your preferences. Rejecting or withdrawing consent halts further analytics measurement in Browser Arcade and prompts best-effort local cookie cleanup. Withdrawing consent disables ongoing measurement on this platform, but does not retroactively delete information previously transmitted to Google or guarantee removal of cookies that browser security settings prevent scripts from modifying.</li>
+            <li>Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">Google Analytics Opt-out Browser Add-on</a> to disable GA measurement across all websites.</li>
+            <li>Clear cookies and site data in your web browser settings.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">5. Hosting Infrastructure & Edge Delivery</h2>
           <p>
             Browser Arcade operates as a fully static web platform. When deployed, static assets are served through edge content delivery infrastructure. Web hosting edge servers process basic technical network requests (such as IP addresses, user-agent headers, and requested resource paths) solely for diagnostic operational reliability, security, DDoS mitigation, and edge caching in accordance with standard internet infrastructure privacy practices.
           </p>
         </div>
 
         <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">5. Public Feedback & Issue Submissions</h2>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">6. Public Feedback & Issue Submissions</h2>
           <p>
             Feedback initiated through our Contact page is prepared to open directly as public GitHub Issues on our open repository. Browser Arcade does not operate a backend database and does not automatically capture or store your submitted feedback on a private server. Any information you choose to post on GitHub (including name, issue details, and optional email) becomes publicly visible and is handled subject to GitHub's privacy terms.
           </p>
         </div>
 
         <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">6. Children's Privacy</h2>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">7. Children's Privacy</h2>
           <p>
             Browser Arcade provides casual puzzle and arcade games accessible to players of all ages. Because we do not request, harvest, or store personal information, we do not knowingly collect personal data from children under the age of 13.
           </p>
         </div>
 
         <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">7. Contact Regarding Privacy</h2>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px;">8. Contact Regarding Privacy</h2>
           <p>
             If you have questions or inquiries regarding our privacy disclosure, please open an issue or inquiry through our <a href="https://github.com/aryansharma11223/BrowserArcade" target="_blank" rel="noopener" style="color: var(--primary-400); text-decoration: underline;">GitHub Repository</a> or reach out through our <a href="/contact/" style="color: var(--primary-400); text-decoration: underline;">Contact Page</a>.
           </p>
@@ -199,6 +226,7 @@
           <ul class="arcade-footer-list">
             <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
             <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+            <li><button type="button" class="arcade-footer-link cookie-settings-trigger">Cookie Settings</button></li>
           </ul>
         </div>
       </div>
@@ -207,6 +235,7 @@
         <div style="display: flex; gap: 16px;">
           <a href="/privacy/" class="arcade-footer-link">Privacy</a>
           <a href="/terms/" class="arcade-footer-link">Terms</a>
+          <button type="button" class="arcade-footer-link" id="cookieSettingsBtn">Cookie Settings</button>
         </div>
       </div>
     </div>

@@ -107,6 +107,7 @@ runTest('All referenced CSS stylesheets and JavaScript modules exist on disk', (
     'assets/css/components.css',
     'assets/css/platform.css',
     'assets/js/arcade.js',
+    'assets/js/consent.js',
     'assets/js/storage.js',
     'assets/js/sound.js',
     'games/2048/css/2048.css',
@@ -483,6 +484,85 @@ runTest('_redirects exists with 5 non-circular HTTP 301 rules enforcing trailing
     const reverse = parsedRules.find(r => r.from === rule.to);
     assert.strictEqual(reverse, undefined, `Circular redirect detected: ${rule.from} -> ${rule.to} and ${rule.to} -> ${reverse ? reverse.to : ''}`);
   });
+});
+
+// 13. Verify Basic Consent Mode: zero static unconsented gtag.js tags in HTML files
+runTest('Zero hardcoded unconsented Google Analytics tags exist in static HTML files', () => {
+  const allHtmlFiles = [
+    'index.html',
+    'games/2048/index.html',
+    'about/index.html',
+    'contact/index.html',
+    'privacy/index.html',
+    'terms/index.html',
+    '404.html'
+  ];
+
+  allHtmlFiles.forEach(file => {
+    const filePath = path.join(ROOT_DIR, file);
+    const content = fs.readFileSync(filePath, 'utf8');
+    assert.ok(
+      !content.includes('googletagmanager.com/gtag/js'),
+      `${file} contains hardcoded unconsented gtag.js script (must be dynamically injected only upon consent)`
+    );
+  });
+});
+
+// 14. Verify all 7 platform HTML pages provide the Cookie Settings trigger and load arcade.js
+runTest('All platform HTML pages include Cookie Settings trigger and load arcade shell module', () => {
+  const allHtmlFiles = [
+    'index.html',
+    'games/2048/index.html',
+    'about/index.html',
+    'contact/index.html',
+    'privacy/index.html',
+    'terms/index.html',
+    '404.html'
+  ];
+
+  allHtmlFiles.forEach(file => {
+    const filePath = path.join(ROOT_DIR, file);
+    const content = fs.readFileSync(filePath, 'utf8');
+    assert.ok(
+      content.includes('id="cookieSettingsBtn"') || content.includes("id='cookieSettingsBtn'"),
+      `${file} missing #cookieSettingsBtn trigger`
+    );
+    assert.ok(
+      content.includes('/assets/js/arcade.js'),
+      `${file} missing /assets/js/arcade.js module script`
+    );
+  });
+});
+
+// 15. Verify Privacy Policy documents Basic Consent Mode and local storage details
+runTest('Privacy Policy documents Basic Consent Mode, default-disabled status, and Cookie Settings', () => {
+  const privacyPath = path.join(ROOT_DIR, 'privacy/index.html');
+  const content = fs.readFileSync(privacyPath, 'utf8');
+
+  assert.ok(
+    content.includes('disabled by default'),
+    'Privacy Policy must disclose that analytics is disabled by default'
+  );
+  assert.ok(
+    content.includes('BrowserArcade:analytics_consent'),
+    'Privacy Policy must document localStorage key BrowserArcade:analytics_consent'
+  );
+  assert.ok(
+    content.includes('Cookie Settings'),
+    'Privacy Policy must reference Cookie Settings trigger'
+  );
+  assert.ok(
+    content.includes('ga-disable'),
+    'Privacy Policy must document ga-disable deactivation'
+  );
+  assert.ok(
+    !content.includes('In compliance with privacy standards'),
+    'Privacy Policy must avoid legalistic "compliance with privacy standards" claims'
+  );
+  assert.ok(
+    content.includes('best-effort'),
+    'Privacy Policy must document cookie clearing as best-effort'
+  );
 });
 
 console.log('\n========================================');
