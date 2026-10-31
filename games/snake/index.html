@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Retro — Play Classic Web Arcade Online | Browser Arcade</title>
+  <meta name="description" content="Play Snake Retro free online in your browser. Classic arcade reflex challenge with sleek neon visuals, smooth grid movement, speed progression, and zero ads.">
+  <link rel="canonical" href="https://browserarcade.pages.dev/games/snake/">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Snake Retro — Free Classic Web Arcade | Browser Arcade">
+  <meta property="og:description" content="Play Snake Retro free online. Sleek neon visuals, smooth controls, and persistent high scores.">
+  <meta property="og:url" content="https://browserarcade.pages.dev/games/snake/">
+  <meta property="og:image" content="https://browserarcade.pages.dev/assets/images/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Browser Arcade Social Preview">
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Snake Retro — Free Classic Web Arcade | Browser Arcade">
+  <meta name="twitter:description" content="Play Snake Retro free online with neon aesthetics and speed progression.">
+  <meta name="twitter:image" content="https://browserarcade.pages.dev/assets/images/og-image.png">
+
+  <!-- Favicon & Manifest -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#121420">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+  <link rel="stylesheet" href="/games/snake/css/snake.css">
+</head>
+<body>
+  <!-- Platform Header -->
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand" aria-label="Browser Arcade Home">
+        <div class="arcade-logo-icon">
+          <svg width="32" height="32" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="navLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="#121420"/>
+            <path d="M16 28 C16 20, 22 16, 32 16 C42 16, 48 20, 48 28 L46 44 C46 47, 43 49, 40 47 L35 43 L29 43 L24 47 C21 49, 18 47, 18 44 Z" fill="url(#navLogoGrad)"/>
+            <rect x="22" y="26" width="4" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="19" y="29" width="10" height="4" rx="1" fill="#FFFFFF"/>
+            <circle cx="39" cy="28" r="2.2" fill="#FFFFFF"/>
+            <circle cx="43" cy="32" r="2.2" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="arcade-nav" aria-label="Primary Navigation">
+        <a href="/" class="arcade-nav-link">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/games/snake/" class="arcade-nav-link active">Snake</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="arcade-header-actions">
+        <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound Effects" title="Sound Effects">
+          <span class="sound-icon"></span>
+        </button>
+        <button class="arcade-mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <a href="/" class="arcade-mobile-link">Home</a>
+    <a href="/games/2048/" class="arcade-mobile-link">2048 Puzzle</a>
+    <a href="/games/snake/" class="arcade-mobile-link active">Snake Retro</a>
+    <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
+    <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
+    <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
+    <a href="/terms/" class="arcade-mobile-link">Terms of Service</a>
+  </div>
+
+  <!-- Main Game Content -->
+  <main class="arcade-main" id="gameContent">
+    <div class="container">
+      <div class="game-wrapper">
+        <!-- Game HUD: Title & Scores -->
+        <div class="game-hud">
+          <div class="game-title-group">
+            <h1 class="game-title">Snake Retro</h1>
+            <p class="game-subtitle">Eat food, grow longer, avoid walls!</p>
+          </div>
+
+          <div class="game-scores">
+            <div class="score-box" aria-live="polite">
+              <span class="score-box-label">Score</span>
+              <span class="score-box-value" id="currentScore">0</span>
+            </div>
+            <div class="score-box">
+              <span class="score-box-label">Best</span>
+              <span class="score-box-value" id="bestScore">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls Toolbar -->
+        <div class="game-toolbar">
+          <div class="game-toolbar-left">
+            <button class="arcade-btn arcade-btn-primary arcade-btn-sm btn-new-game" id="newGameBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+              New Game
+            </button>
+            <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" id="pauseBtn" title="Pause Game (Space)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+              <span class="btn-label">Pause</span>
+            </button>
+          </div>
+
+          <div class="game-toolbar-right">
+            <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" id="rulesBtn" title="Game instructions">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              Rules
+            </button>
+            <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound" title="Sound Effects">
+              <span class="sound-icon"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Snake Canvas Game Board Container -->
+        <div class="game-board-container" id="gameBoard" role="application" aria-label="Snake Retro Game Board">
+          <canvas id="snakeCanvas"></canvas>
+
+          <!-- Start Overlay -->
+          <div class="game-overlay active" id="startOverlay" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+            <div class="game-overlay-icon">🐍</div>
+            <h2 class="game-overlay-title" id="startTitle" style="color: #34D399;">Snake Retro</h2>
+            <p class="game-overlay-desc">Use arrow keys, swipe on mobile, or press Start to begin hunting glowing orbs!</p>
+            <div class="game-overlay-actions">
+              <button class="arcade-btn arcade-btn-primary" id="startOverlayBtn">Start Game</button>
+            </div>
+          </div>
+
+          <!-- Pause Overlay -->
+          <div class="game-overlay" id="pauseOverlay" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+            <div class="game-overlay-icon">⏸️</div>
+            <h2 class="game-overlay-title" id="pauseTitle" style="color: #818CF8;">Game Paused</h2>
+            <p class="game-overlay-desc">Take a breath. Press Resume or Space to jump back into action.</p>
+            <div class="game-overlay-actions">
+              <button class="arcade-btn arcade-btn-primary" id="resumeBtn">Resume</button>
+              <button class="arcade-btn arcade-btn-secondary btn-new-game">Restart</button>
+            </div>
+          </div>
+
+          <!-- Game Over Overlay -->
+          <div class="game-overlay" id="gameOverOverlay" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+            <div class="game-overlay-icon">💥</div>
+            <h2 class="game-overlay-title" id="gameOverTitle" style="color: #EF4444;">Game Over!</h2>
+            <p class="game-overlay-desc">
+              Final Score: <strong id="finalScore" style="color: #F8FAFC;">0</strong> &bull; Best: <strong id="modalBestScore" style="color: #34D399;">0</strong>
+            </p>
+            <div class="game-overlay-actions">
+              <button class="arcade-btn arcade-btn-primary btn-new-game">Play Again</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Virtual Touch D-Pad for Mobile Comfort -->
+        <div class="snake-touch-controls" aria-label="Mobile Direction Controls">
+          <div class="dpad-row">
+            <button type="button" class="dpad-btn" data-snake-dir="UP" aria-label="Move Up">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            </button>
+          </div>
+          <div class="dpad-row">
+            <button type="button" class="dpad-btn" data-snake-dir="LEFT" aria-label="Move Left">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button type="button" class="dpad-btn" data-snake-dir="DOWN" aria-label="Move Down">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <button type="button" class="dpad-btn" data-snake-dir="RIGHT" aria-label="Move Right">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Instructions Modal -->
+        <div class="arcade-modal-backdrop" id="rulesModal" role="dialog" aria-modal="true" aria-labelledby="rulesModalTitle">
+          <div class="arcade-modal-card" style="text-align: left; max-width: 460px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 class="arcade-modal-title" id="rulesModalTitle" style="margin: 0; font-size: 1.4rem;">How to Play Snake Retro</h2>
+              <button class="arcade-btn-icon arcade-btn-sm" id="closeRulesBtn" aria-label="Close rules">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="game-info-text" style="margin-bottom: 18px;">
+              <p style="margin-bottom: 10px;"><strong>Objective:</strong> Guide the neon snake across the 20&times;20 grid to eat glowing pink orbs. Each food item grows your snake by one segment and awards 10 points!</p>
+              <p style="margin-bottom: 10px;"><strong>Speed Progression:</strong> As your score increases, the snake moves progressively faster. Keep your reflexes sharp!</p>
+              <p style="margin-bottom: 10px;"><strong>Hazards:</strong> Do not crash into the perimeter walls or into your own tail. One collision ends the game.</p>
+              <p style="margin-bottom: 12px;"><strong>Controls:</strong></p>
+              <ul style="list-style: disc; padding-left: 20px; line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">
+                <li><strong>Desktop:</strong> Use <kbd class="control-key">↑</kbd> <kbd class="control-key">↓</kbd> <kbd class="control-key">←</kbd> <kbd class="control-key">→</kbd> or <kbd class="control-key">W</kbd> <kbd class="control-key">A</kbd> <kbd class="control-key">S</kbd> <kbd class="control-key">D</kbd>.</li>
+                <li><strong>Pause / Resume:</strong> Press <kbd class="control-key">Space</kbd> or click the Pause button.</li>
+                <li><strong>Mobile:</strong> Swipe anywhere across the board, or tap the virtual directional buttons below.</li>
+              </ul>
+            </div>
+            <button class="arcade-btn arcade-btn-primary" style="width: 100%;" onclick="document.getElementById('rulesModal').classList.remove('active')">Got It, Let's Play!</button>
+          </div>
+        </div>
+
+        <!-- AdSense Ready Placement Container (Zero CLS, No ads/scripts) -->
+        <div class="arcade-ad-slot arcade-ad-leaderboard" aria-hidden="true"></div>
+        <div class="arcade-ad-slot arcade-ad-mobile-banner" aria-hidden="true"></div>
+
+        <!-- Game Instructions & Strategy Card -->
+        <section class="game-info-card" aria-labelledby="howToPlayHeading">
+          <h2 class="game-info-title" id="howToPlayHeading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            How to Play & Pro Tips
+          </h2>
+          <p class="game-info-text">
+            Steer the snake across the grid to gobble glowing neon orbs. Avoid colliding with boundaries and your own body.
+            Use open perimeter loops as your snake becomes longer to prevent boxing yourself into closed corners.
+          </p>
+
+          <div class="controls-badge-grid">
+            <span class="control-key">↑</span>
+            <span class="control-key">↓</span>
+            <span class="control-key">←</span>
+            <span class="control-key">→</span>
+            <span class="control-key">W</span>
+            <span class="control-key">A</span>
+            <span class="control-key">S</span>
+            <span class="control-key">D</span>
+            <span class="control-key">Space</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center; margin-left: 6px;">Desktop Keys or Touch Swipe</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Platform Footer -->
+  <footer class="arcade-footer">
+    <div class="container">
+      <div class="arcade-footer-grid">
+        <div>
+          <div class="arcade-brand">
+            <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+          </div>
+          <p class="arcade-footer-brand-desc">
+            Premium, lightweight web games built with pure vanilla technologies. Instant play on any device with zero downloads.
+          </p>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Games</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+            <li><a href="/games/snake/" class="arcade-footer-link">Snake Retro</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Platform</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
+            <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Legal</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
+            <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+            <li><button type="button" class="arcade-footer-link cookie-settings-trigger">Cookie Settings</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="arcade-footer-bottom">
+        <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+          <a href="/terms/" class="arcade-footer-link">Terms</a>
+          <button type="button" class="arcade-footer-link" id="cookieSettingsBtn">Cookie Settings</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/assets/js/arcade.js"></script>
+  <script type="module" src="/games/snake/js/main.js"></script>
+</body>
+</html>
