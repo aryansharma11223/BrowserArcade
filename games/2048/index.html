@@ -69,6 +69,7 @@
       <nav class="arcade-nav" aria-label="Primary Navigation">
         <a href="/" class="arcade-nav-link">Home</a>
         <a href="/games/2048/" class="arcade-nav-link active">2048</a>
+        <a href="/games/snake/" class="arcade-nav-link">Snake</a>
         <a href="/about/" class="arcade-nav-link">About</a>
         <a href="/contact/" class="arcade-nav-link">Contact</a>
       </nav>
@@ -91,6 +92,7 @@
   <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
     <a href="/" class="arcade-mobile-link">Home</a>
     <a href="/games/2048/" class="arcade-mobile-link active">2048 Puzzle</a>
+    <a href="/games/snake/" class="arcade-mobile-link">Snake Retro</a>
     <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
     <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
     <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
@@ -230,7 +232,7 @@
         <div class="arcade-ad-slot arcade-ad-leaderboard" aria-hidden="true"></div>
         <div class="arcade-ad-slot arcade-ad-mobile-banner" aria-hidden="true"></div>
 
-        <!-- Game Instructions Card -->
+        <!-- Comprehensive Strategy & Guide Section -->
         <section class="game-info-card" aria-labelledby="howToPlayHeading">
           <h2 class="game-info-title" id="howToPlayHeading">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -238,12 +240,10 @@
               <line x1="12" y1="16" x2="12" y2="12"></line>
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
-            How to Play
+            How to Play 2048
           </h2>
           <p class="game-info-text">
-            Use your <strong>arrow keys</strong> or <strong>swipe on mobile</strong> to slide the tiles.
-            When two tiles with the identical number touch, they <strong>merge into one</strong>!
-            Merge your way to the <strong>2048 tile</strong>, or undo any mistake with the <strong>Undo</strong> button.
+            2048 is an addictive mathematical sliding block puzzle played on a 4&times;4 grid. The game begins with two randomly placed numbered tiles (each possessing a 90% probability of being a <strong>2</strong> and a 10% chance of being a <strong>4</strong>). Your goal is to combine identical numbers to create the legendary <strong>2048 tile</strong>, and continue into endless mode for maximum scores.
           </p>
 
           <div class="controls-badge-grid">
@@ -255,7 +255,58 @@
             <span class="control-key">A</span>
             <span class="control-key">S</span>
             <span class="control-key">D</span>
+            <span class="control-key">U / Ctrl+Z</span>
             <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center; margin-left: 6px;">Desktop Keys or Touch Swipe</span>
+          </div>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Core Mechanics &amp; The Single-Merge Rule</h3>
+          <p class="game-info-text">
+            When you initiate a move in any direction (Up, Down, Left, or Right), all tiles on the board slide simultaneously toward that edge until stopped by another tile or the perimeter border.
+          </p>
+          <ul style="list-style: disc; padding-left: 20px; margin: 10px 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            <li><strong>Summation Merging:</strong> If two tiles of the identical denomination collide along the axis of movement, they merge into a single tile with double the value (e.g., 2 + 2 = 4, 4 + 4 = 8, 1024 + 1024 = 2048).</li>
+            <li><strong>Strict Single-Merge Limit:</strong> Each tile can only merge once per individual move. For instance, a row containing <kbd class="control-key">2</kbd> <kbd class="control-key">2</kbd> <kbd class="control-key">2</kbd> <kbd class="control-key">2</kbd> sliding left resolves to <kbd class="control-key">4</kbd> <kbd class="control-key">4</kbd> &mdash; it does not collapse prematurely into an 8 on the same turn.</li>
+            <li><strong>Score Accumulation:</strong> Whenever two tiles merge, the value of the resulting tile is added directly to your running score. Creating higher-tier tiles (such as 512, 1024, or 2048) yields substantially larger point leaps.</li>
+          </ul>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Master Strategy: The Corner Anchor Method</h3>
+          <p class="game-info-text">
+            The single most reliable, mathematically sound method to win 2048 consistently is the <strong>Corner Anchor Strategy</strong>. Rather than sliding randomly in all four directions, commit to anchoring your highest-value tile in one fixed corner throughout the entire session (typically the bottom-left or bottom-right).
+          </p>
+          <ol style="padding-left: 20px; margin: 10px 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            <li><strong>Restricted Three-Key Movement:</strong> If your anchor is the bottom-right corner, restrict yourself strictly to <kbd class="control-key">↓</kbd> Down, <kbd class="control-key">→</kbd> Right, and occasional <kbd class="control-key">←</kbd> Left strokes. <em>Never press <kbd class="control-key">↑</kbd> Up</em> unless absolutely zero valid moves remain, as pressing Up will displace your anchor tile into the open center.</li>
+            <li><strong>Build Monotonic Chains:</strong> Organize your anchor row in strictly descending sequential order from your chosen corner. For example, your bottom row should idealize as <kbd class="control-key">1024</kbd> <kbd class="control-key">512</kbd> <kbd class="control-key">256</kbd> <kbd class="control-key">128</kbd>. This arrangement enables effortless domino-style cascading merges.</li>
+            <li><strong>Keep the Anchor Row Packed:</strong> Ensure all four cells of your anchor row stay filled with numbers at all times. If a space opens in your base row and you slide sideways, a new random '2' tile could spawn directly behind your highest tile, trapping it permanently.</li>
+            <li><strong>Use Multi-Step Undo Responsibly:</strong> Browser Arcade provides full move reversibility via the <kbd class="control-key">Undo</kbd> button. If an errant swipe forces you out of position or spawns an inconvenient tile, step back immediately to maintain your structured chain.</li>
+          </ol>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Common Traps &amp; How to Recover</h3>
+          <p class="game-info-text">
+            The most common mistake novice players make is oscillating between opposing directions (e.g., alternating Left and Right or Up and Down). This scatters high-value tiles across the grid, leaving low-tier '2's and '4's wedged between numbers that cannot merge. If your anchor row becomes compromised, focus on merging smaller satellite tiles on the opposite side of the board to free up grid space before shifting your base back into the corner.
+          </p>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Frequently Asked Questions</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Can I continue playing after reaching the 2048 tile?</h4>
+              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+                Yes! When you assemble the 2048 tile, a victory banner appears with the option to continue playing in Endless Mode. You can proceed to build 4096, 8192, and beyond until no legal moves remain on the board.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">How are high scores and audio settings stored?</h4>
+              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+                High scores and sound preferences are persisted client-side in your browser's private localStorage under key <code>BrowserArcade:2048_bestScore</code>. No personal information or game data is ever sent to an external server.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">What constitutes a Game Over state?</h4>
+              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+                A Game Over triggers only when all 16 cells on the 4&times;4 grid are occupied and no two adjacent tiles (horizontally or vertically) share the same value. As long as at least one merge is possible, the game continues.
+              </p>
+            </div>
           </div>
         </section>
       </div>
@@ -278,6 +329,7 @@
           <h3 class="arcade-footer-title">Games</h3>
           <ul class="arcade-footer-list">
             <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+            <li><a href="/games/snake/" class="arcade-footer-link">Snake Retro</a></li>
           </ul>
         </div>
         <div>

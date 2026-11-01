@@ -63,6 +63,7 @@
       <nav class="arcade-nav" aria-label="Primary Navigation">
         <a href="/" class="arcade-nav-link">Home</a>
         <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/games/snake/" class="arcade-nav-link">Snake</a>
         <a href="/about/" class="arcade-nav-link">About</a>
         <a href="/contact/" class="arcade-nav-link">Contact</a>
       </nav>
@@ -84,6 +85,7 @@
   <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
     <a href="/" class="arcade-mobile-link">Home</a>
     <a href="/games/2048/" class="arcade-mobile-link">2048 Puzzle</a>
+    <a href="/games/snake/" class="arcade-mobile-link">Snake Retro</a>
     <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
     <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
     <a href="/privacy/" class="arcade-mobile-link active">Privacy Policy</a>
@@ -114,9 +116,9 @@
             To deliver an optimal gaming experience, Browser Arcade utilizes standard browser <strong>Local Storage</strong> exclusively on your local device. This storage is used to record:
           </p>
           <ul style="list-style: disc; padding-left: 20px; margin-top: 8px;">
-            <li><strong>High Scores:</strong> Your best score for games such as 2048 (`BrowserArcade:2048_bestScore`).</li>
-            <li><strong>Sound Preferences:</strong> Whether audio effects are muted or enabled (`BrowserArcade:sound_enabled`).</li>
-            <li><strong>Undo State:</strong> Temporary snapshots of active game moves.</li>
+            <li><strong>High Scores:</strong> Your best scores for 2048 (<code>BrowserArcade:2048_bestScore</code>) and Snake Retro (<code>BrowserArcade:snake_bestScore</code>).</li>
+            <li><strong>Sound Preferences:</strong> Whether audio effects are muted or enabled (<code>BrowserArcade:sound_enabled</code>).</li>
+            <li><strong>Undo State:</strong> Temporary snapshots of active game moves (for 2048).</li>
           </ul>
           <p style="margin-top: 8px;">
             This data never leaves your device and is not transmitted to any remote server. You can remove this data at any time by clearing your browser's local storage or site data.
@@ -211,6 +213,7 @@
           <h3 class="arcade-footer-title">Games</h3>
           <ul class="arcade-footer-list">
             <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+            <li><a href="/games/snake/" class="arcade-footer-link">Snake Retro</a></li>
           </ul>
         </div>
         <div>

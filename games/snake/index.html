@@ -240,7 +240,7 @@
         <div class="arcade-ad-slot arcade-ad-leaderboard" aria-hidden="true"></div>
         <div class="arcade-ad-slot arcade-ad-mobile-banner" aria-hidden="true"></div>
 
-        <!-- Game Instructions & Strategy Card -->
+        <!-- Comprehensive Strategy & Guide Section -->
         <section class="game-info-card" aria-labelledby="howToPlayHeading">
           <h2 class="game-info-title" id="howToPlayHeading">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -248,11 +248,10 @@
               <line x1="12" y1="16" x2="12" y2="12"></line>
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
-            How to Play & Pro Tips
+            How to Play Snake Retro
           </h2>
           <p class="game-info-text">
-            Steer the snake across the grid to gobble glowing neon orbs. Avoid colliding with boundaries and your own body.
-            Use open perimeter loops as your snake becomes longer to prevent boxing yourself into closed corners.
+            Snake Retro is a modern, high-framerate reinvention of the arcade classic. Steer your glowing neon serpent across a 20&times;20 discrete grid (400 total coordinate cells), consuming pulsing energy food to increase your score and physical length. As your serpent expands, maneuvering space diminishes and speed accelerates, demanding razor-sharp reflexes and strategic path planning.
           </p>
 
           <div class="controls-badge-grid">
@@ -264,8 +263,56 @@
             <span class="control-key">A</span>
             <span class="control-key">S</span>
             <span class="control-key">D</span>
-            <span class="control-key">Space</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center; margin-left: 6px;">Desktop Keys or Touch Swipe</span>
+            <span class="control-key">Space (Pause)</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center; margin-left: 6px;">Keyboard, Canvas Swipe, or Touch D-Pad</span>
+          </div>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Game Rules &amp; Collision Physics</h3>
+          <p class="game-info-text">
+            Your serpent begins at a standard length of three segments moving rightward at an accessible starting pace of 150ms per step. Movement is continuous and head-directed; the body follows the precise historical path traversed by the head.
+          </p>
+          <ul style="list-style: disc; padding-left: 20px; margin: 10px 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            <li><strong>Energy Food &amp; Growth:</strong> Each food pellet collected awards exactly 10 points and extends the serpent by one trailing segment. Food only spawns on verified unoccupied grid cells.</li>
+            <li><strong>Lethal Wall Boundaries:</strong> Crashing head-first into any of the outer perimeter boundaries (X &lt; 0, X &ge; 20, Y &lt; 0, Y &ge; 20) instantly terminates the game. Boundaries do not wrap around.</li>
+            <li><strong>Self-Collision Hazards:</strong> Colliding with any part of your own trailing body causes immediate defeat.</li>
+            <li><strong>Vacating Tail Physics:</strong> On normal ticks where food is not eaten, the final tail segment vacates its cell simultaneously as the head advances. This allows precision players to follow directly behind their own retreating tail without triggering a false self-collision.</li>
+          </ul>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Dynamic Speed Curve &amp; Acceleration</h3>
+          <p class="game-info-text">
+            To challenge veteran players, Snake Retro features an integrated mathematical speed curve: <code>Math.max(80, 150 - score * 3)</code>. For every food item consumed, the step interval decreases by 3 milliseconds until reaching a hyper-reflex terminal velocity of 80ms per tick (at score 240). Mastering turns at maximum velocity requires anticipatory directional buffering.
+          </p>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Proven Survival Tactics for High Scores</h3>
+          <ol style="padding-left: 20px; margin: 10px 0; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            <li><strong>The Perimeter Highway:</strong> Whenever your body length exceeds 15 segments, resist the temptation to cut straight across the central arena. Instead, hug the outer perimeter walls until you are perpendicular to the target food pellet, then dart in and retreat back to the outer ring.</li>
+            <li><strong>Serpentine Sweeping (The Zig-Zag):</strong> When navigating crowded open zones, move in systematic back-and-forth S-curves or zig-zag patterns. This tightly packs your body loops against one wall and keeps the remaining 75% of the board wide open.</li>
+            <li><strong>Never Box Yourself In:</strong> Before turning into a pocket or cul-de-sac between your own coils, verify that an open exit corridor exists with a path wider than your snake's length. Entering a blind pocket with high body mass is the leading cause of late-game death.</li>
+            <li><strong>Utilize Directional Input Buffering:</strong> The input engine incorporates a two-step FIFO queue. You can quickly tap <kbd class="control-key">↑</kbd> then <kbd class="control-key">→</kbd> in rapid succession to execute a tight 90-degree corner before the next tick executes, ensuring smooth movement without missed keystrokes.</li>
+          </ol>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Frequently Asked Questions</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Is it possible to completely beat Snake Retro?</h4>
+              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+                Yes! If you successfully grow your snake to fill all 400 cells of the 20&times;20 grid, the food spawning algorithm detects that no unoccupied spaces remain and automatically triggers a complete Game Victory state.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">How does the anti-reversal mechanism work?</h4>
+              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+                To prevent accidental suicide, the input manager blocks 180-degree reversals. If moving Right, pressing Left is safely ignored. Furthermore, both current velocity and pending queued moves are checked to prevent rapid double-taps from causing self-reversal.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Where is my high score saved?</h4>
+              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+                Your best score is stored directly on your device in standard HTML5 localStorage under <code>BrowserArcade:snake_bestScore</code>. High scores persist between browser sessions with zero server accounts or tracking cookies.
+              </p>
+            </div>
           </div>
         </section>
       </div>

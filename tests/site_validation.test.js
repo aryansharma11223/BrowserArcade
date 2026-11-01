@@ -236,6 +236,7 @@ runTest('Navigation and footer links are consistent with trailing slashes across
     const content = fs.readFileSync(path.join(ROOT_DIR, page), 'utf8');
     assert.ok(content.includes('href="/"'), `${page} missing link to Home /`);
     assert.ok(content.includes('href="/games/2048/"'), `${page} missing link to 2048/`);
+    assert.ok(content.includes('href="/games/snake/"'), `${page} missing link to Snake/`);
     assert.ok(content.includes('href="/about/"'), `${page} missing link to About/`);
     assert.ok(content.includes('href="/contact/"'), `${page} missing link to Contact/`);
     assert.ok(content.includes('href="/privacy/"'), `${page} missing link to Privacy/`);
@@ -573,9 +574,40 @@ runTest('Privacy Policy documents Basic Consent Mode, default-disabled status, a
     'Privacy Policy must avoid legalistic "compliance with privacy standards" claims'
   );
   assert.ok(
+    content.includes('BrowserArcade:2048_bestScore'),
+    'Privacy Policy must document localStorage key BrowserArcade:2048_bestScore'
+  );
+  assert.ok(
+    content.includes('BrowserArcade:snake_bestScore'),
+    'Privacy Policy must document localStorage key BrowserArcade:snake_bestScore'
+  );
+  assert.ok(
     content.includes('best-effort'),
     'Privacy Policy must document cookie clearing as best-effort'
   );
+});
+
+// 16. Verify About, Contact, and Game Pages reflect multi-game catalog and substantive editorial guides
+runTest('About, Contact, and Game Pages reflect multi-game catalog and substantive editorial guides', () => {
+  const aboutContent = fs.readFileSync(path.join(ROOT_DIR, 'about/index.html'), 'utf8');
+  assert.ok(aboutContent.includes('Snake Retro'), 'About page must reference Snake Retro');
+  assert.ok(aboutContent.includes('2048 Puzzle'), 'About page must reference 2048 Puzzle');
+
+  const contactContent = fs.readFileSync(path.join(ROOT_DIR, 'contact/index.html'), 'utf8');
+  assert.ok(contactContent.includes('Snake Retro'), 'Contact page must reference Snake Retro');
+  assert.ok(contactContent.includes('2048'), 'Contact page must reference 2048');
+
+  // Verify 2048 editorial guide depth
+  const game2048Content = fs.readFileSync(path.join(ROOT_DIR, 'games/2048/index.html'), 'utf8');
+  assert.ok(game2048Content.includes('Corner Anchor Method') || game2048Content.includes('Corner Anchor Strategy'), '2048 must include Corner Anchor strategy guide');
+  assert.ok(game2048Content.includes('Core Mechanics'), '2048 must document core mechanics');
+  assert.ok(game2048Content.includes('Frequently Asked Questions'), '2048 must include FAQ section');
+
+  // Verify Snake editorial guide depth
+  const snakeContent = fs.readFileSync(path.join(ROOT_DIR, 'games/snake/index.html'), 'utf8');
+  assert.ok(snakeContent.includes('Dynamic Speed Curve') || snakeContent.includes('Speed Progression'), 'Snake must document speed progression mechanics');
+  assert.ok(snakeContent.includes('Vacating Tail Physics'), 'Snake must document vacating tail physics');
+  assert.ok(snakeContent.includes('Frequently Asked Questions'), 'Snake must include FAQ section');
 });
 
 console.log('\n========================================');
