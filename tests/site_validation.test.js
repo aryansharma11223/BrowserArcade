@@ -33,6 +33,7 @@ const HTML_PAGES = [
   { file: 'index.html', canonical: 'https://browserarcade.pages.dev/', ogUrl: 'https://browserarcade.pages.dev/' },
   { file: 'games/2048/index.html', canonical: 'https://browserarcade.pages.dev/games/2048/', ogUrl: 'https://browserarcade.pages.dev/games/2048/' },
   { file: 'games/snake/index.html', canonical: 'https://browserarcade.pages.dev/games/snake/', ogUrl: 'https://browserarcade.pages.dev/games/snake/' },
+  { file: 'games/minesweeper/index.html', canonical: 'https://browserarcade.pages.dev/games/minesweeper/', ogUrl: 'https://browserarcade.pages.dev/games/minesweeper/' },
   { file: 'about/index.html', canonical: 'https://browserarcade.pages.dev/about/', ogUrl: 'https://browserarcade.pages.dev/about/' },
   { file: 'contact/index.html', canonical: 'https://browserarcade.pages.dev/contact/', ogUrl: 'https://browserarcade.pages.dev/contact/' },
   { file: 'privacy/index.html', canonical: 'https://browserarcade.pages.dev/privacy/', ogUrl: 'https://browserarcade.pages.dev/privacy/' },
@@ -121,6 +122,11 @@ runTest('All referenced CSS stylesheets and JavaScript modules exist on disk', (
     'games/snake/js/engine.js',
     'games/snake/js/input.js',
     'games/snake/js/renderer.js',
+    'games/minesweeper/css/minesweeper.css',
+    'games/minesweeper/js/main.js',
+    'games/minesweeper/js/engine.js',
+    'games/minesweeper/js/input.js',
+    'games/minesweeper/js/renderer.js',
     'favicon.svg',
     'manifest.webmanifest',
     'assets/images/og-image.png'
@@ -177,7 +183,7 @@ runTest('Social preview og-image.png exists with valid PNG signature and 1200x63
   assert.ok(fs.existsSync(svgPath), 'Master vector og-image.svg must continue to exist');
 });
 
-// 4. Verify Sitemap.xml integrity, absolute URLs, and exact 7-route coverage
+// 4. Verify Sitemap.xml integrity, absolute URLs, and exact 8-route coverage
 runTest('sitemap.xml covers all active production routes without obsolete domains or placeholders', () => {
   const sitemapPath = path.join(ROOT_DIR, 'sitemap.xml');
   assert.ok(fs.existsSync(sitemapPath), 'sitemap.xml is missing');
@@ -189,6 +195,7 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
     'https://browserarcade.pages.dev/',
     'https://browserarcade.pages.dev/games/2048/',
     'https://browserarcade.pages.dev/games/snake/',
+    'https://browserarcade.pages.dev/games/minesweeper/',
     'https://browserarcade.pages.dev/about/',
     'https://browserarcade.pages.dev/contact/',
     'https://browserarcade.pages.dev/privacy/',
@@ -200,9 +207,9 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
     assert.ok(sitemapContent.includes(`<loc>${url}</loc>`), `sitemap.xml missing URL: ${url}`);
   });
 
-  // Verify exactly 7 URLs exist in sitemap
+  // Verify exactly 8 URLs exist in sitemap
   const locMatches = sitemapContent.match(/<loc>/g) || [];
-  assert.strictEqual(locMatches.length, 7, `sitemap.xml must contain exactly 7 URLs, found ${locMatches.length}`);
+  assert.strictEqual(locMatches.length, 8, `sitemap.xml must contain exactly 8 URLs, found ${locMatches.length}`);
 
   // Verify no placeholders or obsolete domains remain
   assert.ok(!sitemapContent.includes('REPLACE_WITH_CONFIRMED_DOMAIN'), 'sitemap.xml contains REPLACE_WITH_CONFIRMED_DOMAIN placeholder');
@@ -452,7 +459,7 @@ runTest('CLOUDFLARE_DEPLOYMENT_GUIDE.md documents safe revalidation, routing dis
 });
 
 // 12. Verify Cloudflare Pages _redirects file and rules
-runTest('_redirects exists with 6 non-circular HTTP 301 rules enforcing trailing slashes', () => {
+runTest('_redirects exists with 7 non-circular HTTP 301 rules enforcing trailing slashes', () => {
   const redirectsPath = path.join(ROOT_DIR, '_redirects');
   assert.ok(fs.existsSync(redirectsPath), '_redirects file is missing');
 
@@ -461,12 +468,13 @@ runTest('_redirects exists with 6 non-circular HTTP 301 rules enforcing trailing
     .map(line => line.trim())
     .filter(line => line && !line.startsWith('#'));
 
-  assert.strictEqual(lines.length, 6, `Expected exactly 6 redirect rules, found ${lines.length}`);
+  assert.strictEqual(lines.length, 7, `Expected exactly 7 redirect rules, found ${lines.length}`);
 
   const expectedRules = [
     { from: '/about', to: '/about/', code: '301' },
     { from: '/games/2048', to: '/games/2048/', code: '301' },
     { from: '/games/snake', to: '/games/snake/', code: '301' },
+    { from: '/games/minesweeper', to: '/games/minesweeper/', code: '301' },
     { from: '/contact', to: '/contact/', code: '301' },
     { from: '/privacy', to: '/privacy/', code: '301' },
     { from: '/terms', to: '/terms/', code: '301' }
