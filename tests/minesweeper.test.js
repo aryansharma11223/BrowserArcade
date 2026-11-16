@@ -196,50 +196,30 @@ runTest('Revealing all non-mine cells triggers victory and auto-flags remaining 
 // 8. Chording Mechanism
 runTest('Chording reveals unflagged neighbors when flagged count matches adjacent mine number', () => {
   const engine = new MinesweeperEngine('beginner');
-  engine.reveal(4, 4);
+  engine.reset();
+  engine.status = 'playing';
+  engine.firstClick = false;
 
-  // Find a revealed cell with adjacentMines === 1
-  let targetR = -1;
-  let targetC = -1;
-  for (let r = 0; r < engine.rows; r++) {
-    for (let c = 0; c < engine.cols; c++) {
-      if (engine.grid[r][c].isRevealed && engine.grid[r][c].adjacentMines === 1) {
-        targetR = r;
-        targetC = c;
-        break;
-      }
-    }
-    if (targetR !== -1) break;
-  }
+  // Set up deterministic scenario:
+  // (1, 1) is revealed with adjacentMines = 1
+  engine.grid[1][1].isRevealed = true;
+  engine.grid[1][1].adjacentMines = 1;
 
-  if (targetR !== -1) {
-    // Find its single mine neighbor
-    let mineR = -1, mineC = -1;
-    for (let dr = -1; dr <= 1; dr++) {
-      for (let dc = -1; dc <= 1; dc++) {
-        const nr = targetR + dr;
-        const nc = targetC + dc;
-        if (nr >= 0 && nr < engine.rows && nc >= 0 && nc < engine.cols) {
-          if (engine.grid[nr][nc].isMine) {
-            mineR = nr;
-            mineC = nc;
-            break;
-          }
-        }
-      }
-      if (mineR !== -1) break;
-    }
+  // (0, 0) is a flagged mine
+  engine.grid[0][0].isMine = true;
+  engine.grid[0][0].isFlagged = true;
+  engine.placedFlags = 1;
 
-    if (mineR !== -1) {
-      // Flag the mine
-      engine.toggleFlag(mineR, mineC);
+  // (0, 1) is safe and unrevealed
+  engine.grid[0][1].isMine = false;
+  engine.grid[0][1].isRevealed = false;
+  engine.grid[0][1].isFlagged = false;
 
-      // Perform chord on (targetR, targetC)
-      const chordResult = engine.chord(targetR, targetC);
-      assert.strictEqual(chordResult.changed, true, 'Chord should succeed when flags match adjacent count');
-      assert.strictEqual(chordResult.hitMine, false);
-    }
-  }
+  // Perform chord on (1, 1)
+  const chordResult = engine.chord(1, 1);
+  assert.strictEqual(chordResult.changed, true, 'Chord should succeed when flags match adjacent count');
+  assert.strictEqual(chordResult.hitMine, false);
+  assert.strictEqual(engine.grid[0][1].isRevealed, true, 'Unflagged neighbor should be revealed by chord');
 });
 
 // 9. Reset and Clean State Restoration
