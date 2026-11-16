@@ -458,3 +458,68 @@
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   Accordion & FAQ Component (Zero-JS Native HTML5 <details>/<summary>)
+   ========================================================================== */
+.arcade-faq-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.arcade-faq-item {
+  background: var(--bg-surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.arcade-faq-item[open] {
+  border-color: var(--primary-500);
+  background: var(--bg-surface-elevated);
+}
+
+.arcade-faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.arcade-faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.arcade-faq-question::after {
+  content: "+";
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--primary-400);
+  margin-left: 12px;
+  transition: transform var(--transition-fast);
+  line-height: 1;
+}
+
+.arcade-faq-item[open] .arcade-faq-question::after {
+  content: "−";
+  color: var(--accent-pink);
+}
+
+.arcade-faq-answer {
+  padding: 0 20px 16px 20px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+}

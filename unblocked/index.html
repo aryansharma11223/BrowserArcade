@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unblocked Games - Play Free Classic Arcade Games Online | Browser Arcade</title>
+  <meta name="description" content="Play free unblocked games online at school, college, or work. Instant zero-download access to 2048, Retro Snake, Minesweeper Classic, and Block Drop with no VPN or Flash required.">
+  <link rel="canonical" href="https://browserarcade.pages.dev/unblocked/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://browserarcade.pages.dev/unblocked/">
+  <meta property="og:title" content="Unblocked Games - Play Free Classic Arcade Games Online">
+  <meta property="og:description" content="Instant zero-download classic arcade games for school Chromebooks and work networks. 100% free, zero lag, no VPN needed.">
+  <meta property="og:image" content="https://browserarcade.pages.dev/assets/images/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Browser Arcade - Free unblocked retro games for school and work with zero downloads.">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Unblocked Games - Play Free Online at School | Browser Arcade">
+  <meta name="twitter:description" content="Fast, lightweight retro games engineered to run in any browser with zero downloads, paywalls, or Flash.">
+  <meta name="twitter:image" content="https://browserarcade.pages.dev/assets/images/og-image.png">
+
+  <!-- Favicon & PWA Tokens -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#090A10">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/variables.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/platform.css">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "Unblocked Games - Browser Arcade",
+        "url": "https://browserarcade.pages.dev/unblocked/",
+        "description": "Collection of unblocked classic HTML5 arcade and puzzle games designed for high performance in restricted school and work environments.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Browser Arcade",
+          "url": "https://browserarcade.pages.dev/"
+        },
+        "hasPart": [
+          {
+            "@type": "VideoGame",
+            "name": "2048 Puzzle",
+            "url": "https://browserarcade.pages.dev/games/2048/"
+          },
+          {
+            "@type": "VideoGame",
+            "name": "Snake Retro",
+            "url": "https://browserarcade.pages.dev/games/snake/"
+          },
+          {
+            "@type": "VideoGame",
+            "name": "Minesweeper Classic",
+            "url": "https://browserarcade.pages.dev/games/minesweeper/"
+          },
+          {
+            "@type": "VideoGame",
+            "name": "Block Drop Classic",
+            "url": "https://browserarcade.pages.dev/games/blockdrop/"
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Browser Arcade",
+            "item": "https://browserarcade.pages.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Unblocked Games",
+            "item": "https://browserarcade.pages.dev/unblocked/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are unblocked games?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Unblocked games are lightweight web-based games designed to run through standard web protocols without requiring executable file downloads, external app stores, Flash plugins, or administrative computer permissions. They run directly in browsers like Google Chrome, Microsoft Edge, and Safari."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does Browser Arcade run so smoothly on school Chromebooks?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Unlike bloated gaming portals packed with heavy Unity or WebGL runtimes that overheat budget laptops, Browser Arcade is built with pure vanilla HTML5, CSS3, and JavaScript Canvas. The entire engine footprint is under 50KB, ensuring responsive 60 FPS gameplay on low-power Intel Celeron and ARM Chromebooks."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need a VPN, browser extension, or login to play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Browser Arcade requires zero VPN connections, zero browser extensions, and zero user accounts. You can start playing immediately with a single click."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are sound effects safe for quiet environments like classrooms or offices?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! All games on Browser Arcade are strictly audio-muted by default to respect classroom, library, and office study spaces. Sound can be voluntarily enabled at any time using the HUD sound button."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are high scores and save states handled on shared computers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "High scores are saved directly in your personal browser session using HTML5 localStorage. No personal data, tracking cookies, or network accounts are required."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="arcade-layout">
+  <!-- Accessibility Skip Link -->
+  <a href="#unblockedCatalog" class="skip-to-content">Skip to games</a>
+
+  <!-- Platform Header -->
+  <header class="arcade-header">
+    <div class="container arcade-header-inner">
+      <a href="/" class="arcade-brand" aria-label="Browser Arcade Home">
+        <div class="arcade-brand-logo">
+          <svg width="32" height="32" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="unblockedNavLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366F1"/>
+                <stop offset="50%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#EC4899"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="#121420"/>
+            <path d="M16 28 C16 20, 22 16, 32 16 C42 16, 48 20, 48 28 L46 44 C46 47, 43 49, 40 47 L35 43 L29 43 L24 47 C21 49, 18 47, 18 44 Z" fill="url(#unblockedNavLogoGrad)"/>
+            <rect x="22" y="26" width="4" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="19" y="29" width="10" height="4" rx="1" fill="#FFFFFF"/>
+            <circle cx="39" cy="28" r="2.2" fill="#FFFFFF"/>
+            <circle cx="43" cy="32" r="2.2" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="arcade-nav" aria-label="Primary Navigation">
+        <a href="/" class="arcade-nav-link">Home</a>
+        <a href="/games/2048/" class="arcade-nav-link">2048</a>
+        <a href="/games/snake/" class="arcade-nav-link">Snake</a>
+        <a href="/games/minesweeper/" class="arcade-nav-link">Minesweeper</a>
+        <a href="/games/blockdrop/" class="arcade-nav-link">Block Drop</a>
+        <a href="/unblocked/" class="arcade-nav-link active">Unblocked</a>
+        <a href="/about/" class="arcade-nav-link">About</a>
+        <a href="/contact/" class="arcade-nav-link">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="arcade-header-actions">
+        <button class="arcade-btn-icon sound-toggle-btn" aria-label="Toggle Sound Effects" title="Sound Effects">
+          <span class="sound-icon"></span>
+        </button>
+        <button class="arcade-mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="arcade-mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <a href="/" class="arcade-mobile-link">Home</a>
+    <a href="/games/2048/" class="arcade-mobile-link">2048 Puzzle</a>
+    <a href="/games/snake/" class="arcade-mobile-link">Snake Retro</a>
+    <a href="/games/minesweeper/" class="arcade-mobile-link">Minesweeper Classic</a>
+    <a href="/games/blockdrop/" class="arcade-mobile-link">Block Drop Classic</a>
+    <a href="/unblocked/" class="arcade-mobile-link active">Unblocked Games</a>
+    <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
+    <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
+    <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
+    <a href="/terms/" class="arcade-mobile-link">Terms of Service</a>
+  </div>
+
+  <main id="mainContent">
+    <!-- Hero Section -->
+    <section class="arcade-hero" style="text-align: center; padding: 56px 0 40px;">
+      <div class="container" style="position: relative; z-index: 2;">
+        <div class="badge badge-pulse" style="margin-bottom: 20px;">
+          <span>Chromebook &amp; Work Ready &bull; Zero Lag</span>
+        </div>
+        <h1 style="font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 20px; line-height: 1.15;">
+          Unblocked Arcade Games.<br>
+          <span style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Play Free Online Anywhere.</span>
+        </h1>
+        <p style="font-size: clamp(1rem, 2.2vw, 1.2rem); color: var(--text-muted); max-width: 680px; margin: 0 auto 32px; line-height: 1.6;">
+          Engineered for performance and accessibility. Enjoy beloved classic retro games directly in your browser with zero downloads, zero VPNs, zero Flash plugins, and zero paywalls.
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a href="#unblockedCatalog" class="arcade-btn arcade-btn-primary" style="padding: 14px 28px; font-size: 1.05rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Play Unblocked Games
+          </a>
+          <a href="#unblockedFaq" class="arcade-btn arcade-btn-secondary" style="padding: 14px 24px; font-size: 1.05rem;">
+            Read Unblocked FAQ
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- AdSense / Monetag Slot (Zero CLS) -->
+    <div class="container">
+      <div class="arcade-ad-slot arcade-ad-leaderboard" aria-hidden="true"></div>
+      <div class="arcade-ad-slot arcade-ad-mobile-banner" aria-hidden="true"></div>
+    </div>
+
+    <!-- Games Catalog Grid -->
+    <section id="unblockedCatalog" style="padding: 40px 0 56px;">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px;">Unblocked Games Catalog</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Instant 1-click launch. Optimized for 60 FPS on school Chromebooks and laptops.</p>
+          </div>
+          <span class="badge">4 Unblocked &bull; 100% Free</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+          <!-- Game 1: 2048 -->
+          <article class="arcade-card game-card">
+            <div class="game-card-media">
+              <img src="/assets/images/games/2048-thumb.svg" alt="2048 Unblocked Game" width="400" height="225" loading="eager">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);">
+                  UNBLOCKED NOW
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                <h3 class="game-card-title">2048 Puzzle</h3>
+                <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; text-transform: uppercase;">Puzzle</span>
+              </div>
+              <p class="game-card-desc">
+                Slide matching numbers to build the coveted 2048 tile. Features multi-step undo, endless mode, and instant response.
+              </p>
+              <div class="game-card-meta">
+                <span class="badge">Undo Supported</span>
+                <span class="badge">Touch &amp; Keys</span>
+              </div>
+              <div class="game-card-actions">
+                <a href="/games/2048/" class="arcade-btn arcade-btn-primary" style="width: 100%; text-align: center;">Play 2048 Unblocked</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 2: Snake Retro -->
+          <article class="arcade-card game-card">
+            <div class="game-card-media">
+              <img src="/assets/images/games/snake-thumb.svg" alt="Retro Snake Unblocked" width="400" height="225" loading="lazy">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);">
+                  UNBLOCKED NOW
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                <h3 class="game-card-title">Snake Retro</h3>
+                <span style="font-size: 0.75rem; color: var(--accent-emerald); font-weight: 700; text-transform: uppercase;">Arcade</span>
+              </div>
+              <p class="game-card-desc">
+                Classic Nokia-inspired snake on a 20&times;20 grid. Eat food, accelerate, and dodge walls with precision directional buffering.
+              </p>
+              <div class="game-card-meta">
+                <span class="badge">60 FPS Loop</span>
+                <span class="badge">Input Buffered</span>
+              </div>
+              <div class="game-card-actions">
+                <a href="/games/snake/" class="arcade-btn arcade-btn-primary" style="width: 100%; text-align: center;">Play Snake Unblocked</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 3: Minesweeper Classic -->
+          <article class="arcade-card game-card">
+            <div class="game-card-media">
+              <img src="/assets/images/games/minesweeper-thumb.svg" alt="Minesweeper Classic Unblocked" width="400" height="225" loading="lazy">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);">
+                  UNBLOCKED NOW
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                <h3 class="game-card-title">Minesweeper Classic</h3>
+                <span style="font-size: 0.75rem; color: var(--accent-amber); font-weight: 700; text-transform: uppercase;">Logic</span>
+              </div>
+              <p class="game-card-desc">
+                Pure deductive logic with safe first-click guarantee. Features Beginner, Intermediate, Expert, and speed chording.
+              </p>
+              <div class="game-card-meta">
+                <span class="badge">Safe 1st Click</span>
+                <span class="badge">Chording</span>
+              </div>
+              <div class="game-card-actions">
+                <a href="/games/minesweeper/" class="arcade-btn arcade-btn-primary" style="width: 100%; text-align: center;">Play Minesweeper Unblocked</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 4: Block Drop Classic -->
+          <article class="arcade-card game-card">
+            <div class="game-card-media">
+              <img src="/assets/images/games/blockdrop-thumb.svg" alt="Block Drop Tetris Unblocked" width="400" height="225" loading="lazy">
+              <div style="position: absolute; top: 12px; right: 12px;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34D399; border-color: rgba(16, 185, 129, 0.4);">
+                  UNBLOCKED NOW
+                </span>
+              </div>
+            </div>
+            <div class="game-card-body">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                <h3 class="game-card-title">Block Drop Classic</h3>
+                <span style="font-size: 0.75rem; color: var(--accent-pink); font-weight: 700; text-transform: uppercase;">Retro</span>
+              </div>
+              <p class="game-card-desc">
+                Iconic falling polyomino puzzle. Engineered with SRS wall kicks, 7-bag randomizer, hold piece queue, and ghost projection.
+              </p>
+              <div class="game-card-meta">
+                <span class="badge">7-Bag Fair</span>
+                <span class="badge">SRS Kicks</span>
+              </div>
+              <div class="game-card-actions">
+                <a href="/games/blockdrop/" class="arcade-btn arcade-btn-primary" style="width: 100%; text-align: center;">Play Block Drop Unblocked</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Browser Arcade Works Everywhere (Features Grid) -->
+    <section style="padding: 48px 0; background: var(--bg-surface-elevated); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+      <div class="container">
+        <div style="text-align: center; max-width: 640px; margin: 0 auto 40px;">
+          <h2 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;">Why Browser Arcade Works in School &amp; Work Environments</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Engineered from scratch to be non-disruptive, ultra-lightweight, and 100% compliant with standard web security policies.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
+          <div style="background: var(--bg-surface-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--primary-400);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Zero Downloads or Installs</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin: 0;">
+              Never worry about restricted Windows or ChromeOS administrator permissions. Every game executes purely client-side inside standard browser memory with zero <code>.exe</code>, <code>.apk</code>, or extension files.
+            </p>
+          </div>
+
+          <div style="background: var(--bg-surface-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(6, 182, 212, 0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--accent-cyan);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Chromebook Optimized (&lt;50KB)</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin: 0;">
+              Unlike commercial portals that run heavy 50MB WebGL assets that cause Chromebooks to lag and overheat, our clean Canvas and CSS engines run at steady 60 FPS while sipping minimal battery.
+            </p>
+          </div>
+
+          <div style="background: var(--bg-surface-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(236, 72, 153, 0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--accent-pink);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">No Flash or VPN Needed</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin: 0;">
+              Adobe Flash is obsolete and blocked across modern networks. Browser Arcade relies exclusively on contemporary HTML5 web standards that operate reliably on school and office networks without proxy workarounds.
+            </p>
+          </div>
+
+          <div style="background: var(--bg-surface-card); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle);">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--accent-emerald);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Quiet Default Audio</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin: 0;">
+              Never suffer an accidental blaring sound in a library, computer lab, or shared room. All game audio is strictly muted by default until you manually tap the sound icon in the header.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Unblocked Games FAQ Section -->
+    <section id="unblockedFaq" style="padding: 56px 0;">
+      <div class="container" style="max-width: 860px;">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;">Unblocked Games Frequently Asked Questions</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Everything you need to know about playing classic games safely on school and work devices.</p>
+        </div>
+
+        <div class="arcade-faq-group">
+          <details class="arcade-faq-item" open>
+            <summary class="arcade-faq-question">What are unblocked games and why are they popular?</summary>
+            <div class="arcade-faq-answer">
+              Unblocked games are lightweight web-based games that can be accessed and played directly through modern web browsers without requiring special administrator permissions, executable downloads, or dedicated gaming software. They are widely popular among students and office workers during designated break times because they load instantaneously and run smoothly on low-spec hardware.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">Why does Browser Arcade run so well on school Chromebooks?</summary>
+            <div class="arcade-faq-answer">
+              Most online gaming websites load dozens of bloated third-party trackers, video ads, and 50MB+ WebGL game builds that quickly throttle low-power Chromebook CPUs (such as Intel Celeron or MediaTek processors). Browser Arcade is hand-coded in vanilla HTML5, CSS3, and JavaScript Canvas without heavy frameworks. The entire platform footprint is under 50KB, ensuring smooth 60 FPS performance without heating up your computer or draining battery life.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">Do I need a VPN or proxy to play?</summary>
+            <div class="arcade-faq-answer">
+              No. Browser Arcade serves pure static files over Cloudflare's ultra-fast global edge network via standard HTTPS. You do not need a VPN, proxy server, or third-party browser extensions.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">Are there paywalls, subscriptions, or hidden in-game purchases?</summary>
+            <div class="arcade-faq-answer">
+              Never. Every title on Browser Arcade—including 2048, Snake Retro, Minesweeper Classic, and Block Drop—is 100% free with unlimited replays, unlimited undos, and zero paywalls.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">How are high scores and records saved on shared computers?</summary>
+            <div class="arcade-faq-answer">
+              High scores are saved directly on your local device using standard HTML5 <code>localStorage</code>. No passwords, user profiles, or cloud accounts are required. Your best scores remain private to your browser profile.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">What games are currently available in the Unblocked Catalog?</summary>
+            <div class="arcade-faq-answer">
+              Our unblocked collection currently features four complete, fully tested classics:
+              <ul style="padding-left: 20px; margin-top: 8px;">
+                <li><a href="/games/2048/" style="color: var(--primary-400); text-decoration: underline;">2048 Puzzle</a>: The iconic sliding tile mathematical puzzle with full multi-step undo.</li>
+                <li><a href="/games/snake/" style="color: var(--primary-400); text-decoration: underline;">Snake Retro</a>: Authentic 20x20 arcade snake with progressive speed curves and directional buffering.</li>
+                <li><a href="/games/minesweeper/" style="color: var(--primary-400); text-decoration: underline;">Minesweeper Classic</a>: Clean logic puzzle with safe first-click guarantee and speed chording.</li>
+                <li><a href="/games/blockdrop/" style="color: var(--primary-400); text-decoration: underline;">Block Drop Classic</a>: Retro falling polyomino puzzle featuring 7-bag randomizer, hold piece queue, and SRS wall kicks.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Platform Footer -->
+  <footer class="arcade-footer">
+    <div class="container">
+      <div class="arcade-footer-grid">
+        <div>
+          <div class="arcade-brand">
+            <div class="arcade-brand-text">Browser<span>Arcade</span></div>
+          </div>
+          <p class="arcade-footer-brand-desc">
+            Premium, lightweight web games built with pure vanilla technologies. Instant play on any device with zero downloads.
+          </p>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Games</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/games/2048/" class="arcade-footer-link">2048 Puzzle</a></li>
+            <li><a href="/games/snake/" class="arcade-footer-link">Snake Retro</a></li>
+            <li><a href="/games/minesweeper/" class="arcade-footer-link">Minesweeper Classic</a></li>
+            <li><a href="/games/blockdrop/" class="arcade-footer-link">Block Drop Classic</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Platform</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/unblocked/" class="arcade-footer-link">Unblocked Games</a></li>
+            <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
+            <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="arcade-footer-title">Legal</h3>
+          <ul class="arcade-footer-list">
+            <li><a href="/privacy/" class="arcade-footer-link">Privacy Policy</a></li>
+            <li><a href="/terms/" class="arcade-footer-link">Terms of Service</a></li>
+            <li><button type="button" class="arcade-footer-link cookie-settings-trigger">Cookie Settings</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="arcade-footer-bottom">
+        <div>&copy; 2026 Browser Arcade. All rights reserved. Zero-cost open web gaming.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="/privacy/" class="arcade-footer-link">Privacy</a>
+          <a href="/terms/" class="arcade-footer-link">Terms</a>
+          <button type="button" class="arcade-footer-link" id="cookieSettingsBtn">Cookie Settings</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Monetag Smart Tag -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="311193" async data-cfasync="false"></script>
+  <!-- Platform Shell Script -->
+  <script type="module" src="/assets/js/arcade.js"></script>
+</body>
+</html>

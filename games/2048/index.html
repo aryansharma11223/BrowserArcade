@@ -94,6 +94,22 @@
         "mainEntity": [
           {
             "@type": "Question",
+            "name": "Can you undo a move in 2048 on Browser Arcade?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Browser Arcade features a full multi-step undo engine. Clicking the 'Undo' button or pressing the 'U' key immediately restores the board matrix, previous score, and tile state without penalty, allowing you to recover from miscalculated swipes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the best strategy to win 2048 consistently?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The most reliable method is the Corner Anchor strategy. Keep your largest value tile permanently anchored in one corner (such as bottom-right) and build monotonic descending chains adjacent to it. Restrict your inputs to only three directions (Down, Right, Left) and avoid pressing Up so your anchor tile is never displaced."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "Can I continue playing after reaching the 2048 tile?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -102,15 +118,15 @@
           },
           {
             "@type": "Question",
-            "name": "How are high scores and audio settings stored?",
+            "name": "Can I play 2048 unblocked at school or work?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "High scores and sound preferences are persisted client-side in your browser's private localStorage under key BrowserArcade:2048_bestScore. No personal information or game data is ever sent to an external server."
+              "text": "Yes. Browser Arcade is built with pure client-side HTML5/CSS3/JavaScript, requiring zero plugins, downloads, VPNs, or login accounts. It loads in under 50KB and runs smoothly on school Chromebooks and restricted networks."
             }
           },
           {
             "@type": "Question",
-            "name": "What constitutes a Game Over state?",
+            "name": "What constitutes a Game Over state in 2048?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "A Game Over triggers only when all 16 cells on the 4x4 grid are occupied and no two adjacent tiles (horizontally or vertically) share the same value. As long as at least one merge is possible, the game continues."
@@ -157,6 +173,7 @@
         <a href="/games/snake/" class="arcade-nav-link">Snake</a>
         <a href="/games/minesweeper/" class="arcade-nav-link">Minesweeper</a>
         <a href="/games/blockdrop/" class="arcade-nav-link">Block Drop</a>
+        <a href="/unblocked/" class="arcade-nav-link">Unblocked</a>
         <a href="/about/" class="arcade-nav-link">About</a>
         <a href="/contact/" class="arcade-nav-link">Contact</a>
       </nav>
@@ -182,6 +199,7 @@
     <a href="/games/snake/" class="arcade-mobile-link">Snake Retro</a>
     <a href="/games/minesweeper/" class="arcade-mobile-link">Minesweeper Classic</a>
     <a href="/games/blockdrop/" class="arcade-mobile-link">Block Drop Classic</a>
+    <a href="/unblocked/" class="arcade-mobile-link">Unblocked Games</a>
     <a href="/about/" class="arcade-mobile-link">About Browser Arcade</a>
     <a href="/contact/" class="arcade-mobile-link">Contact Us</a>
     <a href="/privacy/" class="arcade-mobile-link">Privacy Policy</a>
@@ -374,28 +392,42 @@
             The most common mistake novice players make is oscillating between opposing directions (e.g., alternating Left and Right or Up and Down). This scatters high-value tiles across the grid, leaving low-tier '2's and '4's wedged between numbers that cannot merge. If your anchor row becomes compromised, focus on merging smaller satellite tiles on the opposite side of the board to free up grid space before shifting your base back into the corner.
           </p>
 
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Frequently Asked Questions</h3>
-          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
-            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Can I continue playing after reaching the 2048 tile?</h4>
-              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
-                Yes! When you assemble the 2048 tile, a victory banner appears with the option to continue playing in Endless Mode. You can proceed to build 4096, 8192, and beyond until no legal moves remain on the board.
-              </p>
-            </div>
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin: 24px 0 10px;">Frequently Asked Questions</h3>
+          <div class="arcade-faq-group">
+            <details class="arcade-faq-item" open>
+              <summary class="arcade-faq-question">Can you undo a move in 2048 on Browser Arcade?</summary>
+              <div class="arcade-faq-answer">
+                Yes! Browser Arcade features a full multi-step undo engine. Clicking the <strong>Undo</strong> button or pressing the <kbd class="control-key">U</kbd> key immediately restores the board matrix, previous score, and tile state without penalty, allowing you to recover from miscalculated swipes.
+              </div>
+            </details>
 
-            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">How are high scores and audio settings stored?</h4>
-              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
-                High scores and sound preferences are persisted client-side in your browser's private localStorage under key <code>BrowserArcade:2048_bestScore</code>. No personal information or game data is ever sent to an external server.
-              </p>
-            </div>
+            <details class="arcade-faq-item">
+              <summary class="arcade-faq-question">What is the best strategy to win 2048 consistently?</summary>
+              <div class="arcade-faq-answer">
+                The most reliable method is the <strong>Corner Anchor Strategy</strong>. Commit to locking your largest value tile permanently in one corner (e.g. bottom-right) and build descending values adjacent to it. Restrict your inputs strictly to three directions (<kbd class="control-key">↓</kbd>, <kbd class="control-key">→</kbd>, and <kbd class="control-key">←</kbd>) and avoid pressing Up so your anchor tile is never displaced.
+              </div>
+            </details>
 
-            <div style="background: var(--bg-surface-elevated); padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">What constitutes a Game Over state?</h4>
-              <p class="game-info-text" style="font-size: 0.85rem; margin: 0;">
+            <details class="arcade-faq-item">
+              <summary class="arcade-faq-question">Can I continue playing after reaching the 2048 tile?</summary>
+              <div class="arcade-faq-answer">
+                Yes! When you assemble the 2048 tile, a victory banner appears with the option to continue playing in <strong>Endless Mode</strong>. You can proceed to build 4096, 8192, and beyond until no legal moves remain on the board.
+              </div>
+            </details>
+
+            <details class="arcade-faq-item">
+              <summary class="arcade-faq-question">Can I play 2048 unblocked at school or work?</summary>
+              <div class="arcade-faq-answer">
+                Yes. Browser Arcade is built with pure client-side HTML5/CSS3/JavaScript, requiring zero plugins, downloads, VPNs, or login accounts. It loads in under 50KB and runs smoothly on school Chromebooks and restricted networks. Visit our <a href="/unblocked/" style="color: var(--primary-400); text-decoration: underline;">Unblocked Games Hub</a> for more classic arcade titles.
+              </div>
+            </details>
+
+            <details class="arcade-faq-item">
+              <summary class="arcade-faq-question">What constitutes a Game Over state in 2048?</summary>
+              <div class="arcade-faq-answer">
                 A Game Over triggers only when all 16 cells on the 4&times;4 grid are occupied and no two adjacent tiles (horizontally or vertically) share the same value. As long as at least one merge is possible, the game continues.
-              </p>
-            </div>
+              </div>
+            </details>
           </div>
         </section>
       </div>
@@ -427,6 +459,7 @@
           <h3 class="arcade-footer-title">Platform</h3>
           <ul class="arcade-footer-list">
             <li><a href="/" class="arcade-footer-link">Arcade Hub</a></li>
+            <li><a href="/unblocked/" class="arcade-footer-link">Unblocked Games</a></li>
             <li><a href="/about/" class="arcade-footer-link">About Us</a></li>
             <li><a href="/contact/" class="arcade-footer-link">Contact</a></li>
           </ul>
