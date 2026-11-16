@@ -36,6 +36,91 @@
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/platform.css">
   <link rel="stylesheet" href="/games/2048/css/2048.css">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "name": "2048 Puzzle",
+        "alternateName": "2048 Game",
+        "description": "Play the original 2048 puzzle game online for free. Features smooth swipe and keyboard controls, procedural Web Audio sound effects, multi-step undo support, and endless mode.",
+        "url": "https://browserarcade.pages.dev/games/2048/",
+        "image": "https://browserarcade.pages.dev/assets/images/og-image.png",
+        "genre": ["Puzzle", "Brain Game", "Mathematical Puzzle"],
+        "gamePlatform": ["Web Browser", "Desktop", "Mobile"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Browser Arcade",
+          "url": "https://browserarcade.pages.dev/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Browser Arcade",
+            "item": "https://browserarcade.pages.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Games",
+            "item": "https://browserarcade.pages.dev/#games"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "2048 Puzzle",
+            "item": "https://browserarcade.pages.dev/games/2048/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I continue playing after reaching the 2048 tile?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! When you assemble the 2048 tile, a victory banner appears with the option to continue playing in Endless Mode. You can proceed to build 4096, 8192, and beyond until no legal moves remain on the board."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are high scores and audio settings stored?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "High scores and sound preferences are persisted client-side in your browser's private localStorage under key BrowserArcade:2048_bestScore. No personal information or game data is ever sent to an external server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What constitutes a Game Over state?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A Game Over triggers only when all 16 cells on the 4x4 grid are occupied and no two adjacent tiles (horizontally or vertically) share the same value. As long as at least one merge is possible, the game continues."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="arcade-layout">
   <!-- Accessibility Skip Link -->

@@ -35,6 +35,91 @@
   <link rel="stylesheet" href="/assets/css/components.css">
   <link rel="stylesheet" href="/assets/css/platform.css">
   <link rel="stylesheet" href="/games/snake/css/snake.css">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "name": "Snake Retro",
+        "alternateName": "Classic Snake",
+        "description": "Play Snake Retro free online in your browser. Classic arcade reflex challenge featuring sleek neon visuals, smooth grid movement, dynamic speed acceleration, and zero ads.",
+        "url": "https://browserarcade.pages.dev/games/snake/",
+        "image": "https://browserarcade.pages.dev/assets/images/og-image.png",
+        "genre": ["Arcade", "Retro Game", "Action"],
+        "gamePlatform": ["Web Browser", "Desktop", "Mobile"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Browser Arcade",
+          "url": "https://browserarcade.pages.dev/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Browser Arcade",
+            "item": "https://browserarcade.pages.dev/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Games",
+            "item": "https://browserarcade.pages.dev/#games"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Snake Retro",
+            "item": "https://browserarcade.pages.dev/games/snake/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is it possible to completely beat Snake Retro?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! If you successfully grow your snake to fill all 400 cells of the 20x20 grid, the food spawning algorithm detects that no unoccupied spaces remain and automatically triggers a complete Game Victory state."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the anti-reversal mechanism work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "To prevent accidental suicide, the input manager blocks 180-degree reversals. If moving Right, pressing Left is safely ignored. Furthermore, both current velocity and pending queued moves are checked to prevent rapid double-taps from causing self-reversal."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where is my high score saved?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your best score is stored directly on your device in standard HTML5 localStorage under BrowserArcade:snake_bestScore. High scores persist between browser sessions with zero server accounts or tracking cookies."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- Platform Header -->
