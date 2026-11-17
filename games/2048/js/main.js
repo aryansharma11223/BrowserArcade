@@ -225,7 +225,7 @@ class Game2048App {
       const dateStr = getDailyDateString();
       shareBtns.forEach(btn => {
         btn.setAttribute('data-share-title', `Browser Arcade 2048 Daily Challenge (${dateStr})`);
-        btn.setAttribute('data-share-text', `Browser Arcade 2048 Daily Challenge (${dateStr}) 🔢 Score: ${this.engine.score}! Can you beat my score? https://browserarcade.pages.dev/games/2048/`);
+        btn.setAttribute('data-share-text', `Browser Arcade 2048 Daily (${dateStr}) 🔢\nScore: ${this.engine.score}! ⭐\n🟧 🟨 🟩 🟦 🟪\nCan you beat my seed score? https://browserarcade.pages.dev/games/2048/`);
       });
     } else {
       shareBtns.forEach(btn => {

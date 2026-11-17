@@ -144,24 +144,28 @@ class ArcadePlatform {
       if (!shareBtn) return;
 
       e.preventDefault();
+      const customTitle = shareBtn.getAttribute('data-share-title');
+      const customText = shareBtn.getAttribute('data-share-text');
       const game = shareBtn.getAttribute('data-game') || document.title.split('-')[0].trim();
       const scoreElId = shareBtn.getAttribute('data-score-el');
       const scoreEl = scoreElId ? document.getElementById(scoreElId) : null;
       const score = scoreEl ? scoreEl.textContent.trim() : '';
 
-      const shareText = score
-        ? `🎮 I scored ${score} in ${game} on Browser Arcade! Can you beat my score?`
-        : `🎮 Playing ${game} on Browser Arcade! Check it out:`;
+      const shareTitle = customTitle || `${game} - Browser Arcade`;
       const shareUrl = window.location.href;
+      const shareText = customText || (score
+        ? `🎮 I scored ${score} in ${game} on Browser Arcade! Can you beat my score?`
+        : `🎮 Playing ${game} on Browser Arcade! Check it out:`);
 
       if (navigator.share) {
         navigator.share({
-          title: `${game} - Browser Arcade`,
+          title: shareTitle,
           text: shareText,
           url: shareUrl
         }).catch(() => {});
       } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(`${shareText} ${shareUrl}`).then(() => {
+        const fullCopy = customText ? `${customText}` : `${shareText} ${shareUrl}`;
+        navigator.clipboard.writeText(fullCopy).then(() => {
           this.showShareFeedback(shareBtn);
         }).catch(() => {});
       }

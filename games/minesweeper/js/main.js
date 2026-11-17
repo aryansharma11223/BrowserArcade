@@ -261,7 +261,7 @@ class MinesweeperGame {
       if (this.engine.isDaily && shareBtn) {
         const dateStr = getDailyDateString();
         shareBtn.setAttribute('data-share-title', `Browser Arcade Daily Challenge (${dateStr})`);
-        shareBtn.setAttribute('data-share-text', `Browser Arcade Daily Challenge (${dateStr}) 💣 Minefield Cleared in ${elapsed}s! Can you beat my time? https://browserarcade.pages.dev/games/minesweeper/`);
+        shareBtn.setAttribute('data-share-text', `Browser Arcade Daily (${dateStr}) 💣\nCleared in ${elapsed}s! ⭐\n🟩 🟩 🟩 🟩 🟩\nCan you beat my time? https://browserarcade.pages.dev/games/minesweeper/`);
       } else if (shareBtn) {
         shareBtn.removeAttribute('data-share-title');
         shareBtn.removeAttribute('data-share-text');
