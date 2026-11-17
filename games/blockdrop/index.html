@@ -133,6 +133,37 @@
             }
           }
         ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Play Block Drop Classic (Tetris Rules)",
+        "description": "Step-by-step master guide to positioning falling tetrominoes, stacking flat surfaces, using the Hold box, and clearing 4 lines simultaneously.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Rotate and Position Falling Polyominoes",
+            "text": "Use Left and Right arrow keys to translate falling pieces horizontally across the 10x20 matrix. Press Up or X to rotate clockwise with SRS wall kicks."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Build a Flat Matrix with an Open Well",
+            "text": "Stack horizontal lines smoothly across 9 columns while preserving a 1-column open vertical well (usually on column 1 or 10)."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Use the Hold Queue for Strategic Storage",
+            "text": "Press C or Shift to store awkward pieces or bank a straight cyan I-piece for later."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Execute a 4-Line Tetris Clear",
+            "text": "When your well is 4 rows deep, drop the vertical I-piece straight into the slot to clear all 4 lines simultaneously for an 800-point multiplier."
+          }
+        ]
       }
     ]
   }
@@ -306,9 +337,15 @@
             <span id="finalLinesDisplay" style="font-size: 1.35rem; font-weight: 800; color: var(--accent-pink);">0</span>
           </div>
         </div>
-        <button id="playAgainBtn" type="button" class="arcade-btn arcade-btn-primary arcade-btn-lg" style="width: 100%;">
-          Play Again
-        </button>
+        <div style="display: flex; gap: 10px; width: 100%;">
+          <button id="playAgainBtn" type="button" class="arcade-btn arcade-btn-primary arcade-btn-lg" style="flex: 1;">
+            Play Again
+          </button>
+          <button type="button" class="arcade-btn arcade-btn-secondary arcade-btn-lg arcade-share-btn" data-game="Block Drop Classic" data-score-el="finalScoreDisplay" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 16px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Share
+          </button>
+        </div>
       </div>
     </div>
 
@@ -403,6 +440,88 @@
           </h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
             The <strong>Hold Queue</strong> is your safety valve. Keep an I-piece or T-piece banked in your Hold box. When an awkward piece arrives (such as consecutive S or Z shapes) that would disrupt your flat plane, swap it out. Furthermore, our engine implements <strong>SRS Wall Kicks</strong>: rotating a piece against a wall or resting block attempts offset kicks, allowing you to twist pieces into tight overhangs.
+          </p>
+        </section>
+
+        <section style="margin-bottom: 28px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 10px;">
+            5. Complete Scoring Formula &amp; Line Clear Multipliers
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
+            Block Drop follows tournament falling-block scoring standards, multiplying line rewards by your current level:
+          </p>
+          <div class="arcade-table-container">
+            <table class="arcade-table">
+              <thead>
+                <tr>
+                  <th>Action / Clear Type</th>
+                  <th>Base Points</th>
+                  <th>Level Multiplier</th>
+                  <th>Level 1 Points</th>
+                  <th>Level 10 Points</th>
+                  <th>Strategic Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Single Line Clear</strong></td>
+                  <td>100</td>
+                  <td>&times; Current Level</td>
+                  <td>100 pts</td>
+                  <td>1,000 pts</td>
+                  <td><span class="badge-table" style="background: rgba(16, 185, 129, 0.2); color: #34D399;">Downstack Recovery</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Double Line Clear</strong></td>
+                  <td>300</td>
+                  <td>&times; Current Level</td>
+                  <td>300 pts</td>
+                  <td>3,000 pts</td>
+                  <td><span class="badge-table" style="background: rgba(6, 182, 212, 0.2); color: #38BDF8;">Board Flattening</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Triple Line Clear</strong></td>
+                  <td>500</td>
+                  <td>&times; Current Level</td>
+                  <td>500 pts</td>
+                  <td>5,000 pts</td>
+                  <td><span class="badge-table" style="background: rgba(99, 102, 241, 0.2); color: #818CF8;">High Yield</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Tetris (4 Lines)</strong> 🏆</td>
+                  <td>800</td>
+                  <td>&times; Current Level</td>
+                  <td>800 pts</td>
+                  <td>8,000 pts</td>
+                  <td><span class="badge-table" style="background: rgba(236, 72, 153, 0.2); color: #F472B6;">Maximum Efficiency</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Soft Drop</strong></td>
+                  <td>1 per row</td>
+                  <td>Fixed</td>
+                  <td>1 pt / cell</td>
+                  <td>1 pt / cell</td>
+                  <td><span class="badge-table" style="background: rgba(245, 158, 11, 0.2); color: #FBBF24;">Controlled Pace</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Hard Drop (Spacebar)</strong></td>
+                  <td>2 per row</td>
+                  <td>Fixed</td>
+                  <td>2 pts / cell</td>
+                  <td>2 pts / cell</td>
+                  <td><span class="badge-table" style="background: rgba(139, 92, 246, 0.2); color: #A78BFA;">Instant Lock Speed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section style="margin-bottom: 28px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 10px;">
+            Explore More Classic Arcade Games
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
+            Looking for more retro browser challenges? Exercise numerical spatial strategy in <a href="/games/2048/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">2048 Puzzle</a>, test deductive logic in <a href="/games/minesweeper/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Minesweeper Classic</a>, or push your reaction speed to the limit in <a href="/games/snake/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Snake Retro</a>. Playing from a school Chromebook or workplace laptop? Browse all our titles in the <a href="/unblocked/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Unblocked Games Hub</a> with zero downloads and 60 FPS performance.
           </p>
         </section>
 

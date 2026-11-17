@@ -523,3 +523,56 @@
   border-top: 1px solid var(--border-subtle);
   padding-top: 12px;
 }
+
+/* ==========================================================================
+   Data & Scoring Table Component (Responsive, High-Contrast & Accessible)
+   ========================================================================== */
+.arcade-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 18px 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-card);
+  -webkit-overflow-scrolling: touch;
+}
+
+.arcade-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+  min-width: 440px;
+}
+
+.arcade-table th {
+  background: var(--bg-surface-elevated);
+  color: var(--text-main);
+  font-weight: 700;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+.arcade-table td {
+  padding: 12px 16px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.arcade-table tr:last-child td {
+  border-bottom: none;
+}
+
+.arcade-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.arcade-table .badge-table {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}

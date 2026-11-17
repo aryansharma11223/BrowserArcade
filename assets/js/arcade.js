@@ -19,12 +19,55 @@ class ArcadePlatform {
   init() {
     this.bindMobileNav();
     this.bindSoundButtons();
+    this.bindShareButtons();
     this.updateSoundIcons(audio.isMuted);
 
     // Sync sound state across tabs or components
     window.addEventListener('arcade:soundchange', (e) => {
       this.updateSoundIcons(e.detail.isMuted);
     });
+  }
+
+  bindShareButtons() {
+    document.addEventListener('click', (e) => {
+      const shareBtn = e.target.closest('.arcade-share-btn');
+      if (!shareBtn) return;
+
+      e.preventDefault();
+      const game = shareBtn.getAttribute('data-game') || document.title.split('-')[0].trim();
+      const scoreElId = shareBtn.getAttribute('data-score-el');
+      const scoreEl = scoreElId ? document.getElementById(scoreElId) : null;
+      const score = scoreEl ? scoreEl.textContent.trim() : '';
+
+      const shareText = score
+        ? `🎮 I scored ${score} in ${game} on Browser Arcade! Can you beat my score?`
+        : `🎮 Playing ${game} on Browser Arcade! Check it out:`;
+      const shareUrl = window.location.href;
+
+      if (navigator.share) {
+        navigator.share({
+          title: `${game} - Browser Arcade`,
+          text: shareText,
+          url: shareUrl
+        }).catch(() => {});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(`${shareText} ${shareUrl}`).then(() => {
+          this.showShareFeedback(shareBtn);
+        }).catch(() => {});
+      }
+    });
+  }
+
+  showShareFeedback(btn) {
+    const originalHtml = btn.innerHTML;
+    btn.textContent = 'Copied Link! ✓';
+    btn.style.borderColor = 'var(--accent-emerald)';
+    btn.style.color = 'var(--accent-emerald)';
+    setTimeout(() => {
+      btn.innerHTML = originalHtml;
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2500);
   }
 
   bindMobileNav() {

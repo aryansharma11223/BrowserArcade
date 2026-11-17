@@ -132,6 +132,37 @@
             }
           }
         ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Play Snake Retro and Achieve High Scores",
+        "description": "Step-by-step master guide to controlling the snake, managing progressive acceleration, and executing perimeter loops.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Navigate and Collect Food Pellets",
+            "text": "Use Arrow Keys, WASD, or swipe gestures to guide the green snake toward flashing red food pellets. Each pellet extends body length by one segment and awards 10 points."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Avoid Walls and Self-Collision",
+            "text": "Colliding with any of the 4 outer perimeter walls or slithering into your own tail triggers immediate Game Over."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Adopt the Perimeter Loop Highway",
+            "text": "As your snake exceeds 15 segments, hug the outer grid border and snake in tight S-curves to leave 75% of the center arena free of coils."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Use Input Buffering for Tight Turns",
+            "text": "Queue rapid turns (e.g., Up then Right) before the game tick completes to pull off crisp 90-degree corners at high speeds."
+          }
+        ]
       }
     ]
   }
@@ -292,6 +323,10 @@
             </p>
             <div class="game-overlay-actions">
               <button class="arcade-btn arcade-btn-primary btn-new-game">Play Again</button>
+              <button type="button" class="arcade-btn arcade-btn-secondary arcade-share-btn" data-game="Snake Retro" data-score-el="finalScore" style="display: inline-flex; align-items: center; gap: 6px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                Share Score
+              </button>
             </div>
           </div>
         </div>
@@ -397,6 +432,80 @@
             <li><strong>Never Box Yourself In:</strong> Before turning into a pocket or cul-de-sac between your own coils, verify that an open exit corridor exists with a path wider than your snake's length. Entering a blind pocket with high body mass is the leading cause of late-game death.</li>
             <li><strong>Utilize Directional Input Buffering:</strong> The input engine incorporates a two-step FIFO queue. You can quickly tap <kbd class="control-key">↑</kbd> then <kbd class="control-key">→</kbd> in rapid succession to execute a tight 90-degree corner before the next tick executes, ensuring smooth movement without missed keystrokes.</li>
           </ol>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Snake Speed Progression Curve</h3>
+          <p class="game-info-text">
+            Snake Retro uses an algorithmic speed curve: <code>Math.max(80, 150 - (score / 10) * 3)</code> ms per tick. As you collect food pellets and extend your snake, step intervals accelerate dynamically:
+          </p>
+          <div class="arcade-table-container">
+            <table class="arcade-table">
+              <thead>
+                <tr>
+                  <th>Food Pellets</th>
+                  <th>Total Score</th>
+                  <th>Body Length</th>
+                  <th>Tick Delay (ms)</th>
+                  <th>Relative Speed</th>
+                  <th>Pace Tier</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0 - 4</td>
+                  <td>0 - 40</td>
+                  <td>3 - 7</td>
+                  <td>150 - 138 ms</td>
+                  <td>1.0x</td>
+                  <td><span class="badge-table" style="background: rgba(16, 185, 129, 0.2); color: #34D399;">Cruising</span></td>
+                </tr>
+                <tr>
+                  <td>5 - 9</td>
+                  <td>50 - 90</td>
+                  <td>8 - 12</td>
+                  <td>135 - 123 ms</td>
+                  <td>1.15x</td>
+                  <td><span class="badge-table" style="background: rgba(6, 182, 212, 0.2); color: #38BDF8;">Moderate</span></td>
+                </tr>
+                <tr>
+                  <td>10 - 14</td>
+                  <td>100 - 140</td>
+                  <td>13 - 17</td>
+                  <td>120 - 108 ms</td>
+                  <td>1.3x</td>
+                  <td><span class="badge-table" style="background: rgba(99, 102, 241, 0.2); color: #818CF8;">Brisk</span></td>
+                </tr>
+                <tr>
+                  <td>15 - 19</td>
+                  <td>150 - 190</td>
+                  <td>18 - 22</td>
+                  <td>105 - 93 ms</td>
+                  <td>1.5x</td>
+                  <td><span class="badge-table" style="background: rgba(245, 158, 11, 0.2); color: #FBBF24;">Fast</span></td>
+                </tr>
+                <tr>
+                  <td>20 - 23</td>
+                  <td>200 - 230</td>
+                  <td>23 - 26</td>
+                  <td>90 - 81 ms</td>
+                  <td>1.75x</td>
+                  <td><span class="badge-table" style="background: rgba(236, 72, 153, 0.2); color: #F472B6;">Hyper</span></td>
+                </tr>
+                <tr>
+                  <td>24+ ⚡</td>
+                  <td>240+</td>
+                  <td>27+</td>
+                  <td>80 ms (Cap)</td>
+                  <td>1.88x (Max)</td>
+                  <td><span class="badge-table" style="background: rgba(239, 68, 68, 0.2); color: #F87171;">Terminal Velocity</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin: 20px 0 8px;">Explore More Classic Arcade Games</h3>
+          <p class="game-info-text">
+            Mastered the 20&times;20 serpentine arena? Relax your reflexes with deductive logic in <a href="/games/minesweeper/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Minesweeper Classic</a>, solve tile combinations in <a href="/games/2048/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">2048 Puzzle</a>, or test your spatial block clearing in <a href="/games/blockdrop/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Block Drop Classic</a>. Playing on a school Chromebook or workplace laptop? Browse all our titles in the <a href="/unblocked/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Unblocked Games Hub</a> with zero downloads and 60 FPS performance.
+          </p>
 
           <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin: 24px 0 10px;">Frequently Asked Questions</h3>
           <div class="arcade-faq-group">

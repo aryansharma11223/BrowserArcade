@@ -220,6 +220,10 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
   const locMatches = sitemapContent.match(/<loc>/g) || [];
   assert.strictEqual(locMatches.length, 10, `sitemap.xml must contain exactly 10 URLs, found ${locMatches.length}`);
 
+  // Verify valid lastmod timestamps exist for all URLs
+  const lastmodMatches = sitemapContent.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || [];
+  assert.strictEqual(lastmodMatches.length, 10, `sitemap.xml must contain exactly 10 lastmod tags, found ${lastmodMatches.length}`);
+
   // Verify no placeholders or obsolete domains remain
   assert.ok(!sitemapContent.includes('REPLACE_WITH_CONFIRMED_DOMAIN'), 'sitemap.xml contains REPLACE_WITH_CONFIRMED_DOMAIN placeholder');
   assert.ok(!sitemapContent.includes('vercel.app'), 'sitemap.xml contains obsolete vercel.app reference');
@@ -639,6 +643,19 @@ runTest('About, Contact, and Game Pages reflect multi-game catalog and substanti
   assert.ok(snakeContent.includes('Dynamic Speed Curve') || snakeContent.includes('Speed Progression'), 'Snake must document speed progression mechanics');
   assert.ok(snakeContent.includes('Vacating Tail Physics'), 'Snake must document vacating tail physics');
   assert.ok(snakeContent.includes('Frequently Asked Questions'), 'Snake must include FAQ section');
+});
+
+// 17. Verify All 4 games implement HowTo schema, scoring data tables, and contextual cross-links
+runTest('All 4 games implement HowTo schema, scoring data tables, and contextual cross-links', () => {
+  const games = ['games/2048/index.html', 'games/snake/index.html', 'games/minesweeper/index.html', 'games/blockdrop/index.html'];
+
+  games.forEach(gameFile => {
+    const content = fs.readFileSync(path.join(ROOT_DIR, gameFile), 'utf8');
+    assert.ok(content.includes('"@type": "HowTo"'), `${gameFile} missing @type: HowTo schema`);
+    assert.ok(content.includes('<table class="arcade-table">'), `${gameFile} missing responsive scoring table`);
+    assert.ok(content.includes('Explore More Classic Arcade Games'), `${gameFile} missing contextual cross-linking section`);
+    assert.ok(content.includes('arcade-share-btn'), `${gameFile} missing social share button`);
+  });
 });
 
 console.log('\n========================================');

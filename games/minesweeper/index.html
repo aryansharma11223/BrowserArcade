@@ -133,6 +133,37 @@
             }
           }
         ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Play Minesweeper and Win Step by Step",
+        "description": "Step-by-step master guide to deductive logic, first-click safety, flagging mines, and speed chording in Minesweeper.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Make an Initial Safe Click",
+            "text": "Click any cell to begin. Browser Arcade guarantees your first click and all 8 neighbors are 100% mine-free, creating an opening cascade."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Interpret Adjacent Mine Numbers",
+            "text": "Numbers indicate how many mines touch that cell (1 to 8). For example, a '1' in a corner cell touching only one hidden square means that square is guaranteed to be a mine."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Flag Verified Mines",
+            "text": "Right-click on desktop or long-press on mobile to place a red warning flag over confirmed mine squares to prevent accidental detonation."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Execute Speed Chording",
+            "text": "Once a number touches the correct quantity of flags, click that number (or press C) to instantly reveal all remaining unflagged neighbor cells in one click."
+          }
+        ]
       }
     ]
   }
@@ -269,9 +300,15 @@
           </div>
         </div>
         <div id="winBestBadge" style="color: var(--accent-amber); font-weight: 700; margin-bottom: 20px;"></div>
-        <button id="winPlayAgainBtn" type="button" class="arcade-btn arcade-btn-primary arcade-btn-lg" style="width: 100%;">
-          Play Another Round
-        </button>
+        <div style="display: flex; gap: 10px; width: 100%;">
+          <button id="winPlayAgainBtn" type="button" class="arcade-btn arcade-btn-primary arcade-btn-lg" style="flex: 1;">
+            Play Again
+          </button>
+          <button type="button" class="arcade-btn arcade-btn-secondary arcade-btn-lg arcade-share-btn" data-game="Minesweeper Classic" data-score-el="winTimeDisplay" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 16px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Share
+          </button>
+        </div>
       </div>
     </div>
 
@@ -380,6 +417,68 @@
           </h3>
           <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
             In high-density boards such as Expert (16x30 with 99 mines), you will occasionally encounter isolated 50/50 deadlocks where no mathematical deduction can determine which of two squares holds the explosive. In these scenarios, never guess immediately! Continue solving every other sector of the board. Clearing the rest of the board frequently reveals global mine counts, enabling you to calculate exact remaining mine density and dramatically tilt the odds in your favor.
+          </p>
+        </section>
+
+        <section style="margin-bottom: 28px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 10px;">
+            5. Official Difficulty Presets &amp; Mine Density Specifications
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
+            Minesweeper offers three standard tournament difficulty tiers. Below are the official mathematical board dimensions, safe cell targets, and explosive density percentages:
+          </p>
+          <div class="arcade-table-container">
+            <table class="arcade-table">
+              <thead>
+                <tr>
+                  <th>Difficulty</th>
+                  <th>Grid Size</th>
+                  <th>Total Cells</th>
+                  <th>Total Mines</th>
+                  <th>Safe Cells to Dig</th>
+                  <th>Mine Density</th>
+                  <th>Recommended For</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Beginner</strong></td>
+                  <td>9 &times; 9</td>
+                  <td>81</td>
+                  <td>10</td>
+                  <td>71</td>
+                  <td>12.3%</td>
+                  <td><span class="badge-table" style="background: rgba(16, 185, 129, 0.2); color: #34D399;">Learning &amp; Speedruns</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Intermediate</strong></td>
+                  <td>16 &times; 16</td>
+                  <td>256</td>
+                  <td>40</td>
+                  <td>216</td>
+                  <td>15.6%</td>
+                  <td><span class="badge-table" style="background: rgba(6, 182, 212, 0.2); color: #38BDF8;">Pattern Mastery</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Expert</strong></td>
+                  <td>16 &times; 30</td>
+                  <td>480</td>
+                  <td>99</td>
+                  <td>381</td>
+                  <td>20.6%</td>
+                  <td><span class="badge-table" style="background: rgba(236, 72, 153, 0.2); color: #F472B6;">Championship Logic</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section style="margin-bottom: 28px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 10px;">
+            Explore More Classic Arcade Games
+          </h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.7;">
+            Done sweeping the minefield? Train your spatial puzzle skills in <a href="/games/blockdrop/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Block Drop Classic</a>, challenge your mathematical sliding foresight in <a href="/games/2048/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">2048 Puzzle</a>, or test your reflexes in the 20&times;20 arena in <a href="/games/snake/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Snake Retro</a>. Playing from a school Chromebook or workplace laptop? Browse all our titles in the <a href="/unblocked/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Unblocked Games Hub</a> with zero downloads and 60 FPS performance.
           </p>
         </section>
 
