@@ -9,11 +9,14 @@ import { GridRenderer } from './renderer.js';
 import { InputManager } from './input.js';
 import { audio } from '../../../assets/js/sound.js';
 import { storage } from '../../../assets/js/storage.js';
+import { mulberry32, getDailySeed, getDailyDateString, getDailyChallengeKey } from '../../../assets/js/prng.js';
 
 class Game2048App {
   constructor() {
     this.bestScoreKey = '2048_bestScore';
     this.bestScore = storage.getItem(this.bestScoreKey, 0);
+    this.isDaily = false;
+    this.dailyScoreKey = getDailyChallengeKey('2048');
 
     this.engine = new GameEngine();
     this.renderer = new GridRenderer();
@@ -62,6 +65,15 @@ class Game2048App {
     if (undoBtn) {
       undoBtn.addEventListener('click', () => {
         this.undo();
+      });
+    }
+
+    // Daily Challenge toggle
+    const dailyBtn = document.getElementById('dailyModeBtn');
+    if (dailyBtn) {
+      dailyBtn.addEventListener('click', () => {
+        audio.playClick();
+        this.toggleDailyMode();
       });
     }
 
@@ -124,9 +136,11 @@ class Game2048App {
     this.isAnimating = true;
 
     // Update Best Score persistence if current score exceeded it
-    if (this.engine.score > this.bestScore) {
-      this.bestScore = this.engine.score;
-      storage.setItem(this.bestScoreKey, this.bestScore);
+    const activeBestKey = this.isDaily ? this.dailyScoreKey : this.bestScoreKey;
+    const currentBest = storage.getItem(activeBestKey, 0);
+    if (this.engine.score > currentBest) {
+      storage.setItem(activeBestKey, this.engine.score);
+      if (!this.isDaily) this.bestScore = this.engine.score;
     }
 
     // Trigger audio feedback based on move outcome
@@ -138,17 +152,20 @@ class Game2048App {
     }
 
     // Render move transitions and HUD
+    const displayBest = this.isDaily ? storage.getItem(this.dailyScoreKey, 0) : this.bestScore;
     this.renderer.renderMove(result, this.engine.getTiles());
-    this.renderer.updateScores(this.engine.score, this.bestScore, result.scoreGained);
+    this.renderer.updateScores(this.engine.score, displayBest, result.scoreGained);
     this.renderer.updateUndoState(this.engine.canUndo());
 
     // Check Win and Game Over conditions
     if (result.won && !this.engine.keepPlaying) {
+      this._updateShareButtonText();
       setTimeout(() => {
         audio.playWin();
         this.renderer.showWin();
       }, this.animationDuration + 50);
     } else if (result.gameOver) {
+      this._updateShareButtonText();
       setTimeout(() => {
         audio.playGameOver();
         this.renderer.showGameOver(this.engine.score);
@@ -160,6 +177,62 @@ class Game2048App {
       this.isAnimating = false;
       this._drainNextInput();
     }, this.animationDuration);
+  }
+
+  toggleDailyMode() {
+    this.isDaily = !this.isDaily;
+    const dailyBtn = document.getElementById('dailyModeBtn');
+    const banner = document.getElementById('dailyBanner2048');
+    const dateDisplay = document.getElementById('dailyDateDisplay2048');
+    const bestBadge = document.getElementById('dailyBestBadge2048');
+
+    if (this.isDaily) {
+      if (dailyBtn) {
+        dailyBtn.classList.remove('arcade-btn-secondary');
+        dailyBtn.classList.add('arcade-btn-primary');
+      }
+      if (banner) banner.style.display = 'inline-flex';
+      if (dateDisplay) dateDisplay.textContent = getDailyDateString();
+
+      const dailyBest = storage.getItem(this.dailyScoreKey, 0);
+      if (bestBadge) {
+        bestBadge.style.display = dailyBest > 0 ? 'inline-block' : 'none';
+        bestBadge.textContent = `⭐ Daily Best: ${dailyBest}`;
+      }
+
+      const seed = getDailySeed();
+      this.engine = new GameEngine({ randomFn: mulberry32(seed) });
+    } else {
+      if (dailyBtn) {
+        dailyBtn.classList.remove('arcade-btn-primary');
+        dailyBtn.classList.add('arcade-btn-secondary');
+      }
+      if (banner) banner.style.display = 'none';
+      this.engine = new GameEngine();
+    }
+
+    this.renderer.hideGameOver();
+    this.renderer.hideWin();
+    this.renderer.syncGrid(this.engine.getTiles(), true);
+    const displayBest = this.isDaily ? storage.getItem(this.dailyScoreKey, 0) : this.bestScore;
+    this.renderer.updateScores(this.engine.score, displayBest);
+    this.renderer.updateUndoState(this.engine.canUndo());
+  }
+
+  _updateShareButtonText() {
+    const shareBtns = document.querySelectorAll('.arcade-share-btn');
+    if (this.isDaily) {
+      const dateStr = getDailyDateString();
+      shareBtns.forEach(btn => {
+        btn.setAttribute('data-share-title', `Browser Arcade 2048 Daily Challenge (${dateStr})`);
+        btn.setAttribute('data-share-text', `Browser Arcade 2048 Daily Challenge (${dateStr}) 🔢 Score: ${this.engine.score}! Can you beat my score? https://browserarcade.pages.dev/games/2048/`);
+      });
+    } else {
+      shareBtns.forEach(btn => {
+        btn.removeAttribute('data-share-title');
+        btn.removeAttribute('data-share-text');
+      });
+    }
   }
 
   /**
@@ -184,8 +257,9 @@ class Game2048App {
     if (!success) return;
 
     // Cleanly re-render restored tiles
+    const displayBest = this.isDaily ? storage.getItem(this.dailyScoreKey, 0) : this.bestScore;
     this.renderer.syncGrid(this.engine.getTiles());
-    this.renderer.updateScores(this.engine.score, this.bestScore);
+    this.renderer.updateScores(this.engine.score, displayBest);
     this.renderer.updateUndoState(this.engine.canUndo());
 
     // Dismiss overlays if undone from win or game over
@@ -207,11 +281,17 @@ class Game2048App {
    * Starts a completely new game.
    */
   newGame() {
-    this.engine.reset();
+    if (this.isDaily) {
+      const seed = getDailySeed();
+      this.engine = new GameEngine({ randomFn: mulberry32(seed) });
+    } else {
+      this.engine.reset();
+    }
     this.renderer.hideGameOver();
     this.renderer.hideWin();
     this.renderer.syncGrid(this.engine.getTiles(), true);
-    this.renderer.updateScores(this.engine.score, this.bestScore);
+    const displayBest = this.isDaily ? storage.getItem(this.dailyScoreKey, 0) : this.bestScore;
+    this.renderer.updateScores(this.engine.score, displayBest);
     this.renderer.updateUndoState(this.engine.canUndo());
   }
 }

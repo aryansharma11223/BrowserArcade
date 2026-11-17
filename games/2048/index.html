@@ -276,6 +276,9 @@
               </svg>
               Undo
             </button>
+            <button class="arcade-btn arcade-btn-secondary arcade-btn-sm" id="dailyModeBtn" type="button" title="Play Today's Synchronized Global Daily Puzzle">
+              📅 Daily
+            </button>
           </div>
 
           <div class="game-toolbar-right">
@@ -299,6 +302,13 @@
               <span class="sound-icon"></span>
             </button>
           </div>
+        </div>
+
+        <!-- Daily Challenge Banner -->
+        <div id="dailyBanner2048" class="daily-challenge-badge" style="display: none; margin-bottom: 14px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15)); border: 1px solid var(--primary-500); border-radius: var(--radius-full); padding: 4px 16px; font-size: 0.82rem; font-weight: 700; color: var(--accent-cyan); align-items: center; justify-content: center; gap: 8px;">
+          <span>📅 Daily Challenge:</span>
+          <span id="dailyDateDisplay2048" style="color: #ffffff;"></span>
+          <span id="dailyBestBadge2048" style="margin-left: 6px; font-size: 0.78rem; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #34d399; display: none;"></span>
         </div>
 
         <!-- 4x4 Game Board -->

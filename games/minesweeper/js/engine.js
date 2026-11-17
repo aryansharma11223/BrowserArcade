@@ -7,16 +7,44 @@
 const PRESETS = {
   beginner: { rows: 9, cols: 9, mines: 10, label: 'Beginner' },
   intermediate: { rows: 16, cols: 16, mines: 40, label: 'Intermediate' },
-  expert: { rows: 16, cols: 30, mines: 99, label: 'Expert' }
+  expert: { rows: 16, cols: 30, mines: 99, label: 'Expert' },
+  daily: { rows: 9, cols: 9, mines: 10, label: 'Daily Challenge' }
 };
 
+/**
+ * Deterministic Mulberry32 32-bit PRNG
+ * @param {number|string} seed
+ * @returns {() => number} Float in [0, 1)
+ */
+function mulberry32(seed) {
+  let s = (typeof seed === 'number' ? seed : parseInt(seed, 10) || 123456789) >>> 0;
+  return function() {
+    let t = (s += 0x6D2B79F5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Returns UTC integer seed for given date (YYYYMMDD).
+ * @param {Date} [date=new Date()]
+ * @returns {number}
+ */
+function getDailySeed(date = new Date()) {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(date.getUTCDate()).padStart(2, '0');
+  return parseInt(`${y}${m}${d}`, 10);
+}
+
 class MinesweeperEngine {
-  constructor(difficulty = 'beginner') {
-    this.setDifficulty(difficulty);
+  constructor(difficulty = 'beginner', customSeed = null) {
+    this.setDifficulty(difficulty, customSeed);
     this.reset();
   }
 
-  setDifficulty(difficulty) {
+  setDifficulty(difficulty, customSeed = null) {
     if (!PRESETS[difficulty]) {
       difficulty = 'beginner';
     }
@@ -25,6 +53,18 @@ class MinesweeperEngine {
     this.rows = config.rows;
     this.cols = config.cols;
     this.totalMines = config.mines;
+    this.isDaily = difficulty === 'daily';
+
+    if (this.isDaily) {
+      this.seed = customSeed !== null ? customSeed : getDailySeed();
+      this.rng = mulberry32(this.seed);
+    } else if (customSeed !== null) {
+      this.seed = customSeed;
+      this.rng = mulberry32(customSeed);
+    } else {
+      this.seed = null;
+      this.rng = Math.random;
+    }
   }
 
   reset() {
@@ -36,6 +76,11 @@ class MinesweeperEngine {
     this.explodedMine = null;
     this.startTime = null;
     this.endTime = null;
+
+    // Reset PRNG instance for seed repeatability
+    if (this.seed !== null) {
+      this.rng = mulberry32(this.seed);
+    }
 
     for (let r = 0; r < this.rows; r++) {
       const row = [];
@@ -105,9 +150,9 @@ class MinesweeperEngine {
       }
     }
 
-    // Shuffle coords using Fisher-Yates
+    // Shuffle coords using Fisher-Yates with deterministic or standard PRNG
     for (let i = availableCoords.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(this.rng() * (i + 1));
       [availableCoords[i], availableCoords[j]] = [availableCoords[j], availableCoords[i]];
     }
 
@@ -318,4 +363,8 @@ if (typeof window !== 'undefined') {
   window.MinesweeperEngine = MinesweeperEngine;
 }
 
-export { MinesweeperEngine, PRESETS };
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { MinesweeperEngine, PRESETS, mulberry32, getDailySeed };
+}
+
+export { MinesweeperEngine, PRESETS, mulberry32, getDailySeed };

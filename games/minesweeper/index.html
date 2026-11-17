@@ -261,7 +261,15 @@
         <button type="button" class="diff-btn active" data-diff="beginner">Beginner (9x9)</button>
         <button type="button" class="diff-btn" data-diff="intermediate">Intermediate (16x16)</button>
         <button type="button" class="diff-btn" data-diff="expert">Expert (16x30)</button>
+        <button type="button" class="diff-btn daily-diff-btn" data-diff="daily" title="Synchronized Global Daily Puzzle">📅 Daily</button>
       </div>
+    </div>
+
+    <!-- Daily Challenge Banner -->
+    <div id="dailyBanner" class="daily-challenge-badge" style="display: none; margin-bottom: 16px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15)); border: 1px solid var(--primary-500); border-radius: var(--radius-full); padding: 6px 18px; font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); align-items: center; gap: 8px;">
+      <span>📅 Daily Challenge:</span>
+      <span id="dailyDateDisplay" style="color: #ffffff;"></span>
+      <span id="dailyStatusBadge" style="margin-left: 6px; font-size: 0.78rem; padding: 2px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #34d399; display: none;">✅ Solved</span>
     </div>
 
     <!-- Retro HUD Box -->

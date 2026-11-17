@@ -8,6 +8,7 @@ import { MinesweeperInput } from './input.js';
 import { MinesweeperRenderer } from './renderer.js';
 import { audio } from '/assets/js/sound.js';
 import { storage } from '/assets/js/storage.js';
+import { getDailyDateString, getDailyChallengeKey } from '/assets/js/prng.js';
 
 class MinesweeperGame {
   constructor() {
@@ -47,8 +48,33 @@ class MinesweeperGame {
   init() {
     this.bindDOMControls();
     this.applyTheme(this.theme);
+    this.updateDailyUI();
     this.loadBestTime();
     this.restart();
+  }
+
+  updateDailyUI() {
+    const banner = document.getElementById('dailyBanner');
+    const dateDisplay = document.getElementById('dailyDateDisplay');
+    const statusBadge = document.getElementById('dailyStatusBadge');
+
+    if (this.engine.isDaily) {
+      if (banner) banner.style.display = 'inline-flex';
+      if (dateDisplay) dateDisplay.textContent = getDailyDateString();
+
+      const key = getDailyChallengeKey('minesweeper');
+      const dailyRecord = storage.getItem(key, null);
+      if (statusBadge) {
+        if (dailyRecord && dailyRecord.won) {
+          statusBadge.style.display = 'inline-block';
+          statusBadge.textContent = `⭐ Solved (${dailyRecord.time}s)`;
+        } else {
+          statusBadge.style.display = 'none';
+        }
+      }
+    } else {
+      if (banner) banner.style.display = 'none';
+    }
   }
 
   applyTheme(theme) {
@@ -133,6 +159,7 @@ class MinesweeperGame {
 
   setDifficulty(diff) {
     this.engine.setDifficulty(diff);
+    this.updateDailyUI();
     this.loadBestTime();
     this.restart();
   }
@@ -214,11 +241,33 @@ class MinesweeperGame {
     if (res.status === 'won') {
       this.stopTimer();
       const elapsed = this.engine.getElapsedTime();
-      const isNewBest = this.saveBestTime(elapsed);
+      let isNewBest = false;
+
+      if (this.engine.isDaily) {
+        const key = getDailyChallengeKey('minesweeper');
+        storage.setItem(key, { won: true, time: elapsed, date: new Date().toISOString() });
+        this.updateDailyUI();
+        isNewBest = true;
+      } else {
+        isNewBest = this.saveBestTime(elapsed);
+      }
+
       audio.playWin();
       this.renderer.updateAllCells(this.engine.grid);
       this.renderer.updateHUD(0, elapsed, 'won');
-      setTimeout(() => this.renderer.showWinModal(elapsed, isNewBest), 400);
+
+      // Customize share button for Daily Challenge if applicable
+      const shareBtn = this.dom.winModal ? this.dom.winModal.querySelector('.arcade-share-btn') : null;
+      if (this.engine.isDaily && shareBtn) {
+        const dateStr = getDailyDateString();
+        shareBtn.setAttribute('data-share-title', `Browser Arcade Daily Challenge (${dateStr})`);
+        shareBtn.setAttribute('data-share-text', `Browser Arcade Daily Challenge (${dateStr}) 💣 Minefield Cleared in ${elapsed}s! Can you beat my time? https://browserarcade.pages.dev/games/minesweeper/`);
+      } else if (shareBtn) {
+        shareBtn.removeAttribute('data-share-title');
+        shareBtn.removeAttribute('data-share-text');
+      }
+
+      setTimeout(() => this.renderer.showWinModal(elapsed, isNewBest, this.engine.isDaily), 400);
     } else {
       this.renderer.updateHUD(this.engine.getRemainingMines(), this.engine.getElapsedTime(), 'playing');
     }

@@ -32,6 +32,7 @@ const PRECACHE_RESOURCES = [
   '/assets/js/sound.js',
   '/assets/js/storage.js',
   '/assets/js/consent.js',
+  '/assets/js/prng.js',
   '/games/2048/',
   '/games/2048/index.html',
   '/games/2048/css/game.css',

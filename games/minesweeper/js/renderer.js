@@ -131,11 +131,15 @@ class MinesweeperRenderer {
     }
   }
 
-  showWinModal(elapsedTime, isNewBest) {
+  showWinModal(elapsedTime, isNewBest, isDaily = false) {
     if (this.winModalEl) {
       if (this.winTimeEl) this.winTimeEl.textContent = `${elapsedTime}s`;
       if (this.winBestEl) {
-        this.winBestEl.textContent = isNewBest ? '🏆 New Personal Record!' : '';
+        if (isDaily) {
+          this.winBestEl.textContent = '⭐ Daily Challenge Solved! Global Seed Cleared.';
+        } else {
+          this.winBestEl.textContent = isNewBest ? '🏆 New Personal Record!' : '';
+        }
       }
       this.winModalEl.classList.add('active');
     }
