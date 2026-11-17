@@ -658,6 +658,15 @@ runTest('All 4 games implement HowTo schema, scoring data tables, and contextual
   });
 });
 
+// 18. Verify Homepage index.html implements rich FAQ section, ItemList, and FAQPage JSON-LD schema
+runTest('Homepage index.html implements rich FAQ section, ItemList, and FAQPage JSON-LD schema', () => {
+  const homeContent = fs.readFileSync(path.join(ROOT_DIR, 'index.html'), 'utf8');
+  assert.ok(homeContent.includes('"@type": "FAQPage"'), 'Homepage missing FAQPage schema');
+  assert.ok(homeContent.includes('"@type": "ItemList"'), 'Homepage missing ItemList catalog schema');
+  assert.ok(homeContent.includes('Frequently Asked Questions'), 'Homepage missing visible FAQ section');
+  assert.ok(homeContent.includes('arcade-faq-item'), 'Homepage missing accessible FAQ accordion components');
+});
+
 console.log('\n========================================');
 console.log(`Site Validation Results: ${passedTests}/${totalTests} Passed (100% Success)`);
 console.log('========================================\n');

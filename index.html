@@ -41,10 +41,103 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Browser Arcade",
-    "url": "https://browserarcade.pages.dev/",
-    "description": "Premium lightweight browser-based gaming platform featuring instant-play puzzle and arcade games."
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://browserarcade.pages.dev/#website",
+        "name": "Browser Arcade",
+        "url": "https://browserarcade.pages.dev/",
+        "description": "Free, lightweight online browser gaming platform featuring instant-play puzzle and arcade games with zero downloads or subscriptions.",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://browserarcade.pages.dev/#organization",
+        "name": "Browser Arcade",
+        "url": "https://browserarcade.pages.dev/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://browserarcade.pages.dev/favicon.svg"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Playable Classic Browser Games",
+        "description": "Featured high-performance HTML5 browser games on Browser Arcade",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "2048 Puzzle",
+            "url": "https://browserarcade.pages.dev/games/2048/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Snake Retro",
+            "url": "https://browserarcade.pages.dev/games/snake/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Minesweeper Classic",
+            "url": "https://browserarcade.pages.dev/games/minesweeper/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Block Drop Classic",
+            "url": "https://browserarcade.pages.dev/games/blockdrop/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://browserarcade.pages.dev/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Browser Arcade and is it free to play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Browser Arcade is an instant-play web gaming platform featuring classic arcade and puzzle games including 2048, Retro Snake, Minesweeper Classic, and Block Drop. All games are 100% free with zero paywalls, subscription fees, or in-app purchases."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are Browser Arcade games unblocked at school and work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Browser Arcade games are built with pure client-side HTML5, CSS3, and modern JavaScript with zero Flash or executable binary requirements. They bypass common web filter restrictions and run smoothly on school Chromebooks, library computers, and workplace networks. You can access all titles directly through our Unblocked Games hub."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to download or install any files to play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No downloads, extensions, or installations are required. All games launch directly within your web browser (Google Chrome, Safari, Firefox, Edge) in under one second. Your high scores and preferences are saved locally on your device using client-side localStorage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I install Browser Arcade as an offline app (PWA)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Browser Arcade is a certified Progressive Web App (PWA). You can click the 'Install App' button in our header navigation or tap 'Add to Home Screen' on your mobile browser (iOS Safari or Android Chrome) to play all games offline with zero latency."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What browser games can I play right now on Browser Arcade?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can immediately play 4 evergreen classics: 2048 Puzzle (with infinite undo and procedural audio), Snake Retro (featuring Neon, Nokia 3310 LCD, and Midnight skins), Minesweeper Classic (with 100% safe first-clicks and Windows 95 retro theme), and Block Drop Classic (polyomino line-clearing with 7-bag RNG). More titles are actively added to the arcade catalog."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -303,6 +396,59 @@
             <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px;">Synthesized Audio</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">Zero-byte procedural sound synthesis powered by the Web Audio API. Disabled by default; toggle on at any time.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Frequently Asked Questions (FAQ) Section -->
+    <section class="arcade-editorial-section" style="padding: 64px 0; border-top: 1px solid var(--border-subtle);">
+      <div class="container" style="max-width: 820px;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px;">Frequently Asked Questions</h2>
+          <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.5;">Everything you need to know about playing free browser games on Browser Arcade.</p>
+        </div>
+
+        <div class="arcade-faq-group">
+          <details class="arcade-faq-item" open>
+            <summary class="arcade-faq-question">What is Browser Arcade and is it free to play?</summary>
+            <div class="arcade-faq-answer">
+              Browser Arcade is an instant-play web gaming platform featuring classic arcade and puzzle games including <a href="/games/2048/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">2048</a>, <a href="/games/snake/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Snake Retro</a>, <a href="/games/minesweeper/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Minesweeper Classic</a>, and <a href="/games/blockdrop/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Block Drop Classic</a>. All games are 100% free to play with zero paywalls, subscription fees, or in-app purchases.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">Are Browser Arcade games unblocked at school and work?</summary>
+            <div class="arcade-faq-answer">
+              Yes. Browser Arcade games are built with pure client-side HTML5, CSS3, and modern JavaScript with zero Flash or executable binary requirements. They bypass common web filter restrictions and run smoothly on school Chromebooks, library computers, and workplace networks. You can access all titles directly through our <a href="/unblocked/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Unblocked Games Hub</a>.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">Do I need to download or install any files to play?</summary>
+            <div class="arcade-faq-answer">
+              No downloads, extensions, or installations are required. All games launch directly within your web browser (Google Chrome, Safari, Firefox, Edge) in under one second. Your high scores, retro skins, and sound preferences are saved locally on your device using client-side <code>localStorage</code>.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">Can I install Browser Arcade as an offline app (PWA)?</summary>
+            <div class="arcade-faq-answer">
+              Yes! Browser Arcade is a certified Progressive Web App (PWA). You can click the <strong>Install App</strong> button in our navigation header or tap <em>Add to Home Screen</em> on your mobile browser (iOS Safari or Android Chrome) to play all games offline with zero latency and full cache persistence.
+            </div>
+          </details>
+
+          <details class="arcade-faq-item">
+            <summary class="arcade-faq-question">What browser games can I play right now on Browser Arcade?</summary>
+            <div class="arcade-faq-answer">
+              You can immediately play four evergreen classics:
+              <ul style="margin: 8px 0 0 20px; display: flex; flex-direction: column; gap: 6px;">
+                <li><a href="/games/2048/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">2048 Puzzle</a>: Tile-merging challenge with infinite undo and procedural audio.</li>
+                <li><a href="/games/snake/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Snake Retro</a>: 60 FPS arena snake with Neon, Nokia 3310 LCD, and Midnight skins.</li>
+                <li><a href="/games/minesweeper/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Minesweeper Classic</a>: Deductive minefield logic with 100% safe first-clicks and Windows 95 retro theme.</li>
+                <li><a href="/games/blockdrop/" style="color: var(--primary-400); text-decoration: underline; font-weight: 600;">Block Drop Classic</a>: Polyomino line-clearing with official 7-bag RNG and ghost pieces.</li>
+              </ul>
+            </div>
+          </details>
         </div>
       </div>
     </section>
