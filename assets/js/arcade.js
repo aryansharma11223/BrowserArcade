@@ -20,12 +20,122 @@ class ArcadePlatform {
     this.bindMobileNav();
     this.bindSoundButtons();
     this.bindShareButtons();
+    this.bindFullscreenController();
+    this.bindInstallPrompt();
+    this.registerServiceWorker();
     this.updateSoundIcons(audio.isMuted);
 
     // Sync sound state across tabs or components
     window.addEventListener('arcade:soundchange', (e) => {
       this.updateSoundIcons(e.detail.isMuted);
     });
+  }
+
+  registerServiceWorker() {
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then((reg) => {
+            reg.onupdatefound = () => {
+              const installingWorker = reg.installing;
+              if (installingWorker) {
+                installingWorker.onstatechange = () => {
+                  if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // Pre-cached update ready
+                  }
+                };
+              }
+            };
+          })
+          .catch((err) => {
+            console.warn('[SW] Registration failed:', err);
+          });
+      });
+    }
+  }
+
+  bindInstallPrompt() {
+    let deferredPrompt = null;
+    const installBtns = document.querySelectorAll('.pwa-install-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtns.forEach((btn) => {
+        btn.style.display = 'inline-flex';
+      });
+    });
+
+    installBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtns.forEach((b) => (b.style.display = 'none'));
+        }
+        deferredPrompt = null;
+      });
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBtns.forEach((b) => (b.style.display = 'none'));
+      deferredPrompt = null;
+    });
+  }
+
+  bindFullscreenController() {
+    const toggleFullscreen = () => {
+      const fsTarget = document.querySelector('.game-wrapper') || document.documentElement;
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (fsTarget.requestFullscreen) {
+          fsTarget.requestFullscreen().catch(() => {});
+        } else if (fsTarget.webkitRequestFullscreen) {
+          fsTarget.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    };
+
+    document.addEventListener('click', (e) => {
+      const fsBtn = e.target.closest('.fullscreen-toggle-btn');
+      if (fsBtn) {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+
+    // Keyboard shortcut 'F' (only when not inside inputs/textareas)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'f' || e.key === 'F') {
+        const tag = e.target.tagName ? e.target.tagName.toLowerCase() : '';
+        if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+        if (document.querySelector('.fullscreen-toggle-btn')) {
+          e.preventDefault();
+          toggleFullscreen();
+        }
+      }
+    });
+
+    const updateFsIcons = () => {
+      const isFs = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+      document.querySelectorAll('.fullscreen-toggle-btn').forEach(btn => {
+        btn.setAttribute('aria-label', isFs ? 'Exit Fullscreen' : 'Enter Fullscreen');
+        btn.setAttribute('title', isFs ? 'Exit Fullscreen (F / Esc)' : 'Enter Fullscreen (F)');
+        const enterIcon = btn.querySelector('.fs-icon-enter');
+        const exitIcon = btn.querySelector('.fs-icon-exit');
+        if (enterIcon) enterIcon.style.display = isFs ? 'none' : 'inline-block';
+        if (exitIcon) exitIcon.style.display = isFs ? 'inline-block' : 'none';
+      });
+    };
+
+    document.addEventListener('fullscreenchange', updateFsIcons);
+    document.addEventListener('webkitfullscreenchange', updateFsIcons);
   }
 
   bindShareButtons() {

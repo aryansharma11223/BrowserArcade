@@ -15,6 +15,8 @@ export class SnakeApp {
   constructor() {
     this.bestScoreKey = 'snake_bestScore';
     this.bestScore = storage.getItem(this.bestScoreKey, 0);
+    this.themeKey = 'snake_theme';
+    this.theme = storage.getItem(this.themeKey, 'neon');
 
     this.engine = new GameEngine({
       cols: 20,
@@ -25,6 +27,7 @@ export class SnakeApp {
     this.canvas = document.getElementById('snakeCanvas');
     this.boardContainer = document.getElementById('gameBoard');
     this.renderer = new GridRenderer(this.canvas, 20, 20);
+    this.renderer.setTheme(this.theme);
 
     this.lastTickTime = performance.now();
     this.animationFrameId = null;
@@ -44,8 +47,9 @@ export class SnakeApp {
     // 2. Bind UI Action Buttons
     this.bindButtons();
 
-    // 3. Sync Initial Scores in DOM
+    // 3. Sync Initial Scores & Theme in DOM
     this.updateScoreDisplay(0, this.bestScore);
+    this.applyTheme(this.theme);
 
     // 4. Handle Window Resizes with DPR adjustment
     window.addEventListener('resize', () => {
@@ -56,6 +60,37 @@ export class SnakeApp {
     this.lastTickTime = performance.now();
     this.loop = this.loop.bind(this);
     this.animationFrameId = requestAnimationFrame(this.loop);
+  }
+
+  applyTheme(theme) {
+    this.theme = ['neon', 'nokia', 'midnight'].includes(theme) ? theme : 'neon';
+    this.renderer.setTheme(this.theme);
+    storage.setItem(this.themeKey, this.theme);
+
+    const themeNames = {
+      neon: 'Theme: Neon Cyberpunk',
+      nokia: 'Theme: Nokia 3310 Retro',
+      midnight: 'Theme: Midnight Synth'
+    };
+
+    const themeIcons = {
+      neon: '⚡',
+      nokia: '📟',
+      midnight: '🌌'
+    };
+
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+      themeBtn.setAttribute('title', `${themeNames[this.theme] || 'Theme'} (Click to switch)`);
+      themeBtn.setAttribute('aria-label', themeNames[this.theme] || 'Theme');
+      const icon = themeBtn.querySelector('.theme-btn-icon');
+      if (icon) icon.textContent = themeIcons[this.theme] || '🎨';
+    }
+
+    if (this.boardContainer) {
+      this.boardContainer.classList.remove('theme-neon', 'theme-nokia', 'theme-midnight');
+      this.boardContainer.classList.add(`theme-${this.theme}`);
+    }
   }
 
   /**
@@ -264,6 +299,17 @@ export class SnakeApp {
     const pauseBtn = document.getElementById('pauseBtn');
     if (pauseBtn) {
       pauseBtn.addEventListener('click', () => this.togglePause());
+    }
+
+    // Theme toggle button
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        audio.playClick();
+        const themes = ['neon', 'nokia', 'midnight'];
+        const nextIdx = (themes.indexOf(this.theme) + 1) % themes.length;
+        this.applyTheme(themes[nextIdx]);
+      });
     }
 
     // Resume button in pause overlay

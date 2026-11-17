@@ -31,6 +31,7 @@ class MinesweeperGame {
       tryAgainBtn: document.getElementById('lossTryAgainBtn')
     };
 
+    this.theme = storage.getItem('minesweeper_theme', 'neon');
     this.renderer = new MinesweeperRenderer(this.dom);
     this.input = new MinesweeperInput(this.dom.board, {
       onReveal: (r, c) => this.handleReveal(r, c),
@@ -45,11 +46,48 @@ class MinesweeperGame {
 
   init() {
     this.bindDOMControls();
+    this.applyTheme(this.theme);
     this.loadBestTime();
     this.restart();
   }
 
+  applyTheme(theme) {
+    this.theme = theme === 'win95' ? 'win95' : 'neon';
+    storage.setItem('minesweeper_theme', this.theme);
+    const hudBox = document.querySelector('.minesweeper-hud-box');
+    const board = document.getElementById('minesweeperBoard');
+    const themeBtn = document.getElementById('minesThemeBtn');
+
+    if (this.theme === 'win95') {
+      if (hudBox) hudBox.classList.add('theme-win95');
+      if (board) board.classList.add('theme-win95');
+      if (themeBtn) {
+        themeBtn.setAttribute('title', 'Theme: Windows 95 Classic (Click to switch to Neon)');
+        themeBtn.setAttribute('aria-label', 'Theme: Windows 95 Classic');
+        const icon = themeBtn.querySelector('.theme-btn-icon');
+        if (icon) icon.textContent = '💾';
+      }
+    } else {
+      if (hudBox) hudBox.classList.remove('theme-win95');
+      if (board) board.classList.remove('theme-win95');
+      if (themeBtn) {
+        themeBtn.setAttribute('title', 'Theme: Modern Neon (Click to switch to Win95)');
+        themeBtn.setAttribute('aria-label', 'Theme: Modern Neon');
+        const icon = themeBtn.querySelector('.theme-btn-icon');
+        if (icon) icon.textContent = '✨';
+      }
+    }
+  }
+
   bindDOMControls() {
+    const themeBtn = document.getElementById('minesThemeBtn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        audio.playClick();
+        this.applyTheme(this.theme === 'win95' ? 'neon' : 'win95');
+      });
+    }
+
     if (this.dom.faceBtn) {
       this.dom.faceBtn.addEventListener('click', () => {
         audio.playClick();

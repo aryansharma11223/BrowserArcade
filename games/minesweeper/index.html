@@ -276,9 +276,22 @@
         <div class="best-time-badge">
           Best: <span id="bestTimeDisplay">--:--</span>
         </div>
-        <button id="modeToggleBtn" class="mode-toggle-pill" type="button" aria-label="Toggle Dig or Flag mode for mobile touch">
-          <span id="modeIndicatorText">⛏️ Reveal Mode</span>
-        </button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="arcade-btn-icon" id="minesThemeBtn" aria-label="Theme: Modern Neon" title="Theme: Modern Neon (Click to switch to Windows 95)">
+            <span class="theme-btn-icon" style="font-size: 1rem; line-height: 1;">✨</span>
+          </button>
+          <button class="arcade-btn-icon fullscreen-toggle-btn" aria-label="Toggle Fullscreen" title="Toggle Fullscreen (F)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fs-icon-enter">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fs-icon-exit" style="display: none;">
+              <path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3m17 7h-6m0 0V4m0 6l7-7"></path>
+            </svg>
+          </button>
+          <button id="modeToggleBtn" class="mode-toggle-pill" type="button" aria-label="Toggle Dig or Flag mode for mobile touch">
+            <span id="modeIndicatorText">⛏️ Reveal Mode</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -309,6 +322,17 @@
             Share
           </button>
         </div>
+        <div class="arcade-next-game-card">
+          <div class="next-game-label">Up Next Challenge</div>
+          <a href="/games/blockdrop/" class="next-game-link">
+            <div class="next-game-icon">🧱</div>
+            <div class="next-game-info">
+              <div class="next-game-title">Block Drop Classic</div>
+              <div class="next-game-desc">Line-clearing polyomino action with 7-bag RNG</div>
+            </div>
+            <div class="next-game-arrow">&rarr;</div>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -320,6 +344,17 @@
         <button id="lossTryAgainBtn" type="button" class="arcade-btn arcade-btn-primary arcade-btn-lg" style="width: 100%;">
           Try Again
         </button>
+        <div class="arcade-next-game-card">
+          <div class="next-game-label">Up Next Challenge</div>
+          <a href="/games/blockdrop/" class="next-game-link">
+            <div class="next-game-icon">🧱</div>
+            <div class="next-game-info">
+              <div class="next-game-title">Block Drop Classic</div>
+              <div class="next-game-desc">Line-clearing polyomino action with 7-bag RNG</div>
+            </div>
+            <div class="next-game-arrow">&rarr;</div>
+          </a>
+        </div>
       </div>
     </div>
 

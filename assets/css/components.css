@@ -576,3 +576,132 @@
   font-weight: 700;
   border-radius: var(--radius-sm);
 }
+
+/* ==========================================================================
+   Fullscreen Mode Styles
+   ========================================================================== */
+:fullscreen,
+:-webkit-full-screen {
+  background-color: var(--bg-app) !important;
+}
+
+:fullscreen .game-wrapper,
+:-webkit-full-screen .game-wrapper {
+  max-width: 100vw !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12px !important;
+  background-color: var(--bg-app) !important;
+}
+
+.fullscreen-toggle-btn {
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.fullscreen-toggle-btn:hover {
+  color: var(--accent-cyan);
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Up Next Game Recommendation Card (Inside Modals)
+   ========================================================================== */
+.arcade-next-game-card {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: left;
+  width: 100%;
+}
+
+.next-game-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+}
+
+.next-game-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.next-game-link:hover {
+  border-color: var(--primary-500);
+  background: var(--bg-surface-card);
+  transform: translateX(2px);
+}
+
+.next-game-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.next-game-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.next-game-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.next-game-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.next-game-arrow {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-400);
+  transition: transform var(--transition-fast);
+}
+
+.next-game-link:hover .next-game-arrow {
+  transform: translateX(4px);
+  color: var(--accent-pink);
+}
+
+/* ==========================================================================
+   PWA Install Button
+   ========================================================================== */
+.pwa-install-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pwa-install-btn:hover {
+  background: var(--accent-cyan);
+  color: #0b0f19;
+  transform: translateY(-1px);
+}

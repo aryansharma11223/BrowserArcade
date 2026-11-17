@@ -299,6 +299,15 @@
           <button id="restartBtn" type="button" class="arcade-btn arcade-btn-secondary arcade-btn-sm" style="width: 100%;">
             🔄 Reset
           </button>
+          <button class="arcade-btn arcade-btn-secondary arcade-btn-sm fullscreen-toggle-btn" type="button" aria-label="Toggle Fullscreen" title="Toggle Fullscreen (F)" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fs-icon-enter">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="fs-icon-exit" style="display: none;">
+              <path d="M4 14h6m0 0v6m0-6L3 21m17-7h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3m17 7h-6m0 0V4m0 6l7-7"></path>
+            </svg>
+            Fullscreen
+          </button>
         </div>
       </div>
     </div>
@@ -345,6 +354,17 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
             Share
           </button>
+        </div>
+        <div class="arcade-next-game-card">
+          <div class="next-game-label">Up Next Challenge</div>
+          <a href="/games/2048/" class="next-game-link">
+            <div class="next-game-icon">🔢</div>
+            <div class="next-game-info">
+              <div class="next-game-title">2048 Puzzle</div>
+              <div class="next-game-desc">Strategic tile merging with infinite undo & procedural audio</div>
+            </div>
+            <div class="next-game-arrow">&rarr;</div>
+          </a>
         </div>
       </div>
     </div>
