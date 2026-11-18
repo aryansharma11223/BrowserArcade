@@ -36,6 +36,10 @@ const HTML_PAGES = [
   { file: 'games/minesweeper/index.html', canonical: 'https://browserarcade.pages.dev/games/minesweeper/', ogUrl: 'https://browserarcade.pages.dev/games/minesweeper/' },
   { file: 'games/blockdrop/index.html', canonical: 'https://browserarcade.pages.dev/games/blockdrop/', ogUrl: 'https://browserarcade.pages.dev/games/blockdrop/' },
   { file: 'unblocked/index.html', canonical: 'https://browserarcade.pages.dev/unblocked/', ogUrl: 'https://browserarcade.pages.dev/unblocked/' },
+  { file: 'unblocked/2048/index.html', canonical: 'https://browserarcade.pages.dev/unblocked/2048/', ogUrl: 'https://browserarcade.pages.dev/unblocked/2048/' },
+  { file: 'unblocked/snake/index.html', canonical: 'https://browserarcade.pages.dev/unblocked/snake/', ogUrl: 'https://browserarcade.pages.dev/unblocked/snake/' },
+  { file: 'unblocked/minesweeper/index.html', canonical: 'https://browserarcade.pages.dev/unblocked/minesweeper/', ogUrl: 'https://browserarcade.pages.dev/unblocked/minesweeper/' },
+  { file: 'unblocked/blockdrop/index.html', canonical: 'https://browserarcade.pages.dev/unblocked/blockdrop/', ogUrl: 'https://browserarcade.pages.dev/unblocked/blockdrop/' },
   { file: 'about/index.html', canonical: 'https://browserarcade.pages.dev/about/', ogUrl: 'https://browserarcade.pages.dev/about/' },
   { file: 'contact/index.html', canonical: 'https://browserarcade.pages.dev/contact/', ogUrl: 'https://browserarcade.pages.dev/contact/' },
   { file: 'privacy/index.html', canonical: 'https://browserarcade.pages.dev/privacy/', ogUrl: 'https://browserarcade.pages.dev/privacy/' },
@@ -205,6 +209,10 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
     'https://browserarcade.pages.dev/games/minesweeper/',
     'https://browserarcade.pages.dev/games/blockdrop/',
     'https://browserarcade.pages.dev/unblocked/',
+    'https://browserarcade.pages.dev/unblocked/2048/',
+    'https://browserarcade.pages.dev/unblocked/snake/',
+    'https://browserarcade.pages.dev/unblocked/minesweeper/',
+    'https://browserarcade.pages.dev/unblocked/blockdrop/',
     'https://browserarcade.pages.dev/about/',
     'https://browserarcade.pages.dev/contact/',
     'https://browserarcade.pages.dev/privacy/',
@@ -216,13 +224,13 @@ runTest('sitemap.xml covers all active production routes without obsolete domain
     assert.ok(sitemapContent.includes(`<loc>${url}</loc>`), `sitemap.xml missing URL: ${url}`);
   });
 
-  // Verify exactly 10 URLs exist in sitemap
+  // Verify exactly 14 URLs exist in sitemap
   const locMatches = sitemapContent.match(/<loc>/g) || [];
-  assert.strictEqual(locMatches.length, 10, `sitemap.xml must contain exactly 10 URLs, found ${locMatches.length}`);
+  assert.strictEqual(locMatches.length, 14, `sitemap.xml must contain exactly 14 URLs, found ${locMatches.length}`);
 
   // Verify valid lastmod timestamps exist for all URLs
   const lastmodMatches = sitemapContent.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || [];
-  assert.strictEqual(lastmodMatches.length, 10, `sitemap.xml must contain exactly 10 lastmod tags, found ${lastmodMatches.length}`);
+  assert.strictEqual(lastmodMatches.length, 14, `sitemap.xml must contain exactly 14 lastmod tags, found ${lastmodMatches.length}`);
 
   // Verify no placeholders or obsolete domains remain
   assert.ok(!sitemapContent.includes('REPLACE_WITH_CONFIRMED_DOMAIN'), 'sitemap.xml contains REPLACE_WITH_CONFIRMED_DOMAIN placeholder');
@@ -273,6 +281,10 @@ runTest('All internal links across all HTML documents to platform directory rout
     'games/minesweeper/index.html',
     'games/blockdrop/index.html',
     'unblocked/index.html',
+    'unblocked/2048/index.html',
+    'unblocked/snake/index.html',
+    'unblocked/minesweeper/index.html',
+    'unblocked/blockdrop/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',
@@ -280,7 +292,21 @@ runTest('All internal links across all HTML documents to platform directory rout
     '404.html'
   ];
 
-  const directoryRoutes = ['about', 'games/2048', 'games/snake', 'games/minesweeper', 'games/blockdrop', 'unblocked', 'contact', 'privacy', 'terms'];
+  const directoryRoutes = [
+    'about',
+    'games/2048',
+    'games/snake',
+    'games/minesweeper',
+    'games/blockdrop',
+    'unblocked',
+    'unblocked/2048',
+    'unblocked/snake',
+    'unblocked/minesweeper',
+    'unblocked/blockdrop',
+    'contact',
+    'privacy',
+    'terms'
+  ];
 
   allHtmlFiles.forEach(file => {
     const filePath = path.join(ROOT_DIR, file);
@@ -390,6 +416,10 @@ runTest('All static directory routes contain valid index.html files', () => {
     'games/minesweeper',
     'games/blockdrop',
     'unblocked',
+    'unblocked/2048',
+    'unblocked/snake',
+    'unblocked/minesweeper',
+    'unblocked/blockdrop',
     'about',
     'contact',
     'privacy',
@@ -478,7 +508,7 @@ runTest('CLOUDFLARE_DEPLOYMENT_GUIDE.md documents safe revalidation, routing dis
 });
 
 // 12. Verify Cloudflare Pages _redirects file and rules
-runTest('_redirects exists with 9 non-circular HTTP 301 rules enforcing trailing slashes', () => {
+runTest('_redirects exists with 13 non-circular HTTP 301 rules enforcing trailing slashes', () => {
   const redirectsPath = path.join(ROOT_DIR, '_redirects');
   assert.ok(fs.existsSync(redirectsPath), '_redirects file is missing');
 
@@ -487,7 +517,7 @@ runTest('_redirects exists with 9 non-circular HTTP 301 rules enforcing trailing
     .map(line => line.trim())
     .filter(line => line && !line.startsWith('#'));
 
-  assert.strictEqual(lines.length, 9, `Expected exactly 9 redirect rules, found ${lines.length}`);
+  assert.strictEqual(lines.length, 13, `Expected exactly 13 redirect rules, found ${lines.length}`);
 
   const expectedRules = [
     { from: '/about', to: '/about/', code: '301' },
@@ -496,6 +526,10 @@ runTest('_redirects exists with 9 non-circular HTTP 301 rules enforcing trailing
     { from: '/games/minesweeper', to: '/games/minesweeper/', code: '301' },
     { from: '/games/blockdrop', to: '/games/blockdrop/', code: '301' },
     { from: '/unblocked', to: '/unblocked/', code: '301' },
+    { from: '/unblocked/2048', to: '/unblocked/2048/', code: '301' },
+    { from: '/unblocked/snake', to: '/unblocked/snake/', code: '301' },
+    { from: '/unblocked/minesweeper', to: '/unblocked/minesweeper/', code: '301' },
+    { from: '/unblocked/blockdrop', to: '/unblocked/blockdrop/', code: '301' },
     { from: '/contact', to: '/contact/', code: '301' },
     { from: '/privacy', to: '/privacy/', code: '301' },
     { from: '/terms', to: '/terms/', code: '301' }
@@ -536,6 +570,10 @@ runTest('Zero hardcoded unconsented Google Analytics tags exist in static HTML f
     'games/minesweeper/index.html',
     'games/blockdrop/index.html',
     'unblocked/index.html',
+    'unblocked/2048/index.html',
+    'unblocked/snake/index.html',
+    'unblocked/minesweeper/index.html',
+    'unblocked/blockdrop/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',
@@ -562,6 +600,10 @@ runTest('All platform HTML pages include Cookie Settings trigger and load arcade
     'games/minesweeper/index.html',
     'games/blockdrop/index.html',
     'unblocked/index.html',
+    'unblocked/2048/index.html',
+    'unblocked/snake/index.html',
+    'unblocked/minesweeper/index.html',
+    'unblocked/blockdrop/index.html',
     'about/index.html',
     'contact/index.html',
     'privacy/index.html',

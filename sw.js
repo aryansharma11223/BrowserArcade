@@ -17,7 +17,7 @@ try {
   // Push notification script bypass (offline or blocked)
 }
 
-const CACHE_NAME = 'browser-arcade-core-v1.2';
+const CACHE_NAME = 'browser-arcade-core-v1.3';
 
 const PRECACHE_RESOURCES = [
   '/',
@@ -35,11 +35,11 @@ const PRECACHE_RESOURCES = [
   '/assets/js/prng.js',
   '/games/2048/',
   '/games/2048/index.html',
-  '/games/2048/css/game.css',
+  '/games/2048/css/2048.css',
   '/games/2048/js/main.js',
   '/games/2048/js/engine.js',
-  '/games/2048/js/grid.js',
-  '/games/2048/js/tile.js',
+  '/games/2048/js/input.js',
+  '/games/2048/js/renderer.js',
   '/games/snake/',
   '/games/snake/index.html',
   '/games/snake/css/snake.css',
@@ -61,6 +61,16 @@ const PRECACHE_RESOURCES = [
   '/games/blockdrop/js/engine.js',
   '/games/blockdrop/js/renderer.js',
   '/games/blockdrop/js/input.js',
+  '/unblocked/',
+  '/unblocked/index.html',
+  '/unblocked/2048/',
+  '/unblocked/2048/index.html',
+  '/unblocked/snake/',
+  '/unblocked/snake/index.html',
+  '/unblocked/minesweeper/',
+  '/unblocked/minesweeper/index.html',
+  '/unblocked/blockdrop/',
+  '/unblocked/blockdrop/index.html',
   '/assets/images/games/2048-thumb.svg',
   '/assets/images/games/snake-thumb.svg',
   '/assets/images/games/minesweeper-thumb.svg',
